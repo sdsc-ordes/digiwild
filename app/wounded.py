@@ -1,0 +1,13 @@
+import gradio as gr
+from top_section import create_top_section, create_dropdown
+
+def show_section_wounded(visible):
+    #with gr.Tab("Wounded Information"):
+    with gr.Column(visible=visible) as wounded_section:
+        gr.Markdown("# Please describe the cause of wound")
+
+        image_row, button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause = create_top_section(visible)      
+        dropdown_row, dropdown = create_dropdown(visible)
+
+    # Change variables and names
+    return wounded_section, button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown
