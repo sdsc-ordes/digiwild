@@ -3,6 +3,8 @@ from functools import partial
 from dead import show_section_dead
 from wounded import show_section_wounded
 from dropdowns import *
+from maps import get_location
+from style import *
 
 with gr.Blocks() as demo:
     with gr.Row():
@@ -13,6 +15,24 @@ with gr.Blocks() as demo:
     with gr.Row():
         with gr.Column(scale=1):
             camera = gr.Image()
+
+    with gr.Row():
+        with gr.Column(scale=1):
+            location = gr.Textbox(visible=True, interactive=True, label="Location of Sighting")
+            #display location processing
+            identified_location= gr.Textbox(visible=False, interactive=False, 
+                                            label="Identified GPS Location")
+            with gr.Row():
+                #to clear it
+                clear_location = gr.ClearButton(components=[location], visible=True, interactive=True, 
+                                                #elem_classes=["custom-button"]
+                                                )
+                clear_location.click()
+                #to submit it
+                submit_location = gr.Button("Submit", visible=True, interactive=True)
+                submit_location.click(get_location, inputs=[location], outputs=[identified_location])
+            
+
 
     with gr.Row() as block_form:
         with gr.Column(scale=1):
@@ -30,20 +50,24 @@ with gr.Blocks() as demo:
     partial_hide_section_wounded = partial(show_section_wounded, False)
     butt_dead.click(partial_show_section_dead, inputs=None, outputs=[section_dead, 
                                                                      button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, 
-                                                                     dropdown])
+                                                                     dropdown
+                                                                     ])
     butt_dead.click(partial_hide_section_wounded, inputs=None, outputs=[section_wounded, 
                                                                         button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, 
-                                                                        dropdown])
+                                                                        dropdown
+                                                                        ])
 
     # Wounded Button Logic
     partial_show_section_wounded = partial(show_section_wounded, True)
     partial_hide_section_dead = partial(show_section_dead, False)
     butt_wounded.click(partial_show_section_wounded, inputs=None, outputs=[section_wounded, 
                                                                         button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, 
-                                                                        dropdown])
+                                                                        dropdown
+                                                                        ])
     butt_wounded.click(partial_hide_section_dead, inputs=None, outputs=[section_dead, 
                                                                         button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, 
-                                                                        dropdown])
+                                                                        dropdown
+                                                                        ])
 
     # Dropdowns 
     button_collision.click(dropdown_collision, outputs=dropdown)
