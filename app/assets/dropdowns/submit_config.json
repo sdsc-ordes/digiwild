@@ -1,0 +1,23 @@
+{
+    "Event follow-up": 
+    {
+        "Animal collected": {
+            "Options": ["Yes", "No"]
+        },
+        "Recipient": {
+            "Options": ["Veterinary", "Care center", "Local Museum", "National Museum", "Other"]
+        },
+        "Radiography": {
+            "Options": ["Yes", "No", "Unknown"]
+        },
+        "Given answer": {
+            "Options": ["Nothing", "Complaint against X", "Complaint", "Police call", "Discussion with the speaker", "Press release", "Unknown"]
+        },
+        "Name of recipient / museum": {
+            "Open": {}
+        },
+        "Collection reference": {
+            "Open": {}
+        }
+    }
+}

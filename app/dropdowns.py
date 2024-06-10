@@ -1,32 +1,37 @@
 import gradio as gr
+import json
+import os
+
+def load_config(file_path):
+    with open(file_path) as f:
+        config = json.load(f)
+    return config
+
+def retrieve_config_options(label):
+    path = os.getcwd()
+    dropdown_config_path = path + "/assets/dropdowns/dropdown_config.json"
+    dropdown_config = load_config(dropdown_config_path)
+    options = list(dropdown_config[label].keys())
+    options = [option.title() for option in options]
+    return options
+
 
 def dropdown_collision():
-    return gr.Dropdown(choices=["Road vehicle", "Train", "Aircraft", "Boat", "Other", "Unknown"], label="Collision with a means of transport", interactive=True)
+    label = "Collision with a means of transport"
+    options = retrieve_config_options(label)
+    return gr.Dropdown(choices=options, label=label, interactive=True)
 
 def dropdown_deliberate_destruction():
-    return gr.Dropdown(choices=["Hunting", "Trap", "Poisoning", "Removal or direct capture", "Fishing", "Other", "Unkown"], label="Destruction / Deliberatly removed", interactive=True)        
+    label = "Destruction / Deliberatly removed"
+    options = retrieve_config_options(label)
+    return gr.Dropdown(choices=options, label=label, interactive=True)        
 
 def dropdown_indirect_destruction(): 
-    return gr.Dropdown(choices=["pylone and electric grid",
-                                "windfarm",
-                                "other collision",
-                                "fall",
-                                "development work",
-                                "pollution / contamination",
-                                "agricultural net protection",
-                                "vegetal / forest work",
-                                "other",
-                                "unknown"
-                                ], label="Indirect destruction", interactive=True)  
+    label = "Indirect destruction"
+    options = retrieve_config_options(label)
+    return gr.Dropdown(choices=options, label=label, interactive=True)  
 
 def dropdown_natural_cause(): 
-    return gr.Dropdown(choices=["predation",
-                                "weather",
-                                "natural disaster",
-                                "nest fall",
-                                "stranding due to exhaustion",
-                                "disease/parasite",
-                                "accidental drowning",
-                                "other",
-                                "unknown"
-                                ], label="Indirect destruction", interactive=True)            
+    label = "Natural cause"
+    options = retrieve_config_options(label)
+    return gr.Dropdown(choices=options, label=label, interactive=True)            
