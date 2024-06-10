@@ -6,7 +6,6 @@ PATH = os.getcwd()
 def create_top_section(visible): 
     with gr.Row() as image_row:
             with gr.Column(scale=1, min_width="50px"):
-                print(PATH + '/assets/logos/van.png')
                 img1 = gr.Image(value=PATH + '/assets/logos/van.png', show_download_button=False, show_label=False, height="150px")
                 button_collision = gr.Button("Collision with a means of transport", visible=visible)
                 
