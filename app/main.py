@@ -5,14 +5,15 @@ from wounded import show_section_wounded
 from dropdowns import *
 from maps import get_location
 from style import *
+from theme import theme, css
 
-with gr.Blocks() as demo:
+with gr.Blocks(theme=theme, css=css) as demo:
     # ---------------------------------------------------------
     # Intro Text
     with gr.Row():
         with gr.Column(scale=1):
             title = gr.Markdown("# Welcome to Digiwild", label="Title")
-            description = gr.Markdown("Lorem ipsum", label="description")
+            description = gr.Markdown("Please record your wildlife observations here !", label="description")
 
     # ---------------------------------------------------------
     # Camera
