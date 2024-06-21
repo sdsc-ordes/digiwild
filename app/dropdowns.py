@@ -1,21 +1,10 @@
 import gradio as gr
-import json
-import os
+from config_utils import get_custom_config_dropdowns
 
-def load_config(file_path):
-    with open(file_path) as f:
-        config = json.load(f)
-    return config
-
-def get_custom_config_dropdowns():
-    path = os.getcwd()
-    dropdown_config_path = path + "/assets/dropdowns/dropdown_config.json"
-    dropdown_config = load_config(dropdown_config_path)
-    return dropdown_config
 
 #--------------------------------------------------------- LEVEL 1 DROPDOWNS
 def retrieve_config_options(label):
-    dropdown_config = get_custom_config_dropdowns()
+    dropdown_config = get_custom_config_dropdowns("/assets/dropdowns/dropdown_config.json")
     options = list(dropdown_config[label].keys())
     options = [option.title() for option in options]
     return options
@@ -56,7 +45,7 @@ def get_options(value):
         open_field = None
         extras = None
         extras_label = None
-        dropdown_config = get_custom_config_dropdowns()
+        dropdown_config = get_custom_config_dropdowns("/assets/dropdowns/dropdown_config.json")
         for _, sub_dict in dropdown_config.items():
             nested_dict = sub_dict.get(value)
             if nested_dict is not None: 
