@@ -1,6 +1,7 @@
 import gradio as gr
 from top_section import create_top_section, create_dropdown
 
+
 def show_section_dead(visible):
     with gr.Column(visible=visible) as section_dead:
         gr.Markdown("# Dead Animal")

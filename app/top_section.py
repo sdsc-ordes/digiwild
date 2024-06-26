@@ -7,7 +7,7 @@ def create_top_section(visible):
     with gr.Row() as image_row:
             with gr.Column(scale=1, min_width="50px"):
                 img1 = gr.Image(value=PATH + '/assets/logos/van.png', show_download_button=False, show_label=False, height="150px")
-                button_collision = gr.Button("Collision with a means of transport", visible=visible)
+                button_collision = gr.Button("Collision with a means of transport", visible=visible, elem_id="warning", elem_classes=".feedback")
                 
             with gr.Column(scale=1, min_width="50px"):
                 img2 = gr.Image(value=PATH + '/assets/logos/destruction.png', show_download_button=False, show_label=False, height="150px")
