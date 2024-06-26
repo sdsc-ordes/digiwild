@@ -3,12 +3,16 @@
 ## Docker
 
 ```
- docker build -t ordes/digiwild:swallow . 
+docker build -t ordes/digiwild:latest . 
 ```
 
 ```
-docker run -it -p 7860:7860 ordes/digiwild:swallow
+docker run -it -p 7860:7860 ordes/digiwild:latest
+docker run -it -p 8080:8080 ordes/digiwild:latest
+docker run -it -p 8081:8081 -p 7860:7860  ordes/digiwild:latest
 ```
+
+
 
 ## Needs
 

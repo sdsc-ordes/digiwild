@@ -1,7 +1,8 @@
-From ubuntu:latest
+FROM ubuntu:22.04
 
-RUN apt-get update
-RUN apt-get install python3 python3-pip -y
+RUN apt update
+RUN apt install python3.10 python3-pip -y 
+RUN pip install --upgrade setuptools
 
 # https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-every-time-i-use-pip-3
 # https://veronneau.org/python-311-pip-and-breaking-system-packages.html
@@ -28,14 +29,13 @@ RUN apt-get update && apt-get -y upgrade \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-##################################################
-# ODTP setup
-##################################################
 
-RUN mkdir /app
 COPY . /digiwild
 RUN pip3 install -r /digiwild/requirements.txt
 
 WORKDIR /digiwild
+
+EXPOSE 8081
+EXPOSE 7860
 
 ENTRYPOINT bash
