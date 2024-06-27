@@ -16,7 +16,10 @@ api_requester = APIRequester(
 response, _ = api_requester.request(
     method='GET',
     endpoint='observations/search',
-    body={"period_choice":"range","date_from":"1.01.2022","date_to":"24.12.2022","species_choice":"all", "has_death": "2"},
+    body={
+        "period_choice":"range","date_from":"1.01.2022","date_to":"1.01.2024",
+        "species_choice":"all"
+        },
     params={}
 )
 
