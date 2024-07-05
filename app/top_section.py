@@ -23,7 +23,6 @@ def create_top_section(visible):
     return image_row, button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause
 
 def create_dropdown(visible):
-    print(visible)
     with gr.Row() as dropdown_row:
         dropdown = gr.Dropdown(choices=[], label="Dropdown", interactive=True, visible=visible)
     openfield_level2 = gr.Textbox(visible=False)
