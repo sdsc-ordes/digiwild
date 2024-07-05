@@ -7,11 +7,11 @@ css = """
 #wounded {background-color: #5e0724}
 #buttons-conditions {background-color: #b3b3b3}
 #dropdown-conditions {background-color: #b3b3b3}
-#submit {background-color: #91ccb0}
+#followup {background-color: #38241c} 
+#submit {background-color: #abb2bf}
 """
-#wound old: #2d5543
-#submit:#13422f
 
+#followup 2nd option: #13422f
 
 theme = gr.themes.Soft(primary_hue="teal", secondary_hue="teal", neutral_hue="emerald",
                          font=[gr.themes.GoogleFont("Inconsolata"), "Arial", "sans-serif"])

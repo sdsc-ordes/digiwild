@@ -6,6 +6,7 @@ from dropdowns import *
 from maps import get_location
 from style import *
 from theme import theme, css
+from followup_events import create_followup_section
 
 with gr.Blocks(theme=theme, css=css) as demo:
     # ---------------------------------------------------------
@@ -40,6 +41,8 @@ with gr.Blocks(theme=theme, css=css) as demo:
 
     # ---------------------------------------------------------
     # Dead and Wounded Buttons
+    gr.Markdown("## The State of the Animal", label="Title")
+    gr.Markdown("Please tell us if the animal was wounded or dead.", label="description")
     with gr.Row() as block_form:
         with gr.Column(scale=1):
             butt_wounded = gr.Button("Wounded", elem_id="wounded")
@@ -96,12 +99,12 @@ with gr.Blocks(theme=theme, css=css) as demo:
     dropdown_wounded.select(on_select, None, [dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
 
     # ---------------------------------------------------------
-    #Follow up Events
-
-    # ---------------------------------------------------------
     #Submit Button
     with gr.Column(scale=1):
-        subbutt = gr.Button("SUBMIT YOUR OBSERVATION TO ORNITHO", elem_id="submit")
+        subbutt = gr.Button("SUBMIT YOUR OBSERVATION TO ORNITHO", 
+                            elem_id="submit", 
+                            icon="https://cdn.iconscout.com/icon/free/png-256/free-send-2451554-2082560.png",
+                            scale=1)
         output_message = gr.Markdown("Thank you, you are a champion of biodiversity conservation !")
 
     
