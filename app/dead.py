@@ -2,8 +2,9 @@ import gradio as gr
 from top_section import create_top_section, create_dropdown
 from followup_events import create_followup_section
 
+
 def show_section_dead(visible):
-    with gr.Column(visible=visible) as section_dead:
+    with gr.Column(visible=visible, elem_id="dead") as section_dead:
         gr.Markdown("# Dead Animal")
         gr.Markdown("## Please describe the cause of death")
         

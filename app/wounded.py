@@ -3,7 +3,7 @@ from top_section import create_top_section, create_dropdown
 from followup_events import create_followup_section
 
 def show_section_wounded(visible):
-    with gr.Column(visible=visible) as wounded_section:
+    with gr.Column(visible=visible, elem_id="wounded") as wounded_section:
         gr.Markdown("# Wounded Animal")
         gr.Markdown("## Please describe the wound's cause.")
 
