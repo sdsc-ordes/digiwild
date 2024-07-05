@@ -19,7 +19,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
     # Camera
     with gr.Row():
         with gr.Column(scale=1):
-            camera = gr.Image()
+            camera = gr.Image(elem_id="image")
             
     # ---------------------------------------------------------
     # Location
@@ -31,8 +31,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
                                             label="Identified GPS Location")
             with gr.Row():
                 #to clear it
-                clear_location = gr.ClearButton(components=[location], visible=True, interactive=True, 
-                                                #elem_classes=["custom-button"]
+                clear_location = gr.ClearButton(components=[location], visible=True, interactive=True
                                                 )
                 clear_location.click()
                 #to submit it
@@ -44,10 +43,10 @@ with gr.Blocks(theme=theme, css=css) as demo:
     # Dead and Wounded Buttons
     with gr.Row() as block_form:
         with gr.Column(scale=1):
-            butt_dead = gr.Button("Dead")
+            butt_dead = gr.Button("Dead", elem_id="dead")
 
         with gr.Column(scale=1):
-            butt_wounded = gr.Button("Wounded")
+            butt_wounded = gr.Button("Wounded", elem_id="wounded")
 
     # ---------------------------------------------------------
     # Initiate sections
@@ -101,8 +100,8 @@ with gr.Blocks(theme=theme, css=css) as demo:
     # ---------------------------------------------------------
     #Submit Button
     with gr.Column(scale=1):
-        subbutt = gr.Button("Submit")
-        output_message = gr.Markdown("Thank you, you didn't save this one but you could save the next")
+        subbutt = gr.Button("Submit", elem_id="submit")
+        output_message = gr.Markdown("Thank you, you are a champion of biodiversity conservation !")
 
     
 
