@@ -96,6 +96,9 @@ with gr.Blocks(theme=theme, css=css) as demo:
     dropdown_wounded.select(on_select, None, [dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
 
     # ---------------------------------------------------------
+    #Follow up Events
+
+    # ---------------------------------------------------------
     #Submit Button
     with gr.Column(scale=1):
         subbutt = gr.Button("SUBMIT YOUR OBSERVATION TO ORNITHO", elem_id="submit")
