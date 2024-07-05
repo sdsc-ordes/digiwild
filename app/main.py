@@ -18,12 +18,12 @@ with gr.Blocks(theme=theme, css=css) as demo:
     # ---------------------------------------------------------
     # Camera
     with gr.Row():
-        with gr.Column(scale=1):
-            camera = gr.Image(elem_id="image")
+        #with gr.Column(scale=1):
+        camera = gr.Image(elem_id="image")
             
     # ---------------------------------------------------------
     # Location
-    with gr.Row():
+    #with gr.Row():
         with gr.Column(scale=1):
             location = gr.Textbox(visible=True, interactive=True, label="Location of Sighting")
             #display location processing
@@ -31,22 +31,20 @@ with gr.Blocks(theme=theme, css=css) as demo:
                                             label="Identified GPS Location")
             with gr.Row():
                 #to clear it
-                clear_location = gr.ClearButton(components=[location], visible=True, interactive=True
+                clear_location = gr.ClearButton(components=[location], visible=True, interactive=True, scale=1
                                                 )
                 clear_location.click()
                 #to submit it
-                submit_location = gr.Button("Submit", visible=True, interactive=True)
+                submit_location = gr.Button("Get GPS Coordinates", visible=True, interactive=True, scale=3)
                 submit_location.click(get_location, inputs=[location], outputs=[identified_location])
-            
 
     # ---------------------------------------------------------
     # Dead and Wounded Buttons
     with gr.Row() as block_form:
         with gr.Column(scale=1):
-            butt_dead = gr.Button("Dead", elem_id="dead")
-
-        with gr.Column(scale=1):
             butt_wounded = gr.Button("Wounded", elem_id="wounded")
+        with gr.Column(scale=1):
+            butt_dead = gr.Button("Dead", elem_id="dead")
 
     # ---------------------------------------------------------
     # Initiate sections
@@ -100,7 +98,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
     # ---------------------------------------------------------
     #Submit Button
     with gr.Column(scale=1):
-        subbutt = gr.Button("Submit", elem_id="submit")
+        subbutt = gr.Button("SUBMIT YOUR OBSERVATION TO ORNITHO", elem_id="submit")
         output_message = gr.Markdown("Thank you, you are a champion of biodiversity conservation !")
 
     

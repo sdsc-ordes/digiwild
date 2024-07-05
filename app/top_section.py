@@ -24,7 +24,7 @@ def create_top_section(visible):
 
 def create_dropdown(visible):
     with gr.Row() as dropdown_row:
-        dropdown = gr.Dropdown(choices=[], interactive=True, visible=visible, elem_id="dropdown-conditions")
+        dropdown = gr.Dropdown(choices=[], interactive=False, visible=visible, elem_id="dropdown-conditions")
     openfield_level2 = gr.Textbox(visible=False, elem_id="dropdown-conditions")
     dropdown_level2 = gr.Dropdown(choices=[], visible=False, elem_id="dropdown-conditions")
     dropdown_extra_level2 = gr.Dropdown(choices=[], visible=False, elem_id="dropdown-conditions")
