@@ -9,16 +9,18 @@ def draw_bounding_boxes(image_path, gdf):
     draw = ImageDraw.Draw(image)
 
     # Optional: Load a font (requires a TTF file)
-    try:
-        font = ImageFont.truetype("arial.ttf", 15)
-    except IOError:
-        font = ImageFont.load_default()
+    # try:
+    font = ImageFont.truetype("assets/fonts/LiberationSans-Regular.ttf", 
+                              20)
+    # except IOError:
+    #     print("default")
+    #     font = ImageFont.load_default()
 
     # Draw each bounding box on the image
     for _, row in gdf.iterrows():
         xmin, ymin, xmax, ymax = row['geometry'].bounds
-        draw.rectangle([xmin, ymin, xmax, ymax], outline="red", width=2)
-        draw.text((xmin, ymin-10), row['name'], fill="red", font=font)
+        draw.rectangle([xmin, ymin, xmax, ymax], outline="purple", width=2)
+        draw.text((xmin, ymin-22), row['name'], fill="black", font=font)
 
     image.save(image_path+'bird_boxed.png', "PNG")
 

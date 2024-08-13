@@ -3,21 +3,21 @@ from shapely.geometry import box
 
 bounding_boxes = [
     # 'Head incl. eyes',
-    box(250, 375, 350, 500),
+    box(250, 375, 350, 485),
     # 'Beak and mouth region',
-    box(200, 450, 250, 500),
-    # 'Feathers/Wings', 
-    box(10, 10, 50, 50), 
+    box(200, 450, 250, 485),
+    # 'Feathers/Wings/Tail', 
+    box(50, 100, 725, 355), 
     # 'Legs', 
-    box(325, 575, 450, 675),
+    box(325, 585, 450, 675),
     # 'Body'
-    box(500, 500, 500, 500)
+    box(275, 510, 500, 565)
 ]
 
 # Create a GeoDataFrame from these boxes
 gdf = gpd.GeoDataFrame({'geometry': bounding_boxes, 
                         'name': ['Head incl. eyes',
-                                 'Beak and mouth region',
-                                 'Feathers/Wings', 
+                                 'Beak',
+                                 'Feathers/Wings/Tail', 
                                  'Legs', 
                                  'Body']})
