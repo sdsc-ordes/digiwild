@@ -6,7 +6,7 @@ from dropdowns import *
 from maps import get_location
 from style import *
 from theme import theme, css
-from followup_events import create_followup_section
+from select_bird import find_bounding_box
 
 with gr.Blocks(theme=theme, css=css) as demo:
     # ---------------------------------------------------------
@@ -117,7 +117,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
     # ---------------------------------------------------------
     # Initiate sections
     section_dead, button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead = show_section_dead(False)
-    section_wounded, button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded= show_section_wounded(False)
+    section_wounded, button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded, img_with_boxes, matched_box= show_section_wounded(False)
 
     # ---------------------------------------------------------
     # Dead Button Logic
@@ -143,6 +143,9 @@ with gr.Blocks(theme=theme, css=css) as demo:
                                                                         button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
                                                                         dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead
                                                                         ])
+    img_with_boxes.select(find_bounding_box, 
+                     inputs=[img_with_boxes], 
+                     outputs=[matched_box])
     # ---------------------------------------------------------
     # Dropdowns Dead
     button_collision_dead.click(dropdown_collision,  
