@@ -2,6 +2,7 @@ import gradio as gr
 # from gradio_image_prompter import ImagePrompter
 from typing import List
 from shapely.geometry import Point
+from checkbox_physical import *
 
 from boxes_define import gdf
 
@@ -12,9 +13,10 @@ def find_bounding_box(evt: gr.SelectData, img):
     match = gdf[gdf.contains(point)]
     if not match.empty:
         matched_box = match.iloc[0]['name']
+        physical_checkbox, physical_text = checkbox(matched_box)
     else:
         matched_box = "No bounding box found"
-    return matched_box
+    return physical_checkbox, physical_text
 
 # Gradio app
 def create_bird_anatomy():
@@ -22,8 +24,10 @@ def create_bird_anatomy():
     img_with_boxes = gr.Image(value='assets/images/bird_boxed.png', 
                               show_label=False, 
                               height="600px")
-    matched_box = gr.Textbox(label="Selected box")
-    return img_with_boxes, matched_box
+    #templates
+    checkbox = gr.CheckboxGroup([], label="")
+    text = gr.Textbox("", label = "", interactive=False,) 
+    return img_with_boxes, checkbox, text
 
 
 

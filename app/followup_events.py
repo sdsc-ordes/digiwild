@@ -2,7 +2,7 @@ import gradio as gr
 from config_utils import get_custom_config_dropdowns
 
 def create_followup_section():
-    followup_config = get_custom_config_dropdowns("/assets/dropdowns/followup_config.json")
+    followup_config = get_custom_config_dropdowns("/assets/config/config_followup.json")
     followup_config = followup_config["Event follow-up"]
     gr.Markdown("## Follow-Up Events", label="Title")
     gr.Markdown("Please tell us what you did with the animal.", label="description")
