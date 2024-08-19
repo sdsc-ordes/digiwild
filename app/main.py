@@ -88,7 +88,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
                                 ])
     
     img_with_boxes.select(find_bounding_box, 
-                     inputs=[img_with_boxes], 
+                     inputs=[img_with_boxes, gr.Textbox(value="wounded", label="Keyword", visible=False)], 
                      outputs=[physical_checkbox, physical_text])
     # ---------------------------------------------------------
     # Dropdowns Dead

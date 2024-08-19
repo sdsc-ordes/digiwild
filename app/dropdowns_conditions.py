@@ -17,7 +17,7 @@ def reinitialise_level2():
 def create_dropdown_level1(label): 
     dropdown_config = get_custom_config_dropdowns("/assets/config/config_dropdown_conditions.json")
     options = retrieve_config_options(label, dropdown_config)
-    dropdown = gr.Dropdown(choices=options, label=label, interactive=True)
+    dropdown = gr.Dropdown(choices=options, label=label, interactive=True, visible=True)
     dropdown_level2, openfield_level2, dropdown_extra_level2 = reinitialise_level2()
     return dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2
     
