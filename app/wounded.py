@@ -1,19 +1,22 @@
 import gradio as gr
-from top_section import create_top_section, create_dropdown
+from causes import create_causes
 from followup_events import create_followup_section
 from select_bird import create_bird_anatomy
 
 def show_section_wounded(visible):
     with gr.Column(visible=visible, elem_id="wounded") as wounded_section:
         gr.Markdown("# Wounded Animal")
-        gr.Markdown("# Please describe the wound's cause.", label="description")
+        
+        gr.Markdown("## Do you know what conditions caused this?", label="description")
+        radio_cause = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)
+        button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_causes(visible=False)
 
-        image_row, button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause = create_top_section(visible)      
-        dropdown_row, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_dropdown(visible)
-        
-        img_with_boxes, physical_checkbox, physical_text = create_bird_anatomy("wounded")
-        
+        gr.Markdown("## Is the bird displaying behavioural changes?" , label="description")
+        radio_behaviour = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)
+
+        gr.Markdown("## Are there physical changes on the bird?" , label="description")
+        radio_physical = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)
         create_followup_section()
 
     # Change variables and names
-    return wounded_section, button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2, img_with_boxes, physical_checkbox, physical_text
+    return wounded_section, radio_cause, radio_behaviour, radio_physical, button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2

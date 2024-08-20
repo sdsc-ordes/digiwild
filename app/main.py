@@ -2,7 +2,8 @@ import gradio as gr
 from functools import partial
 from dead import show_section_dead
 from wounded import show_section_wounded
-from dropdowns_conditions import *
+from causes import show_causes
+from dropdowns import *
 from maps import get_location
 from style import *
 from theme import theme, css
@@ -52,44 +53,35 @@ with gr.Blocks(theme=theme, css=css) as demo:
     # ---------------------------------------------------------
     # Initiate sections
     section_dead, button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead = show_section_dead(False)
-    section_wounded, button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded, img_with_boxes, physical_checkbox, physical_text= show_section_wounded(False)
+    section_wounded, radio_cause_wounded, radio_behaviour_wounded, radio_physical_wounded, button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded= show_section_wounded(False)
 
     # ---------------------------------------------------------
     # Dead Button Logic
     partial_show_section_dead = partial(show_section_dead, True)
     partial_hide_section_wounded = partial(show_section_wounded, False)
-    butt_dead.click(partial_show_section_dead, 
-                    inputs=None, 
-                    outputs=[section_dead, 
-                            button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
-                            dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead
-                            ])
-    butt_dead.click(partial_hide_section_wounded, 
-                    inputs=None, 
-                    outputs=[section_wounded, 
-                            button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
-                            dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded
-                            ])
+    butt_dead.click(partial_show_section_dead, inputs=None, outputs=[section_dead, 
+                                                                     button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
+                                                                     dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead
+                                                                     ])
+    butt_dead.click(partial_hide_section_wounded, inputs=None, outputs=[section_wounded, 
+                                                                        radio_cause_wounded, radio_behaviour_wounded, radio_physical_wounded,
+                                                                        button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
+                                                                        dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded
+                                                                        ])
     # ---------------------------------------------------------
     # Wounded Button Logic
     partial_show_section_wounded = partial(show_section_wounded, True)
     partial_hide_section_dead = partial(show_section_dead, False)
-    butt_wounded.click(partial_show_section_wounded, 
-                       inputs=None, 
-                       outputs=[section_wounded, 
-                                button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
-                                dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded
-                                ])
-    butt_wounded.click(partial_hide_section_dead, 
-                       inputs=None, 
-                       outputs=[section_dead, 
-                                button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
-                                dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead
-                                ])
-    
-    img_with_boxes.select(find_bounding_box, 
-                     inputs=[img_with_boxes, gr.Textbox(value="wounded", label="Keyword", visible=False)], 
-                     outputs=[physical_checkbox, physical_text])
+
+    butt_wounded.click(partial_show_section_wounded, inputs=None, outputs=[section_wounded, 
+                                                                           radio_cause_wounded, radio_behaviour_wounded, radio_physical_wounded,
+                                                                            button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
+                                                                            dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded
+                                                                            ])
+    butt_wounded.click(partial_hide_section_dead, inputs=None, outputs=[section_dead, 
+                                                                        button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
+                                                                        dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead
+                                                                        ])
     # ---------------------------------------------------------
     # Dropdowns Dead
     button_collision_dead.click(dropdown_collision,  
@@ -99,6 +91,14 @@ with gr.Blocks(theme=theme, css=css) as demo:
     button_natural_cause_dead.click(dropdown_natural_cause, outputs=[dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
 
     dropdown_dead.select(on_select, None, [dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
+
+    # ---------------------------------------------------------
+    # Radio Wounded
+    radio_cause_wounded.change(fn=show_causes,
+                              inputs=[radio_cause_wounded],
+                              outputs=[button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
+                                        dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded]
+                              )
 
     # ---------------------------------------------------------
     # Dropdowns Wounded
