@@ -1,5 +1,5 @@
 import gradio as gr
-from top_section import create_top_section, create_dropdown
+from causes import create_causes
 from followup_events import create_followup_section
 
 
@@ -8,8 +8,7 @@ def show_section_dead(visible):
         gr.Markdown("# Dead Animal")
         gr.Markdown("## Please describe the cause of death", label="description")
         
-        image_row, button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause = create_top_section(visible)      
-        dropdown_row, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_dropdown(visible)
+        button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_causes(visible)      
         
         create_followup_section()
 
