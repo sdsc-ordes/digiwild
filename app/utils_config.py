@@ -12,3 +12,4 @@ def get_custom_config_dropdowns(config_path):
     dropdown_config = load_config(dropdown_config_path)
     return dropdown_config
 
+

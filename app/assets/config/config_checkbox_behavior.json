@@ -1,0 +1,42 @@
+{
+    "Abnormal breating":
+    {
+        "Description": "Problems breathing, breathing sounds"
+    },
+    "Crash, Falling from the sky":
+    {
+        "Description": "Suddenly falling from the sky"
+    },
+    "Diarrhea":
+    {
+        "Description": "Observed diarrhea"
+    },
+    "Lameness":
+    {
+        "Description": "Apparent limping or not able to walk properly"
+    },
+    "Neurological":
+    {
+        "Description": "Circling, incoordination, tremors, convulsions, fast eye movements"
+    },
+    "Other abnormal behavior":
+    {
+        "Description": "Other than weakness, other than neurologic"
+    },
+    "Unable to fly":
+    {
+        "Description": "Animal alert and tries to fly but can not take off"
+    },
+    "Vomiting":
+    {
+        "Description": "Throwing up undigested food, regurgitating"
+    },
+    "Weakness":
+    {
+        "Description": "Non responsive, does not fly away when approached, lethargy"
+    },
+    "No changes": 
+    {
+        "Description": "Animal is acting normally"
+    }
+}
