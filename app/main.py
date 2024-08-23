@@ -5,6 +5,7 @@ from wounded import show_section_wounded
 from circumstances import show_causes
 from circumstances_dropdowns import *
 from physical_select_animal import show_physical, find_bounding_box
+from behavior_checkbox import show_behavior
 from maps import get_location
 from style import *
 from theme import theme, css
@@ -56,11 +57,12 @@ with gr.Blocks(theme=theme, css=css) as demo:
         button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, \
             dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead \
                 = show_section_dead(False)
-    section_wounded, radio_cause_wounded, radio_behaviour_wounded, radio_physical_wounded, \
+    section_wounded, radio_cause_wounded, radio_behavior_wounded, radio_physical_wounded, \
         button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, \
             dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded, \
-                physical_boxes_wounded, \
-                    checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs \
+                behavior_checkbox, behavior_text, \
+                    physical_boxes_wounded, \
+                        checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs \
                         = show_section_wounded(False)
 
     # ---------------------------------------------------------
@@ -76,9 +78,10 @@ with gr.Blocks(theme=theme, css=css) as demo:
     butt_dead.click(partial_hide_section_wounded, 
                     inputs=None, 
                     outputs=[section_wounded, 
-                            radio_cause_wounded, radio_behaviour_wounded, radio_physical_wounded,
+                            radio_cause_wounded, radio_behavior_wounded, radio_physical_wounded,
                             button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
                             dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded,
+                            behavior_checkbox, behavior_text, 
                             physical_boxes_wounded, 
                             checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
 
@@ -91,9 +94,10 @@ with gr.Blocks(theme=theme, css=css) as demo:
     butt_wounded.click(partial_show_section_wounded, 
                        inputs=None, 
                        outputs=[section_wounded, 
-                                radio_cause_wounded, radio_behaviour_wounded, radio_physical_wounded,
+                                radio_cause_wounded, radio_behavior_wounded, radio_physical_wounded,
                                 button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
                                 dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded,
+                                behavior_checkbox, behavior_text, 
                                 physical_boxes_wounded, 
                                 checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
                                 ])
@@ -129,11 +133,17 @@ with gr.Blocks(theme=theme, css=css) as demo:
     dropdown_wounded.select(on_select, None, [dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
 
     # ---------------------------------------------------------
+    # Radio Behavior Wounded
+    radio_behavior_wounded.change(fn=show_behavior,
+                                  inputs=[radio_behavior_wounded, gr.Text("wounded", visible=False)],
+                                  outputs=[behavior_checkbox, behavior_text])
+
+    # ---------------------------------------------------------
     # Radio Physical Wounded
     radio_physical_wounded.change(fn=show_physical,
                                   inputs=[radio_physical_wounded, gr.Text("wounded", visible=False)],
                                   outputs=[physical_boxes_wounded])
-    # ---------------------------------------------------------
+
     # Checkbox Physical Wounded
     physical_boxes_wounded.select(find_bounding_box, 
                      inputs=[physical_boxes_wounded, gr.Textbox(value="wounded", visible=False)], 
