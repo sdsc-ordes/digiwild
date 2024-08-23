@@ -1,10 +1,9 @@
 import gradio as gr
-from config_utils import get_custom_config_dropdowns
+from utils_config import get_custom_config_dropdowns
 
 
 #--------------------------------------------------------- LEVEL 1 DROPDOWNS
-def retrieve_config_options(label):
-    dropdown_config = get_custom_config_dropdowns("/assets/dropdowns/dropdown_config.json")
+def retrieve_config_options(label, dropdown_config):
     options = list(dropdown_config[label].keys())
     options = [option.title() for option in options]
     return options
@@ -16,8 +15,9 @@ def reinitialise_level2():
     return dropdown_level2, openfield_level2, dropdown_extra_level2
 
 def create_dropdown_level1(label): 
-    options = retrieve_config_options(label)
-    dropdown = gr.Dropdown(choices=options, label=label, interactive=True)
+    dropdown_config = get_custom_config_dropdowns("/assets/config/config_dropdown_conditions.json")
+    options = retrieve_config_options(label, dropdown_config)
+    dropdown = gr.Dropdown(choices=options, label=label, interactive=True, visible=True)
     dropdown_level2, openfield_level2, dropdown_extra_level2 = reinitialise_level2()
     return dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2
     
@@ -45,7 +45,7 @@ def get_options(value):
         open_field = None
         extras = None
         extras_label = None
-        dropdown_config = get_custom_config_dropdowns("/assets/dropdowns/dropdown_config.json")
+        dropdown_config = get_custom_config_dropdowns("/assets/config/config_dropdown_conditions.json")
         for _, sub_dict in dropdown_config.items():
             nested_dict = sub_dict.get(value)
             if nested_dict is not None: 

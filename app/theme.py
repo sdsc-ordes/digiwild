@@ -5,6 +5,7 @@ css = """
 #image {background-color: #73b9ae}
 #dead {background-color: #333333}
 #wounded {background-color: #5e0724}
+#bird-boxes {background-color: #f2f3f3}
 #buttons-conditions {background-color: #b3b3b3}
 #dropdown-conditions {background-color: #b3b3b3}
 #followup {background-color: #38241c} 

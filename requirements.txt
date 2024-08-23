@@ -1,2 +1,4 @@
 gradio
 geopy
+geopandas
+pillow
