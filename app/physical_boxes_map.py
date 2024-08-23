@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 
-from boxes_define import gdf
+from physical_boxes_define import gdf
 
 # Function to draw the bounding boxes on the image
 def draw_bounding_boxes(image_path, gdf):

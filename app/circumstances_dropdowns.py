@@ -1,5 +1,5 @@
 import gradio as gr
-from config_utils import get_custom_config_dropdowns
+from utils_config import get_custom_config_dropdowns
 
 
 #--------------------------------------------------------- LEVEL 1 DROPDOWNS

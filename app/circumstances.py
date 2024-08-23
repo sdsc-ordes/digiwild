@@ -1,15 +1,9 @@
 import gradio as gr
 import os
+from utils_visible import set_visible
 
 PATH = os.getcwd()
 CAUSE_COL_WIDTH = "50px"
-
-def set_visible(choice):
-    if choice=="Yes":
-        visible = True
-    else:
-        visible=False
-    return visible
 
 def show_causes(choice): 
     visible = set_visible(choice)
@@ -23,7 +17,6 @@ def create_causes(visible):
 
 
 def create_causes_buttons(visible): 
-    print(visible)
     with gr.Row() as image_row:
             with gr.Column(scale=1, min_width=CAUSE_COL_WIDTH):
                 button_collision = gr.Button("Collision with a means of transport", 

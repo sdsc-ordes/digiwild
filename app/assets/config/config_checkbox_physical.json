@@ -18,15 +18,6 @@
         "Warty or tumor-like growth, crusts": {
             "Description": "Unusual growth, crusty tumor-like growth"}
     },
-    "Head incl. eyes": 
-    {
-        "Ear changes": {
-            "Description": "Swollen, crusts, plugged, discharge"},
-        "Eye changes": {
-            "Description": "Red, swollen, discharge, crusts, eyes shut"},
-        "Tilted head": {
-            "Description": "Wry neck, unusual neck posture, torticollis"}
-    },
     "Beak":
     {
         "Adhesion": {
@@ -45,13 +36,6 @@
         "Stained feathers": {
             "Description": "Feces, dirt, dried blood"}
     },
-    "Legs":
-    {
-        "Missing limb": {
-            "Description": "Missing limb"},
-        "Deformation": {
-            "Description": "Abnormal form of limbs, toes, legs"}
-    },
     "Feathers/Wings/Tail":
     {
         "Fluffed up": {
@@ -64,5 +48,21 @@
             "Description": "Wing is not used/ hangs on the side"},
         "Missing limb": {
             "Description": "Missing limb"}
+    },
+    "Head incl. eyes": 
+    {
+        "Ear changes": {
+            "Description": "Swollen, crusts, plugged, discharge"},
+        "Eye changes": {
+            "Description": "Red, swollen, discharge, crusts, eyes shut"},
+        "Tilted head": {
+            "Description": "Wry neck, unusual neck posture, torticollis"}
+    },
+    "Legs":
+    {
+        "Missing limb": {
+            "Description": "Missing limb"},
+        "Deformation": {
+            "Description": "Abnormal form of limbs, toes, legs"}
     }
 }
