@@ -40,31 +40,67 @@ with gr.Blocks(theme=theme, css=css) as demo:
                 #to submit it
                 submit_location = gr.Button("Get GPS Coordinates", visible=True, interactive=True, scale=3)
                 submit_location.click(get_location, inputs=[location], outputs=[identified_location])
-
+    
     # ---------------------------------------------------------
-    # Dead and Wounded Buttons
-    gr.Markdown("## The State of the Animal", label="Title")
-    gr.Markdown("Please tell us if the animal was wounded or dead.", label="description")
-    with gr.Row() as block_form:
-        with gr.Column(scale=1):
-            butt_wounded = gr.Button("Wounded", elem_id="wounded")
-        with gr.Column(scale=1):
-            butt_dead = gr.Button("Dead", elem_id="dead")
-
     # ---------------------------------------------------------
-    # Initiate sections
-    section_dead, \
-        button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, \
-            dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead \
-                = show_section_dead(False)
-    section_wounded, radio_cause_wounded, radio_behavior_wounded, radio_physical_wounded, \
-        button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, \
-            dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded, \
-                behavior_checkbox, behavior_text, \
-                    physical_boxes_wounded, \
-                        checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs \
-                        = show_section_wounded(False)
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    with gr.Tab("Animal 1"):
+    # ---------------------------------------------------------
+        # Dead and Wounded Buttons
+        gr.Markdown("## The State of the Animal", label="Title")
+        gr.Markdown("Please tell us if the animal was wounded or dead.", label="description")
+        with gr.Row() as block_form:
+            with gr.Column(scale=1):
+                butt_wounded = gr.Button("Wounded", elem_id="wounded")
+            with gr.Column(scale=1):
+                butt_dead = gr.Button("Dead", elem_id="dead")
 
+        # ---------------------------------------------------------
+        # Initiate sections
+        section_dead, \
+            button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, \
+                dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead \
+                    = show_section_dead(False)
+        section_wounded, radio_cause_wounded, radio_behavior_wounded, radio_physical_wounded, \
+            button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, \
+                dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded, \
+                    behavior_checkbox, behavior_text, \
+                        physical_boxes_wounded, \
+                            checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs \
+                            = show_section_wounded(False)
+    
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    with gr.Tab("Animal 2"):
+    # ---------------------------------------------------------
+        # Dead and Wounded Buttons
+        gr.Markdown("## The State of the Animal", label="Title")
+        gr.Markdown("Please tell us if the animal was wounded or dead.", label="description")
+        with gr.Row() as block_form:
+            with gr.Column(scale=1):
+                butt_wounded = gr.Button("Wounded", elem_id="wounded")
+            with gr.Column(scale=1):
+                butt_dead = gr.Button("Dead", elem_id="dead")
+
+        # ---------------------------------------------------------
+        # Initiate sections
+        section_dead, \
+            button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, \
+                dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead \
+                    = show_section_dead(False)
+        section_wounded, radio_cause_wounded, radio_behavior_wounded, radio_physical_wounded, \
+            button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, \
+                dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded, \
+                    behavior_checkbox, behavior_text, \
+                        physical_boxes_wounded, \
+                            checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs \
+                            = show_section_wounded(False)
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+        
     # ---------------------------------------------------------
     # Dead Button Logic
     partial_show_section_dead = partial(show_section_dead, True)
@@ -84,7 +120,6 @@ with gr.Blocks(theme=theme, css=css) as demo:
                             behavior_checkbox, behavior_text, 
                             physical_boxes_wounded, 
                             checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
-
                             ])
     # ---------------------------------------------------------
     # Wounded Button Logic
