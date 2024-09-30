@@ -1,6 +1,6 @@
 import gradio as gr
 from utils_config import get_custom_config_dropdowns
-
+from utils_json import add_data_to_individual  
 
 #--------------------------------------------------------- LEVEL 1 DROPDOWNS
 def retrieve_config_options(label, dropdown_config):
@@ -23,18 +23,22 @@ def create_dropdown_level1(label):
     
 def dropdown_collision():
     label = "Collision with a means of transport"
+    add_data_to_individual("circumstance", label)
     return create_dropdown_level1(label)
 
 def dropdown_deliberate_destruction():
     label = "Destruction / Deliberatly removed"
+    add_data_to_individual("circumstance", label)
     return create_dropdown_level1(label)     
 
 def dropdown_indirect_destruction(): 
     label = "Indirect destruction"
+    add_data_to_individual("circumstance", label)
     return create_dropdown_level1(label) 
 
 def dropdown_natural_cause(): 
     label = "Natural cause"
+    add_data_to_individual("circumstance", label)
     return create_dropdown_level1(label)         
 
 
@@ -61,8 +65,10 @@ def get_options(value):
                         extras = val
                         extras = [extra.title() for extra in extras]
         return options_dropdown, open_field, extras, extras_label
-            
+
+       
 def on_select(evt: gr.SelectData):  # SelectData is a subclass of EventData
+    add_data_to_individual("circumstance_dropdown_level1", evt.value)
     options_dropdown, open_field, extras, extras_label = get_options(evt.value)
     if options_dropdown is not None:
         dropdown_level2 = gr.Dropdown(choices=options_dropdown, label=evt.value, interactive=True, visible=True)
@@ -79,3 +85,12 @@ def on_select(evt: gr.SelectData):  # SelectData is a subclass of EventData
     else: 
         dropdown_extra_level2 = gr.Dropdown(choices=[], visible=False)
     return dropdown_level2, openfield_level2, dropdown_extra_level2
+
+def on_select_dropdown_level2(evt: gr.SelectData): 
+    add_data_to_individual("circumstance_dropdown_level2", evt.value)
+
+def on_select_openfield_level2(evt: gr.SelectData): 
+    add_data_to_individual("circumstance_openfield_level2", evt.value)
+
+def on_select_dropdown_extra_level2(evt: gr.SelectData):  
+    add_data_to_individual("circumstance_dropdown_extra_level2", evt.value)

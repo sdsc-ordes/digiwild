@@ -154,7 +154,9 @@ with gr.Blocks() as demo:
         button_natural_cause_wounded.click(dropdown_natural_cause, outputs=[dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
         
         dropdown_wounded.select(on_select, None, [dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
-
+        dropdown_level2_wounded.select(on_select_dropdown_level2)
+        openfield_level2_wounded.select(on_select_openfield_level2)
+        dropdown_extra_level2_wounded.select(on_select_dropdown_extra_level2)
         # ---------------------------------------------------------
         # Radio Behavior Wounded
         radio_behavior_wounded.change(fn=show_behavior,

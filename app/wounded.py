@@ -4,8 +4,13 @@ from physical_select_animal import create_bird_anatomy
 from physical_checkbox import process_body_parts
 from behavior_checkbox import create_behavior_checkbox
 from followup_events import create_followup_section
+from utils_json import add_data_to_individual  
 
 def show_section_wounded(visible):
+    if visible==True: 
+        add_data_to_individual("wounded", "True")
+    else: 
+        add_data_to_individual("wounded", "False")
     with gr.Column(visible=visible, elem_id="wounded") as wounded_section:
         gr.Markdown("# Wounded Animal")
         
