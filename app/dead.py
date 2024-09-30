@@ -6,8 +6,8 @@ from utils_json import add_data_to_individual
 def show_section_dead(visible):
     if visible==True: 
         add_data_to_individual("dead", "True")
-    else: 
-        add_data_to_individual("dead", "False")
+        add_data_to_individual("wounded", "False")
+        
     with gr.Column(visible=visible, elem_id="dead") as section_dead:
         gr.Markdown("# Dead Animal")
         gr.Markdown("## Please describe the cause of death", label="description")
