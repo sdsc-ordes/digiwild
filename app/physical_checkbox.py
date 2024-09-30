@@ -3,7 +3,7 @@ from utils_config import get_custom_config_dropdowns
 from utils_checkbox import create_checkbox
 #--------------------------------------------------------- 
 def get_body_parts():
-    dropdown_config = get_custom_config_dropdowns("/assets/config/config_checkbox_physical.json")
+    dropdown_config = get_custom_config_dropdowns("config_checkbox_physical.json")
     return list(dropdown_config.keys())
 
 def retrieve_config_options(label, dropdown_config):
@@ -12,7 +12,7 @@ def retrieve_config_options(label, dropdown_config):
     return options
 
 def get_options_description(value):
-        dropdown_config = get_custom_config_dropdowns("/assets/config/config_checkbox_physical.json")
+        dropdown_config = get_custom_config_dropdowns("config_checkbox_physical.json")
         # get options
         options_common = retrieve_config_options("Common", dropdown_config)
         options_for_value = retrieve_config_options(value, dropdown_config)

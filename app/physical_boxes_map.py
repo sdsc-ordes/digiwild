@@ -2,6 +2,11 @@ from PIL import Image, ImageDraw, ImageFont
 
 from physical_boxes_define import gdf
 
+from dotenv import load_dotenv
+import os
+load_dotenv()
+PATH_ASSETS = os.getenv('PATH_ASSETS')
+
 # Function to draw the bounding boxes on the image
 def draw_bounding_boxes(image_path, gdf):
     image = Image.open(image_path+'bird.png').convert("RGB")
@@ -10,7 +15,7 @@ def draw_bounding_boxes(image_path, gdf):
 
     # Optional: Load a font (requires a TTF file)
     # try:
-    font = ImageFont.truetype("assets/fonts/LiberationSans-Regular.ttf", 
+    font = ImageFont.truetype(PATH_ASSETS + "fonts/LiberationSans-Regular.ttf", 
                               20)
     # except IOError:
     #     print("default")
@@ -25,4 +30,4 @@ def draw_bounding_boxes(image_path, gdf):
     image.save(image_path+'bird_boxed.png', "PNG")
 
 if __name__ == "__main__":
-    draw_bounding_boxes('assets/images/', gdf)
+    draw_bounding_boxes(PATH_ASSETS + 'images/', gdf)

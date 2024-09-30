@@ -3,7 +3,7 @@ from utils_checkbox import create_checkbox
 from utils_visible import set_visible
 
 def retrieve_behavior_options_description():
-    dropdown_config = get_custom_config_dropdowns("/assets/config/config_checkbox_behavior.json")
+    dropdown_config = get_custom_config_dropdowns("config_checkbox_behavior.json")
     options = list(dropdown_config.keys())
     options = [option.title() for option in options]
     descriptions =[]

@@ -15,7 +15,7 @@ def reinitialise_level2():
     return dropdown_level2, openfield_level2, dropdown_extra_level2
 
 def create_dropdown_level1(label): 
-    dropdown_config = get_custom_config_dropdowns("/assets/config/config_dropdown_conditions.json")
+    dropdown_config = get_custom_config_dropdowns("config_dropdown_conditions.json")
     options = retrieve_config_options(label, dropdown_config)
     dropdown = gr.Dropdown(choices=options, label=label, interactive=True, visible=True)
     dropdown_level2, openfield_level2, dropdown_extra_level2 = reinitialise_level2()
@@ -45,7 +45,7 @@ def get_options(value):
         open_field = None
         extras = None
         extras_label = None
-        dropdown_config = get_custom_config_dropdowns("/assets/config/config_dropdown_conditions.json")
+        dropdown_config = get_custom_config_dropdowns("config_dropdown_conditions.json")
         for _, sub_dict in dropdown_config.items():
             nested_dict = sub_dict.get(value)
             if nested_dict is not None: 
