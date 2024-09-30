@@ -3,7 +3,7 @@ from gradio_modal import Modal
 
 from utils_df import get_headers
 from utils_json import *
-from utils_df import save_individual_to_df, get_headers
+from utils_df import save_individual_to_df, get_headers, save_and_rest_df
 from maps import get_location
 from functools import partial
 from dead import show_section_dead
@@ -17,8 +17,9 @@ from style import *
 from theme import theme, css
 
 with gr.Blocks(theme=theme, css=css) as demo:
-    # with gr.Tab("Tab 1"):
-    show_modal = gr.Button("Add an Animal")
+    with gr.Row(): 
+        show_modal = gr.Button("Add an Animal", scale=3)
+        submit_button = gr.Button("Submit All Animals", scale=1)
     df = gr.Dataframe(headers=get_headers(),
                       visible=False)
     with Modal(visible=False) as modal:
@@ -181,6 +182,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
 
         # ---------------------------------------------------------
         # Add One Individual's Data to the Dataframe
+        # And Allow clearing of all previous output
         with gr.Row(): 
             button_df = gr.Button("Submit Animal Report", scale = 3)
             button_clear = gr.ClearButton(scale = 1, 
@@ -200,8 +202,12 @@ with gr.Blocks(theme=theme, css=css) as demo:
                         inputs=[df],
                         outputs=[df])
         button_df.click(lambda: Modal(visible=False), None, modal)
+    
+    # ---------------------------------------------------------
+    # Event Functions of the landing page buttons
     show_modal.click(lambda: Modal(visible=True), None, modal)
     show_modal.click(create_json)
+    submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
 
 
      

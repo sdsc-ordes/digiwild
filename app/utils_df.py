@@ -2,7 +2,7 @@ import gradio as gr
 import pandas as pd
 from dotenv import load_dotenv
 from utils_config import load_config
-from utils_json import get_json_one_individual
+from utils_json import get_json_one_individual, save_all_animals
 import os
 load_dotenv()
 PATH = os.getcwd() + "/"
@@ -36,3 +36,9 @@ def save_individual_to_df(df):
                          value=df_new,
                          headers=headers)
     return df_gr
+
+def save_and_rest_df(df):
+    save_all_animals(df)
+    df = gr.Dataframe(headers=get_headers(),
+                      visible=False)
+    return df
