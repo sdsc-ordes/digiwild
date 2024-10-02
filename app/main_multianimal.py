@@ -11,7 +11,7 @@ from wounded import show_section_wounded
 from circumstances import show_causes
 from circumstances_dropdowns import *
 from physical_select_animal import show_physical, find_bounding_box
-from physical_checkbox import on_select_body_part
+from physical_checkbox import on_select_body_part, hide_physical
 from behavior_checkbox import show_behavior, on_select_behavior
 from style import *
 from theme import theme, css
@@ -197,7 +197,10 @@ with gr.Blocks(theme=theme, css=css) as demo:
                 physical_boxes_wounded, 
                 checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
                 ])
+            
         button_clear.click()
+        button_clear.click(hide_physical,
+                           outputs=[checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs])
         button_df.click(save_individual_to_df, 
                         inputs=[df],
                         outputs=[df])
@@ -210,8 +213,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
     submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
 
 
-     
-     
+
      
 if __name__ == "__main__":
     demo.launch(server_name="0.0.0.0", server_port=3333)
