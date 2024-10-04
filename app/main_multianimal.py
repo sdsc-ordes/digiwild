@@ -1,9 +1,8 @@
 import gradio as gr
 from gradio_modal import Modal
 
-from utils_df import get_headers
 from utils_json import *
-from utils_df import save_individual_to_df, get_headers, save_and_rest_df
+from utils_df import save_individual_to_gallery
 from maps import get_location
 from functools import partial
 from dead import show_section_dead
@@ -17,11 +16,16 @@ from style import *
 from theme import theme, css
 
 with gr.Blocks(theme=theme, css=css) as demo:
+    create_json_all_individuals()
     with gr.Row(): 
         show_modal = gr.Button("Add an Animal", scale=3)
         submit_button = gr.Button("Submit All Animals", scale=1)
-    df = gr.Dataframe(headers=get_headers(),
-                      visible=False)
+    # df = gr.Dataframe(headers=get_headers(),
+    #                   visible=False)
+    gallery = gr.Gallery(
+        label="Gallery of Records", elem_id="gallery", 
+        columns=[1], rows=[1],
+        object_fit="contain", height="auto", interactive=False)
     with Modal(visible=False) as modal:
         # ---------------------------------------------------------
         # Intro Text
@@ -33,9 +37,11 @@ with gr.Blocks(theme=theme, css=css) as demo:
         # ---------------------------------------------------------
         # Camera
         with gr.Row():
-            #with gr.Column(scale=1):
+            def save_image(camera):
+                add_data_to_individual("image", camera.tolist())
+
             camera = gr.Image(elem_id="image")
-                
+            camera.input(save_image, inputs=[camera])
         # ---------------------------------------------------------
         # Location
         #with gr.Row():
@@ -187,6 +193,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
             button_df = gr.Button("Submit Animal Report", scale = 3)
             button_clear = gr.ClearButton(scale = 1, 
                                           components=[
+                camera,
                 location, identified_location, 
                 button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
                 dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead,
@@ -201,17 +208,20 @@ with gr.Blocks(theme=theme, css=css) as demo:
         button_clear.click()
         button_clear.click(hide_physical,
                            outputs=[checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs])
-        button_df.click(save_individual_to_df, 
-                        inputs=[df],
-                        outputs=[df])
+        # button_df.click(save_individual_to_df, 
+        #                 inputs=[df],
+        #                 outputs=[df])
+        button_df.click(save_individual_to_gallery, 
+                        inputs=[gallery],
+                        outputs=[gallery])
         button_df.click(lambda: Modal(visible=False), None, modal)
     
     # ---------------------------------------------------------
     # Event Functions of the landing page buttons
     show_modal.click(lambda: Modal(visible=True), None, modal)
-    show_modal.click(create_json)
-    submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
-
+    show_modal.click(create_json_one_individual)
+    #submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
+    #submit_button.click(save_individual_to_gallery)
 
 
      

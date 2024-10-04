@@ -1,6 +1,5 @@
 {
-    "headers": [
-        "image",
+    "fields": [
         "latitude",
         "longitude",
         "wounded", 
@@ -15,6 +14,7 @@
         "physical_changes_body",
         "physical_changes_head", 
         "physical_changes_feathers", 
-        "physical_changes_legs"
+        "physical_changes_legs",
+        "image"
     ]
 }
