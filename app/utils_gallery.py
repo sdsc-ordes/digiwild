@@ -34,9 +34,10 @@ def match_data_to_fields(fields, one_individual):
             new_row[key] = "NA"
     return new_row
 
+
+
 def process_animals(all_animals): 
     processed_animals = []
-    print(len(all_animals))
     for _, animal in all_animals.items(): 
         image = np.array(animal["image"])
         caption = []
@@ -52,23 +53,23 @@ def process_animals(all_animals):
                     caption.extend([" | Wounded: " + animal["wounded"]])
                 elif key=="dead" and val=="True":
                     caption.extend([" | Dead: " + animal["dead"]])
-                elif key=="circumstance": 
-                    caption.extend([" | Circumstances: " , 
-                                    animal["circumstance"],
-                                    animal["circumstance_dropdown_level1"], 
-                                    animal["circumstance_dropdown_level2"],
-                                    animal["circumstance_openfield_level2"], 
-                                    animal["circumstance_dropdown_extra_level2"]])
-                elif key=="behavior": 
-                    caption.extend([" | Behavior: ", animal[key]])
-                elif "physical_changes" in key:
-                    if not(" | Physical Changes: " in caption) :
-                        caption.extend([" | Physical Changes: ",
-                                        "Beak: " + animal["physical_changes_beak"],
-                                        "Body: " + animal["physical_changes_body"], 
-                                        "Head: " + animal["physical_changes_head"],
-                                        "Feathers: " + animal["physical_changes_feathers"], 
-                                        "Legs: " + animal["physical_changes_legs"]])
+                # elif key=="circumstance": 
+                #     caption.extend([" | Circumstances: " , 
+                #                     animal["circumstance"],
+                #                     animal["circumstance_dropdown_level1"], 
+                #                     animal["circumstance_dropdown_level2"],
+                #                     animal["circumstance_openfield_level2"], 
+                #                     animal["circumstance_dropdown_extra_level2"]])
+                # elif key=="behavior": 
+                #     caption.extend([" | Behavior: ", animal[key]])
+                # elif "physical_changes" in key:
+                #     if not(" | Physical Changes: " in caption) :
+                #         caption.extend([" | Physical Changes: ",
+                #                         "Beak: " + animal["physical_changes_beak"],
+                #                         "Body: " + animal["physical_changes_body"], 
+                #                         "Head: " + animal["physical_changes_head"],
+                #                         "Feathers: " + animal["physical_changes_feathers"], 
+                #                         "Legs: " + animal["physical_changes_legs"]])
         caption_str = " ".join(caption)
         animal = (image, caption_str)
         processed_animals.append(animal)

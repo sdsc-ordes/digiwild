@@ -2,7 +2,7 @@ import gradio as gr
 from gradio_modal import Modal
 
 from utils_json import *
-from utils_df import save_individual_to_gallery
+from utils_gallery import save_individual_to_gallery
 from maps import get_location
 from functools import partial
 from dead import show_section_dead
@@ -26,6 +26,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
         label="Gallery of Records", elem_id="gallery", 
         columns=[1], rows=[1],
         object_fit="contain", height="auto", interactive=False)
+
     with Modal(visible=False) as modal:
         # ---------------------------------------------------------
         # Intro Text
@@ -213,7 +214,8 @@ with gr.Blocks(theme=theme, css=css) as demo:
         #                 outputs=[df])
         button_df.click(save_individual_to_gallery, 
                         inputs=[gallery],
-                        outputs=[gallery])
+                        outputs=[gallery]
+                        )
         button_df.click(lambda: Modal(visible=False), None, modal)
     
     # ---------------------------------------------------------
