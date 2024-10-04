@@ -12,6 +12,7 @@ from circumstances_dropdowns import *
 from physical_select_animal import show_physical, find_bounding_box
 from physical_checkbox import on_select_body_part, hide_physical
 from behavior_checkbox import show_behavior, on_select_behavior
+from followup_events import save_fe
 from style import *
 from theme import theme, css
 
@@ -77,15 +78,19 @@ with gr.Blocks(theme=theme, css=css) as demo:
         # Initiate sections
         section_dead, \
             button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, \
-                dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead \
+                dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead, \
+                    fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, \
+                        fe_name_recipient_dead, fe_collection_ref_dead \
                     = show_section_dead(False)
         section_wounded, radio_cause_wounded, radio_behavior_wounded, radio_physical_wounded, \
             button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, \
                 dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded, \
                     behavior_checkbox, behavior_text, \
                         physical_boxes_wounded, \
-                            checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs \
-                            = show_section_wounded(False)
+                            checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs, \
+                            fe_collection_dropdown_wounded, fe_recepient_dropdown_wounded, fe_radio_dropdown_wounded, fe_answer_dropdown_wounded, \
+                                fe_name_recipient_wounded, fe_collection_ref_wounded \
+                                = show_section_wounded(False)
     
         # ---------------------------------------------------------
         # ---------------------------------------------------------
@@ -97,7 +102,9 @@ with gr.Blocks(theme=theme, css=css) as demo:
                         inputs=None, 
                         outputs=[section_dead, 
                                 button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
-                                dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead
+                                dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead, \
+                                fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, \
+                                fe_name_recipient_dead, fe_collection_ref_dead \
                                 ])
         butt_dead.click(partial_hide_section_wounded, 
                         inputs=None, 
@@ -107,7 +114,9 @@ with gr.Blocks(theme=theme, css=css) as demo:
                                 dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded,
                                 behavior_checkbox, behavior_text, 
                                 physical_boxes_wounded, 
-                                checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
+                                checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs, \
+                                fe_collection_dropdown_wounded, fe_recepient_dropdown_wounded, fe_radio_dropdown_wounded, fe_answer_dropdown_wounded, \
+                                fe_name_recipient_wounded, fe_collection_ref_wounded \
                                 ])
         # ---------------------------------------------------------
         # Wounded Button Logic
@@ -122,11 +131,15 @@ with gr.Blocks(theme=theme, css=css) as demo:
                                     dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded,
                                     behavior_checkbox, behavior_text, 
                                     physical_boxes_wounded, 
-                                    checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
+                                    checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs, \
+                                    fe_collection_dropdown_wounded, fe_recepient_dropdown_wounded, fe_radio_dropdown_wounded, fe_answer_dropdown_wounded, \
+                                    fe_name_recipient_wounded, fe_collection_ref_wounded \
                                     ])
         butt_wounded.click(partial_hide_section_dead, inputs=None, outputs=[section_dead, 
                                                                             button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
-                                                                            dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead
+                                                                            dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead, \
+                                                                            fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, \
+                                                                            fe_name_recipient_dead, fe_collection_ref_dead \
                                                                             ])
         # ---------------------------------------------------------
         # Dropdowns Dead
@@ -186,6 +199,24 @@ with gr.Blocks(theme=theme, css=css) as demo:
         checkbox_feathers.select(on_select_body_part, inputs=[checkbox_feathers, gr.Text("feathers", visible=False)])
         checkbox_head.select(on_select_body_part, inputs=[checkbox_head, gr.Text("head", visible=False)])
         checkbox_legs.select(on_select_body_part, inputs=[checkbox_legs, gr.Text("legs", visible=False)])
+        
+        # ---------------------------------------------------------
+        # Follow Up Events Wounded 
+        fe_collection_dropdown_wounded.select(save_fe, inputs=[fe_collection_dropdown_wounded, gr.Textbox("fe_collection", visible=False)])
+        fe_recepient_dropdown_wounded.select(save_fe, inputs=[fe_recepient_dropdown_wounded, gr.Textbox("fe_recipient", visible=False)])
+        fe_radio_dropdown_wounded.select(save_fe, inputs=[fe_radio_dropdown_wounded, gr.Textbox("fe_radio", visible=False)]) 
+        fe_answer_dropdown_wounded.select(save_fe, inputs=[fe_answer_dropdown_wounded, gr.Textbox("fe_answer", visible=False)])
+        fe_name_recipient_wounded.input(save_fe, inputs=[fe_name_recipient_wounded, gr.Textbox("fe_name_recipient", visible=False)])
+        fe_collection_ref_wounded.input(save_fe, inputs=[fe_collection_ref_wounded, gr.Textbox("fe_collection_ref", visible=False)])
+
+        # ---------------------------------------------------------
+        # Follow Up Events Dead 
+        fe_collection_dropdown_dead.select(save_fe, inputs=[fe_collection_dropdown_dead, gr.Textbox("fe_collection", visible=False)])
+        fe_recepient_dropdown_dead.select(save_fe, inputs=[fe_recepient_dropdown_dead, gr.Textbox("fe_recipient", visible=False)])
+        fe_radio_dropdown_dead.select(save_fe, inputs=[fe_radio_dropdown_dead, gr.Textbox("fe_radio", visible=False)]) 
+        fe_answer_dropdown_dead.select(save_fe, inputs=[fe_answer_dropdown_dead, gr.Textbox("fe_answer", visible=False)])
+        fe_name_recipient_dead.input(save_fe, inputs=[fe_name_recipient_dead, gr.Textbox("fe_name_recipient", visible=False)])
+        fe_collection_ref_dead.input(save_fe, inputs=[fe_collection_ref_dead, gr.Textbox("fe_collection_ref", visible=False)])
 
         # ---------------------------------------------------------
         # Add One Individual's Data to the Dataframe
@@ -198,14 +229,17 @@ with gr.Blocks(theme=theme, css=css) as demo:
                 location, identified_location, 
                 button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
                 dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead,
+                fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, 
+                fe_name_recipient_dead, fe_collection_ref_dead,
                 radio_cause_wounded, radio_behavior_wounded, radio_physical_wounded,
                 button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
                 dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded,
                 behavior_checkbox, behavior_text, 
                 physical_boxes_wounded, 
-                checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
+                checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs, 
+                fe_collection_dropdown_wounded, fe_recepient_dropdown_wounded, fe_radio_dropdown_wounded, fe_answer_dropdown_wounded, 
+                fe_name_recipient_wounded, fe_collection_ref_wounded 
                 ])
-            
         button_clear.click()
         button_clear.click(hide_physical,
                            outputs=[checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs])
