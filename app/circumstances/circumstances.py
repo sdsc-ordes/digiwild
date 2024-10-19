@@ -1,6 +1,6 @@
 import gradio as gr
 import os
-from utils_visible import set_visible
+from utils.utils_visible import set_visible
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -11,17 +11,17 @@ LOGO_PATH = PATH + PATH_ASSETS + "logos"
 CAUSE_COL_WIDTH = "50px"
 
 
-def show_causes(choice): 
+def show_circumstances(choice): 
     visible = set_visible(choice)
-    button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_causes(visible)
+    button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_circumstances(visible)
     return button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2
 
-def create_causes(visible):
-    button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause = create_causes_buttons(visible)      
-    dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_causes_dropdown(visible)
+def create_circumstances(visible):
+    button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause = create_circumstances_buttons(visible)      
+    dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_circumstances_dropdown(visible)
     return button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2
 
-def create_causes_buttons(visible): 
+def create_circumstances_buttons(visible): 
     with gr.Row() as image_row:
             with gr.Column(scale=1, min_width=CAUSE_COL_WIDTH):
                 button_collision = gr.Button("Collision with a means of transport", 
@@ -48,7 +48,7 @@ def create_causes_buttons(visible):
                                                  elem_id="buttons-conditions")
     return button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause
 
-def create_causes_dropdown(visible):
+def create_circumstances_dropdown(visible):
     with gr.Row() as dropdown_row:
         dropdown = gr.Dropdown(choices=[], 
                                label="Choices will appear here...",

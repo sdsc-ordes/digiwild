@@ -1,6 +1,6 @@
 from geopy.geocoders import Nominatim
 import gradio as gr
-from utils_json import add_data_to_individual
+from utils.utils_json import add_data_to_individual
  
 def get_location(address):
     # try: 

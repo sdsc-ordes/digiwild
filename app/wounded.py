@@ -1,10 +1,10 @@
 import gradio as gr
-from circumstances import create_causes
-from physical_select_animal import create_bird_anatomy
-from physical_checkbox import process_body_parts
-from behavior_checkbox import create_behavior_checkbox
-from followup_events import create_followup_dropdowns, create_followup_open
-from utils_json import add_data_to_individual  
+from circumstances.circumstances import create_circumstances
+from physical.physical_select_animal import create_bird_anatomy
+from physical.physical_checkbox import process_body_parts
+from behavior.behavior_checkbox import create_behavior_checkbox
+from follow_up.followup_events import create_followup_dropdowns, create_followup_open
+from utils.utils_json import add_data_to_individual  
 
 def show_section_wounded(visible):
     if visible==True: 
@@ -16,7 +16,7 @@ def show_section_wounded(visible):
         
         gr.Markdown("## Do you know what conditions caused this?", label="description")
         radio_cause = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)
-        button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_causes(visible=False)
+        button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_circumstances(visible=False)
 
         gr.Markdown("## Is the bird displaying behavioural changes?" , label="description")
         radio_behaviour = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)

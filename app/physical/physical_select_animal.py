@@ -1,12 +1,13 @@
 import gradio as gr
-# from gradio_image_prompter import ImagePrompter
-from typing import List
-from shapely.geometry import Point
-from physical_checkbox import *
-from physical_boxes_define import gdf
-from utils_visible import set_visible
 from dotenv import load_dotenv
 import os
+from typing import List
+from shapely.geometry import Point
+
+from physical.physical_checkbox import *
+from physical.physical_boxes_define import gdf
+from utils.utils_visible import set_visible
+
 load_dotenv()
 PATH_ASSETS = os.getenv('PATH_ASSETS')
 

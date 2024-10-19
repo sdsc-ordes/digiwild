@@ -1,7 +1,7 @@
 import gradio as gr
-from utils_config import get_custom_config_dropdowns
-from utils_checkbox import create_checkbox
-from utils_json import add_data_to_individual 
+from utils.utils_config import get_custom_config_dropdowns
+from utils.utils_checkbox import create_checkbox
+from utils.utils_json import add_data_to_individual 
 #--------------------------------------------------------- 
 def get_body_parts():
     dropdown_config = get_custom_config_dropdowns("config_checkbox_physical.json")

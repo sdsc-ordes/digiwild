@@ -1,20 +1,20 @@
 import gradio as gr
 from gradio_modal import Modal
 
-from utils_json import *
-from utils_gallery import save_individual_to_gallery
-from maps import get_location
+from utils.utils_json import *
+from gallery import save_individual_to_gallery
+from geolocalisation.maps import get_location
 from functools import partial
 from dead import show_section_dead
 from wounded import show_section_wounded
-from circumstances import show_causes
-from circumstances_dropdowns import *
-from physical_select_animal import show_physical, find_bounding_box
-from physical_checkbox import on_select_body_part, hide_physical
-from behavior_checkbox import show_behavior, on_select_behavior
-from followup_events import save_fe
-from style import *
-from theme import theme, css
+from circumstances.circumstances import show_circumstances
+from circumstances.circumstances_dropdowns import *
+from physical.physical_select_animal import show_physical, find_bounding_box
+from physical.physical_checkbox import on_select_body_part, hide_physical
+from behavior.behavior_checkbox import show_behavior, on_select_behavior
+from follow_up.followup_events import save_fe
+from styling.style import *
+from styling.theme import theme, css
 
 with gr.Blocks(theme=theme, css=css) as demo:
     create_json_all_individuals()
@@ -155,7 +155,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
         dropdown_extra_level2_dead.select(on_select_dropdown_extra_level2)
         # ---------------------------------------------------------
         # Radio Cause Wounded
-        radio_cause_wounded.change(fn=show_causes,
+        radio_cause_wounded.change(fn=show_circumstances,
                                 inputs=[radio_cause_wounded],
                                 outputs=[button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
                                             dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded]
@@ -257,7 +257,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
     show_modal.click(lambda: Modal(visible=True), None, modal)
     show_modal.click(create_json_one_individual)
     #submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
-    #submit_button.click(save_individual_to_gallery)
+    submit_button.click(save_individual_to_gallery)
 
 
      

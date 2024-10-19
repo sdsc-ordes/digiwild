@@ -1,6 +1,6 @@
 import gradio as gr
-from utils_config import get_custom_config_dropdowns
-from utils_json import add_data_to_individual
+from utils.utils_config import get_custom_config_dropdowns
+from utils.utils_json import add_data_to_individual
 
 def create_followup_dropdowns(visible, elem_id): 
     followup_config = get_custom_config_dropdowns("config_followup.json")

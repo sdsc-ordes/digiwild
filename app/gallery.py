@@ -2,9 +2,11 @@ import gradio as gr
 import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
-from utils_config import load_config
-from utils_json import get_json_one_individual, save_to_all_individuals
+
+from utils.utils_config import load_config
+from utils.utils_json import get_json_one_individual, save_to_all_individuals
 import os
+
 load_dotenv()
 PATH = os.getcwd() + "/"
 PATH_ASSETS = os.getenv('PATH_ASSETS')
