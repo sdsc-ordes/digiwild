@@ -1,8 +1,10 @@
 import gradio as gr
 import os
-from utils.utils_visible import set_visible
 from dotenv import load_dotenv
-import os
+
+from utils.utils_visible import set_visible
+from validation_submission.add_json import add_data_tmp
+
 load_dotenv()
 PATH = os.getcwd() + "/"
 PATH_ASSETS = os.getenv('PATH_ASSETS')
@@ -13,6 +15,9 @@ CAUSE_COL_WIDTH = "50px"
 
 def show_circumstances(choice): 
     visible = set_visible(choice)
+    add_data_tmp("wounded_dead", 
+                    "circumstance_radio", 
+                    True)
     button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_circumstances(visible)
     return button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2
 

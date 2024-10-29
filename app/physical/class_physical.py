@@ -75,4 +75,4 @@ AnomalyType = Union[
 
 # Main PhysicalAnomaly class that logs anomalies across different body parts
 class PhysicalAnomaly(BaseModel):
-    body_part_anomalies: List[AnomalyType]  # List of anomalies across different body parts
+    body_part_anomalies: List[AnomalyType] = Field(..., discriminator='type')

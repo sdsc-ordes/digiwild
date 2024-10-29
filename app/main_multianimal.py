@@ -1,7 +1,8 @@
 import gradio as gr
 from gradio_modal import Modal
 
-from utils.utils_json import *
+from validation_submission.create_json import create_json_all_individuals, create_json_one_individual, create_tmp
+from validation_submission.add_json import add_data_to_individual
 from gallery import save_individual_to_gallery
 from geolocalisation.maps import get_location
 from functools import partial
@@ -15,9 +16,16 @@ from behavior.behavior_checkbox import show_behavior, on_select_behavior
 from follow_up.followup_events import save_fe
 from styling.style import *
 from styling.theme import theme, css
+from classes import Report
 
 with gr.Blocks(theme=theme, css=css) as demo:
     create_json_all_individuals()
+    # ---------------------------------------------------------
+    # Intro Text
+    with gr.Row():
+        with gr.Column(scale=1):
+            title = gr.Markdown("# Welcome to Digiwild", label="Title")
+            description = gr.Markdown("Please record your wildlife observations here !", label="description")
     with gr.Row(): 
         show_modal = gr.Button("Add an Animal", scale=3)
         submit_button = gr.Button("Submit All Animals", scale=1)
@@ -33,8 +41,8 @@ with gr.Blocks(theme=theme, css=css) as demo:
         # Intro Text
         with gr.Row():
             with gr.Column(scale=1):
-                title = gr.Markdown("# Welcome to Digiwild", label="Title")
-                description = gr.Markdown("Please record your wildlife observations here !", label="description")
+                title = gr.Markdown("# Animal Report", label="Title")
+                description = gr.Markdown("Please record your observation here.", label="description")
 
         # ---------------------------------------------------------
         # Camera
@@ -256,6 +264,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
     # Event Functions of the landing page buttons
     show_modal.click(lambda: Modal(visible=True), None, modal)
     show_modal.click(create_json_one_individual)
+    show_modal.click(create_tmp)
     #submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
     submit_button.click(save_individual_to_gallery)
 

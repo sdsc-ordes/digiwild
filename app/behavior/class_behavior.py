@@ -63,4 +63,4 @@ BehaviorType = Union[
 
 # Main class that logs multiple behaviors
 class Behaviors(BaseModel):
-    observed_behaviors: List[BehaviorType]
+    observed_behaviors: List[BehaviorType] = Field(..., discriminator='type')

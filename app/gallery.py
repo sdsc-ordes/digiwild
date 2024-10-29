@@ -2,10 +2,13 @@ import gradio as gr
 import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
+import os
 
 from utils.utils_config import load_config
-from utils.utils_json import get_json_one_individual, save_to_all_individuals
-import os
+from validation_submission.get_json import get_json_one_individual
+from validation_submission.submission import save_to_all_individuals
+from validation_submission.validation import validate_individual
+
 
 load_dotenv()
 PATH = os.getcwd() + "/"
@@ -87,6 +90,7 @@ def set_gallery_size(len_animals):
     return num_cols, num_rows
 
 def save_individual_to_gallery(gallery):
+    validate_individual()
     one_individual = get_json_one_individual()
     fields = get_fields()
     one_individual_matched = match_data_to_fields(fields, one_individual)

@@ -2,7 +2,7 @@ import gradio as gr
 from utils.utils_config import get_custom_config_dropdowns
 from utils.utils_checkbox import create_checkbox
 from utils.utils_visible import set_visible
-from utils.utils_json import add_data_to_individual 
+from validation_submission.add_json import add_data_to_individual 
 
 def on_select_behavior(behavior_checkbox): 
     add_data_to_individual("behavior", behavior_checkbox)

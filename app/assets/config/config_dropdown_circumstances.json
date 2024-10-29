@@ -4,7 +4,9 @@
         "road vehicle": 
         {
             
-            "Options": ["highway", "main road", "secondary road", "local road/path/trail", "parking lot", "other", "unknown"],
+            "Options": {
+                "road_type" : ["highway", "main road", "secondary road", "local road/path/trail", "parking lot", "other", "unknown"]
+            },
             "Open": "Infrastructure number"
             
         },
@@ -21,20 +23,26 @@
     {
         "hunting": 
         {
-            "Options": ["shooting", "bow", "falconry", "hounds hunting", "digging up", "other", "unknown"]
+            "Options": {
+                "method" : ["shooting", "bow", "falconry", "hounds hunting", "digging up", "other", "unknown"]
+            }
         },
         "trap": 
         {
-            "Options": ["killing trap", "pole trap", "trap cage", "corvids nasse", "net", "cage trap", "fall-trap", "glue trap", "insect trap", "other", "unknown"]
+            "Options": {
+                "method": ["killing trap", "pole trap", "trap cage", "corvids nasse", "net", "cage trap", "fall-trap", "glue trap", "insect trap", "other", "unknown"]
+            }
         },
         "poisoning": {},
         "removal or direct capture": 
         {
-            "Options": ["gassing", "raptor captured at nest", "brood destruction", "traffic/trade", "capture accident", "scientific sample", "other", "unknown"]
+            "Options": {"method": ["gassing", "raptor captured at nest", "brood destruction", "traffic/trade", "capture accident", "scientific sample", "other", "unknown"]
+        }
         },
         "fishing": 
         {
-            "Options": ["drowned/tangled", "beached with capture indications", "other", "unknown"]
+            "Options": {"method" : ["drowned/tangled", "beached with capture indications", "other", "unknown"]
+        }
         },
         "other": {},
         "unknown": {}
@@ -44,7 +52,9 @@
          "pylone and electric grid":
          {
   
-            "Options": ["electric line", "pole/pylon", "other", "unknown"],
+            "Options": {
+                "infrastructure" : ["electric line", "pole/pylon", "other", "unknown"]
+            },
             "Extra":
             {
                 "Cause": ["collision", "electrocution", "unknown"]
@@ -53,24 +63,34 @@
          "windfarm": {},
          "other collision": 
          {
-            "Options": ["window", "building", "lighthouse", "cable", "wire fence/barbed wire", "other crash", "unknown"]
+            "Options": {
+                "object": ["window", "building", "lighthouse", "cable", "wire fence/barbed wire", "other crash", "unknown"]
+            }
          },
          "fall": 
          {
-            "Options": ["chimney", "empty pole", "hole/well", "other", "unknown"]
+            "Options": {
+                "location": ["chimney", "empty pole", "hole/well", "other", "unknown"]
+            }
          },
          "development work": 
          {
-            "Options": ["transport infrastructure", "building", "other", "unknown"]
+            "Options": {
+                "work_type" : ["transport infrastructure", "building", "other", "unknown"]
+            }
          },
          "pollution / contamination": 
          {
-            "Options": ["oil pollution", "chemical pollution", "heavy metals", "light", "noise", "plastic ingestion", "other", "unknown"]
+            "Options": {
+                "pollution_type" : ["oil pollution", "chemical pollution", "heavy metals", "light", "noise", "plastic ingestion", "other", "unknown"]
          },
          "agricultural net protection": {},
          "vegetal / forest work": 
          {
-            "Options": ["clearing/mowing/plowing", "tree felling/pruning", "other", "unknown"]
+            "Options": {
+                "work_type" : ["clearing/mowing/plowing", "tree felling/pruning", "other", "unknown"]
+            }
+         }
          },
          "other": {},
          "unknown": {}
@@ -79,22 +99,30 @@
     {
         "predation": 
         {
-            "Options": ["cat", "dog", "rooster/hen", "other domestic animal", "wild birds", "wild mammal", "other", "unknown"]
+            "Options": {
+                "predator" : ["cat", "dog", "rooster/hen", "other domestic animal", "wild birds", "wild mammal", "other", "unknown"]
+            }
         },
         "weather": 
         {
-            "Options": ["cold wave", "drought", "hail", "lightening", "storm", "other", "unknown"]
+            "Options": {
+                "condition" : ["cold wave", "drought", "hail", "lightening", "storm", "other", "unknown"]
+            }
         },
         "natural disaster": 
         {
-            "Options": ["fire", "avalanche", "rock fall", "mudslide", "volcanic eruption/ashes", "other", "unknown"]
+            "Options": {
+                "disaster" : ["fire", "avalanche", "rock fall", "mudslide", "volcanic eruption/ashes", "other", "unknown"]
+            }
         },
         "nest fall": {},
         "stranding due to exhaustion": {},
         "disease/parasite": {},
         "accidental drowing": 
         {
-            "Options": ["drinking trough", "pool", "storm pool", "irrigation pool", "natural pool", "flood", "other container", "unknown"]
+            "Options": {
+                "drowning_location" : ["drinking trough", "pool", "storm pool", "irrigation pool", "natural pool", "flood", "other container", "unknown"]
+            }
         },
         "other": {},
         "unknown": {}

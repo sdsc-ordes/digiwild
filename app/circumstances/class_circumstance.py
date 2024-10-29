@@ -22,10 +22,10 @@ class BoatCollision(CircumstanceTypeBase):
     type: Literal['boat']
 
 class OtherTransportCollision(CircumstanceTypeBase):
-    type: Literal['other']
+    type: Literal['other transport collision']
 
 class UnknownTransportCollision(CircumstanceTypeBase):
-    type: Literal['unknown']
+    type: Literal['unknown transport collision']
 
 # Destruction / Deliberately removed
 class HuntingDestruction(CircumstanceTypeBase):
@@ -48,10 +48,10 @@ class FishingDestruction(CircumstanceTypeBase):
     method: Literal['drowned/tangled', 'beached with capture indications', 'other', 'unknown']
 
 class OtherDestruction(CircumstanceTypeBase):
-    type: Literal['other']
+    type: Literal['other destruction']
 
 class UnknownDestruction(CircumstanceTypeBase):
-    type: Literal['unknown']
+    type: Literal['unknown destruction']
 
 # Indirect destruction
 class PylonElectricGridDestruction(CircumstanceTypeBase):
@@ -86,10 +86,10 @@ class VegetalForestWorkDestruction(CircumstanceTypeBase):
     work_type: Literal['clearing/mowing/plowing', 'tree felling/pruning', 'other', 'unknown']
 
 class OtherIndirectDestruction(CircumstanceTypeBase):
-    type: Literal['other']
+    type: Literal['other indirect desctruction']
 
 class UnknownIndirectDestruction(CircumstanceTypeBase):
-    type: Literal['unknown']
+    type: Literal['unknown indirect desctruction']
 
 # Natural cause
 class Predation(CircumstanceTypeBase):
@@ -118,10 +118,10 @@ class AccidentalDrowning(CircumstanceTypeBase):
     drowning_location: Literal['drinking trough', 'pool', 'storm pool', 'irrigation pool', 'natural pool', 'flood', 'other container', 'unknown']
 
 class OtherNaturalCause(CircumstanceTypeBase):
-    type: Literal['other']
+    type: Literal['other natural cause']
 
 class UnknownNaturalCause(CircumstanceTypeBase):
-    type: Literal['unknown']
+    type: Literal['unknown natural cause']
 
 # Unknown cause
 class UnknownCircumstance(CircumstanceTypeBase):
@@ -169,3 +169,16 @@ class Circumstances(BaseModel):
     circumstance: str  # e.g., "COLLISION"
     circumstance_radio: str  # e.g., "Yes"
     circumstance_type: CircumstanceType = Field(..., discriminator='type')
+
+
+# Example usage
+# json_data = {
+#     "circumstance": "COLLISION",
+#     "circumstance_radio": "Yes",
+#     "circumstance_type": {
+#         "type": "Train",
+#         "infrastructure_number": "56"
+#     }
+# }
+# circumstance_instance = Circumstance(**json_data)
+# circumstance_schema = Circumstance.schema_json(indent=2)
