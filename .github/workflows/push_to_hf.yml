@@ -13,20 +13,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.8'
-
-    - name: Install Hugging Face Hub
-      run: pip install huggingface-hub
-
-    - name: Authenticate to Hugging Face
-      run: huggingface-cli login --token ${{ secrets.HF_TOKEN }}
-
-    - name: Push to Hugging Face
+    - name: Clone Hugging Face repository with token
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
       run: |
-        python -m huggingface_hub.cli upload_folder \
-          --repo-id SDSC/digiwild \
-          --path "./" \
-          --branch main
+        git clone https://${{ secrets.HF_USERNAME }}:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/SDSC/digiwild
+        cd digiwild
+        cp -R ../* .
+        git add .
+        git commit -m "Update from main branch"
+        git push origin main
