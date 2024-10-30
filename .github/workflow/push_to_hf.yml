@@ -1,0 +1,32 @@
+name: Push to Hugging Face on PR merge
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  push_to_huggingface:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+
+    - name: Install Hugging Face Hub
+      run: pip install huggingface-hub
+
+    - name: Authenticate to Hugging Face
+      run: huggingface-cli login --token ${{ secrets.HF_TOKEN }}
+
+    - name: Push to Hugging Face
+      run: |
+        python -m huggingface_hub.cli upload_folder \
+          --repo-id SDSC/digiwild \
+          --path "./" \
+          --branch main
