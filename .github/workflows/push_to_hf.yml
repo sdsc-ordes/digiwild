@@ -10,16 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout GitHub repository
       uses: actions/checkout@v3
+      with:
+        path: github_repo  # Change 'github_repo' to the desired directory name for the GitHub repo
 
     - name: Clone Hugging Face repository with token
       env:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        HF_USERNAME: ${{ secrets.HF_USERNAME }}
       run: |
-        git clone https://${{ secrets.HF_USERNAME }}:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/SDSC/digiwild
-        cd digiwild
-        cp -R ../* .
+        git clone https://${{ env.HF_USERNAME }}:${{ env.HF_TOKEN }}@huggingface.co/spaces/SDSC/digiwild hf_repo
+        rsync -av --exclude='hf_repo' github_repo/ hf_repo/
+        cd hf_repo
         git add .
         git commit -m "Update from main branch"
         git push origin main
