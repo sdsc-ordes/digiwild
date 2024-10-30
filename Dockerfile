@@ -38,4 +38,4 @@ RUN pip3 install -r /digiwild/requirements.txt
 
 WORKDIR /digiwild
 
-ENTRYPOINT bash
+ENTRYPOINT python3 main.py
