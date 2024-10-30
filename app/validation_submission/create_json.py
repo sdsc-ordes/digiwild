@@ -10,7 +10,7 @@ def create_json_all_individuals(all_individuals={}):
     with open("data/all_individuals.json", "w") as outfile:
         outfile.write(all_individuals)
 
-def create_tmp(tmp_name, tmp={}):
+def create_tmp(tmp_name="wounded_dead", tmp={}):
     tmp = json.dumps(tmp)
     with open(f"app/assets/json_tmp/tmp_{tmp_name}.json", "w") as outfile:
         outfile.write(tmp)

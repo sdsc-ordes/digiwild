@@ -2,10 +2,10 @@ import gradio as gr
 from utils.utils_config import get_custom_config_dropdowns
 from utils.utils_checkbox import create_checkbox
 from utils.utils_visible import set_visible
-from validation_submission.add_json import add_data_to_individual 
+from validation_submission.add_json import add_data_tmp
 
 def on_select_behavior(behavior_checkbox): 
-    add_data_to_individual("behavior", behavior_checkbox)
+    add_data_tmp("wounded_dead", "behaviors_type", behavior_checkbox)
 
 def retrieve_behavior_options_description():
     dropdown_config = get_custom_config_dropdowns("config_checkbox_behavior.json")
@@ -25,4 +25,5 @@ def create_behavior_checkbox(section: str, visible):
 def show_behavior(choice, section: str): 
     visible = set_visible(choice)
     checkbox, text = create_behavior_checkbox(section, visible)
+    add_data_tmp("wounded_dead", "behaviors_radio", choice)
     return checkbox, text

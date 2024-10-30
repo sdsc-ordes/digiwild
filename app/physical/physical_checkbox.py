@@ -1,7 +1,7 @@
 import gradio as gr
 from utils.utils_config import get_custom_config_dropdowns
 from utils.utils_checkbox import create_checkbox
-from validation_submission.add_json import add_data_to_individual 
+from validation_submission.add_json import add_data_tmp 
 #--------------------------------------------------------- 
 def get_body_parts():
     dropdown_config = get_custom_config_dropdowns("config_checkbox_physical.json")
@@ -72,7 +72,8 @@ def process_body_parts(section, matched_box):
 #--------------------------------------------------------- 
 
 def on_select_body_part(body_part_checkbox, body_part): 
-    add_data_to_individual("physical_changes_" + body_part, body_part_checkbox)
+    add_data_tmp("wounded_dead", "physical_type_"+body_part, body_part)
+    add_data_tmp("wounded_dead", "physical_anomaly_type_"+body_part, body_part_checkbox)
 
 #--------------------------------------------------------- 
 

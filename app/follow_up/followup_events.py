@@ -1,6 +1,6 @@
 import gradio as gr
 from utils.utils_config import get_custom_config_dropdowns
-from validation_submission.add_json import add_data_to_individual
+from validation_submission.add_json import add_data_tmp
 
 def create_followup_dropdowns(visible, elem_id): 
     followup_config = get_custom_config_dropdowns("config_followup.json")
@@ -40,7 +40,7 @@ def create_fe_answer_dropdown(followup_config, visible, elem_id):
     return fe_answer_dropdown
 
 def save_fe(value, key): 
-    add_data_to_individual(key, value)
+    add_data_tmp("wounded_dead", key.lower(), value.lower())
 
 
     

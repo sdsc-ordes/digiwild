@@ -74,5 +74,6 @@ AnomalyType = Union[
 ]
 
 # Main PhysicalAnomaly class that logs anomalies across different body parts
-class PhysicalAnomaly(BaseModel):
-    body_part_anomalies: List[AnomalyType] = Field(..., discriminator='type')
+class PhysicalAnomalies(BaseModel):
+    physical_radio: str
+    physical_anomalies_type: List[AnomalyType] = Field(..., discriminator='type')

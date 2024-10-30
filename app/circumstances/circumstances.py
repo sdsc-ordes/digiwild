@@ -17,7 +17,7 @@ def show_circumstances(choice):
     visible = set_visible(choice)
     add_data_tmp("wounded_dead", 
                     "circumstance_radio", 
-                    True)
+                    choice)
     button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_circumstances(visible)
     return button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2
 
