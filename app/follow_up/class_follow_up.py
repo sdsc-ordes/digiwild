@@ -6,22 +6,22 @@ from typing import Literal, Union, Optional, List
 # Animal collected event
 class AnimalCollectedEvent(BaseModel):
     type: Literal['animal collected']
-    option: Literal['Yes', 'No']
+    collected: Literal['Yes', 'No']
 
 # Recipient event
 class RecipientEvent(BaseModel):
     type: Literal['recipient']
-    option: Literal['Veterinary', 'Care center', 'Local Museum', 'National Museum', 'Other']
-
+    recipient: Literal['Veterinary', 'Care center', 'Local Museum', 'National Museum', 'Other']
+    
 # Radiography event
 class RadiographyEvent(BaseModel):
     type: Literal['radiography']
-    option: Literal['Yes', 'No', 'Unknown']
+    radiography: Literal['Yes', 'No', 'Unknown']
 
 # Given answer event
 class GivenAnswerEvent(BaseModel):
     type: Literal['given answer']
-    option: Literal[
+    answer: Literal[
         'Nothing', 
         'Complaint against X', 
         'Complaint', 
@@ -33,7 +33,7 @@ class GivenAnswerEvent(BaseModel):
 
 # Name of recipient/museum (open text field)
 class NameOfRecipientEvent(BaseModel):
-    type: Literal['name of recipient / museum']
+    type: Literal['recipient name']
     name: str  # Open text field for entering the name
 
 # Collection reference (open text field)

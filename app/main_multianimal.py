@@ -210,21 +210,21 @@ with gr.Blocks(theme=theme, css=css) as demo:
         
         # ---------------------------------------------------------
         # Follow Up Events Wounded 
-        fe_collection_dropdown_wounded.select(save_fe, inputs=[fe_collection_dropdown_wounded, gr.Textbox("fe_collection", visible=False)])
-        fe_recepient_dropdown_wounded.select(save_fe, inputs=[fe_recepient_dropdown_wounded, gr.Textbox("fe_recipient", visible=False)])
-        fe_radio_dropdown_wounded.select(save_fe, inputs=[fe_radio_dropdown_wounded, gr.Textbox("fe_radio", visible=False)]) 
-        fe_answer_dropdown_wounded.select(save_fe, inputs=[fe_answer_dropdown_wounded, gr.Textbox("fe_answer", visible=False)])
-        fe_name_recipient_wounded.input(save_fe, inputs=[fe_name_recipient_wounded, gr.Textbox("fe_name_recipient", visible=False)])
-        fe_collection_ref_wounded.input(save_fe, inputs=[fe_collection_ref_wounded, gr.Textbox("fe_collection_ref", visible=False)])
+        fe_collection_dropdown_wounded.select(save_fe, inputs=[fe_collection_dropdown_wounded, gr.Textbox("animal collected", visible=False)])
+        fe_recepient_dropdown_wounded.select(save_fe, inputs=[fe_recepient_dropdown_wounded, gr.Textbox("recipient", visible=False)])
+        fe_radio_dropdown_wounded.select(save_fe, inputs=[fe_radio_dropdown_wounded, gr.Textbox("radiography", visible=False)]) 
+        fe_answer_dropdown_wounded.select(save_fe, inputs=[fe_answer_dropdown_wounded, gr.Textbox("given answer", visible=False)])
+        fe_name_recipient_wounded.input(save_fe, inputs=[fe_name_recipient_wounded, gr.Textbox("recipient name", visible=False)])
+        fe_collection_ref_wounded.input(save_fe, inputs=[fe_collection_ref_wounded, gr.Textbox("collection reference", visible=False)])
 
         # ---------------------------------------------------------
         # Follow Up Events Dead 
-        fe_collection_dropdown_dead.select(save_fe, inputs=[fe_collection_dropdown_dead, gr.Textbox("fe_collection", visible=False)])
-        fe_recepient_dropdown_dead.select(save_fe, inputs=[fe_recepient_dropdown_dead, gr.Textbox("fe_recipient", visible=False)])
-        fe_radio_dropdown_dead.select(save_fe, inputs=[fe_radio_dropdown_dead, gr.Textbox("fe_radio", visible=False)]) 
-        fe_answer_dropdown_dead.select(save_fe, inputs=[fe_answer_dropdown_dead, gr.Textbox("fe_answer", visible=False)])
-        fe_name_recipient_dead.input(save_fe, inputs=[fe_name_recipient_dead, gr.Textbox("fe_name_recipient", visible=False)])
-        fe_collection_ref_dead.input(save_fe, inputs=[fe_collection_ref_dead, gr.Textbox("fe_collection_ref", visible=False)])
+        fe_collection_dropdown_dead.select(save_fe, inputs=[fe_collection_dropdown_dead, gr.Textbox("animal collected", visible=False)])
+        fe_recepient_dropdown_dead.select(save_fe, inputs=[fe_recepient_dropdown_dead, gr.Textbox("recipient", visible=False)])
+        fe_radio_dropdown_dead.select(save_fe, inputs=[fe_radio_dropdown_dead, gr.Textbox("radiography", visible=False)]) 
+        fe_answer_dropdown_dead.select(save_fe, inputs=[fe_answer_dropdown_dead, gr.Textbox("given answer", visible=False)])
+        fe_name_recipient_dead.input(save_fe, inputs=[fe_name_recipient_dead, gr.Textbox("recipient name", visible=False)])
+        fe_collection_ref_dead.input(save_fe, inputs=[fe_collection_ref_dead, gr.Textbox("collection reference", visible=False)])
 
         # ---------------------------------------------------------
         # Add One Individual's Data to the Dataframe

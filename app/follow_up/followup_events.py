@@ -40,7 +40,7 @@ def create_fe_answer_dropdown(followup_config, visible, elem_id):
     return fe_answer_dropdown
 
 def save_fe(value, key): 
-    add_data_tmp("wounded_dead", key.lower(), value.lower())
+    add_data_tmp("wounded_dead", "followup " + key.lower(), value.lower())
 
 
     
