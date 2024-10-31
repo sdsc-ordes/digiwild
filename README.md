@@ -1,3 +1,13 @@
+---
+title: Digiwild
+emoji: 🏢
+colorFrom: purple
+colorTo: green
+sdk: docker
+pinned: false
+short_description: Digiwild
+---
+
 # digiwild
 
 ## Docker
@@ -8,6 +18,11 @@
 
 ```
 docker run -it -p 7860:7860 ordes/digiwild:swallow
+```
+
+```
+cd /digiwild/app
+python3 main.py
 ```
 
 ## Needs
