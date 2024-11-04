@@ -11,6 +11,6 @@ def get_json_all_individuals():
     return all_individuals
 
 def get_json_tmp(tmp_name):
-    with open(f"app/assets/json_tmp/tmp_{tmp_name}.json", "r") as openfile:
+    with open(f"app/assets/tmp_json/tmp_{tmp_name}.json", "r") as openfile:
         tmp_json = json.load(openfile)
     return tmp_json

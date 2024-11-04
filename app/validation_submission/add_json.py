@@ -8,7 +8,7 @@ def add_data_to_individual(key, value):
     create_json_one_individual(one_individual)
 
 def add_data_tmp(tmp_name, key, value): 
-    with open(f"app/assets/json_tmp/tmp_{tmp_name}.json", 'r') as openfile:
+    with open(f"app/assets/tmp_json/tmp_{tmp_name}.json", 'r') as openfile:
         tmp = json.load(openfile)
     tmp[key] = value
     create_tmp(tmp_name, tmp)

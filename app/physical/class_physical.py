@@ -16,52 +16,52 @@ CommonAnomalies = Literal[
 # --- Beak-related Anomalies ---
 class BeakAnomaly(BaseModel):
     type: Literal['beak']
-    anomaly_type: Literal[
+    anomaly_type: List[Literal[
         'adhesion',
         'deformation',
         CommonAnomalies
-    ]
+    ]]
 
 # --- Body-related Anomalies ---
 class BodyAnomaly(BaseModel):
     type: Literal['body']
-    anomaly_type: Literal[
+    anomaly_type: List[Literal[
         'emaciation',
         'fluffed up',
         'stained feathers',
         CommonAnomalies
-    ]
+    ]]
 
 # --- Legs-related Anomalies ---
 class LegAnomaly(BaseModel):
     type: Literal['legs']
-    anomaly_type: Literal[
+    anomaly_type: List[Literal[
         'missing limb',
         'deformation',
         CommonAnomalies
-    ]
+    ]]
 
 # --- Feathers/Wings/Tail-related Anomalies ---
 class FeathersWingsTailAnomaly(BaseModel):
     type: Literal['feathers/wings/tail']
-    anomaly_type: Literal[
+    anomaly_type: List[Literal[
         'fluffed up',
         'feather abnormalities',
         'stained feathers',
         'abnormal wing posture',
         'missing limb',
         CommonAnomalies
-    ]
+    ]]
 
 # --- Head-related Anomalies (including eyes) ---
 class HeadAnomaly(BaseModel):
-    type: Literal['head']
-    anomaly_type: Literal[
+    type: Literal['head incl. eyes']
+    anomaly_type: List[Literal[
         'ear changes',
         'eye changes',
         'tilted head',
         CommonAnomalies
-    ]
+    ]]
 
 
 # Union of all possible anomaly types for specific body parts
@@ -76,4 +76,4 @@ AnomalyType = Union[
 # Main PhysicalAnomaly class that logs anomalies across different body parts
 class PhysicalAnomalies(BaseModel):
     physical_radio: str
-    physical_anomalies_type: List[AnomalyType] = Field(..., discriminator='type')
+    physical_anomalies_type: Optional[List[AnomalyType]] = None

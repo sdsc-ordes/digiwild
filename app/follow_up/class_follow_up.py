@@ -3,45 +3,40 @@ from typing import Literal, Union, Optional, List
 
 # --- Event follow-up classes ---
 
-# Animal collected event
 class AnimalCollectedEvent(BaseModel):
     type: Literal['animal collected']
-    collected: Literal['Yes', 'No']
+    collected: Literal['yes', 'no']
 
-# Recipient event
 class RecipientEvent(BaseModel):
     type: Literal['recipient']
-    recipient: Literal['Veterinary', 'Care center', 'Local Museum', 'National Museum', 'Other']
-    
-# Radiography event
+    recipient: Literal['veterinary', 'care center', 
+                                'local museum', 'national museum', 
+                                'other']
+
 class RadiographyEvent(BaseModel):
     type: Literal['radiography']
-    radiography: Literal['Yes', 'No', 'Unknown']
+    radiography: Literal['yes', 'no', 'unknown']
 
-# Given answer event
 class GivenAnswerEvent(BaseModel):
     type: Literal['given answer']
     answer: Literal[
-        'Nothing', 
-        'Complaint against X', 
-        'Complaint', 
-        'Police call', 
-        'Discussion with the speaker', 
-        'Press release', 
-        'Unknown'
+        'nothing', 
+        'complaint against x', 
+        'complaint', 
+        'police call', 
+        'discussion with the speaker', 
+        'press release', 
+        'unknown'
     ]
 
-# Name of recipient/museum (open text field)
 class NameOfRecipientEvent(BaseModel):
     type: Literal['recipient name']
-    name: str  # Open text field for entering the name
+    name: str
 
-# Collection reference (open text field)
 class CollectionReferenceEvent(BaseModel):
     type: Literal['collection reference']
-    reference: str  # Open text field for entering the reference
+    reference: str
 
-# Union of all possible follow-up event types
 FollowUpEventType = Union[
     AnimalCollectedEvent,
     RecipientEvent,
@@ -51,7 +46,5 @@ FollowUpEventType = Union[
     CollectionReferenceEvent
 ]
 
-# Main class that logs multiple follow-up events
 class FollowUpEvents(BaseModel):
-    follow_up_events: List[FollowUpEventType]
-
+    follow_up_events: Optional[List[FollowUpEventType]] = None

@@ -29,8 +29,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
     with gr.Row(): 
         show_modal = gr.Button("Add an Animal", scale=3)
         submit_button = gr.Button("Submit All Animals", scale=1)
-    # df = gr.Dataframe(headers=get_headers(),
-    #                   visible=False)
+    df = gr.Dataframe(headers=["Identifier", "Location", "Wounded", "Dead"], visible=False, interactive=False)
     gallery = gr.Gallery(
         label="Gallery of Records", elem_id="gallery", 
         columns=[1], rows=[1],
@@ -126,6 +125,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
                                 fe_collection_dropdown_wounded, fe_recepient_dropdown_wounded, fe_radio_dropdown_wounded, fe_answer_dropdown_wounded, \
                                 fe_name_recipient_wounded, fe_collection_ref_wounded \
                                 ])
+        
         # ---------------------------------------------------------
         # Wounded Button Logic
         partial_show_section_wounded = partial(show_section_wounded, True)
@@ -149,6 +149,9 @@ with gr.Blocks(theme=theme, css=css) as demo:
                                                                             fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, \
                                                                             fe_name_recipient_dead, fe_collection_ref_dead \
                                                                             ])
+        def save_wounded_state():
+            add_data_tmp("wounded_dead", "wounded", "Yes")
+        butt_wounded.click(save_wounded_state())
         # ---------------------------------------------------------
         # Dropdowns Dead
         button_collision_dead.click(dropdown_collision,  
@@ -159,7 +162,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
 
         dropdown_dead.select(on_select, None, [dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
         dropdown_level2_dead.select(on_select_dropdown_level2)
-        openfield_level2_dead.select(on_select_openfield_level2)
+        openfield_level2_dead.input(on_change_openfield_level2)
         dropdown_extra_level2_dead.select(on_select_dropdown_extra_level2)
         # ---------------------------------------------------------
         # Radio Cause Wounded
@@ -178,7 +181,7 @@ with gr.Blocks(theme=theme, css=css) as demo:
         
         dropdown_wounded.select(on_select, None, [dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
         dropdown_level2_wounded.select(on_select_dropdown_level2)
-        openfield_level2_wounded.select(on_select_openfield_level2)
+        openfield_level2_wounded.select(on_change_openfield_level2)
         dropdown_extra_level2_wounded.select(on_select_dropdown_extra_level2)
         # ---------------------------------------------------------
         # Radio Behavior Wounded
@@ -255,8 +258,8 @@ with gr.Blocks(theme=theme, css=css) as demo:
         #                 inputs=[df],
         #                 outputs=[df])
         button_df.click(save_individual_to_gallery, 
-                        inputs=[gallery],
-                        outputs=[gallery]
+                        inputs=[gallery, df],
+                        outputs=[gallery, df]
                         )
         button_df.click(lambda: Modal(visible=False), None, modal)
     
@@ -266,7 +269,6 @@ with gr.Blocks(theme=theme, css=css) as demo:
     show_modal.click(create_json_one_individual)
     show_modal.click(create_tmp)
     #submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
-    submit_button.click(save_individual_to_gallery)
 
 
      

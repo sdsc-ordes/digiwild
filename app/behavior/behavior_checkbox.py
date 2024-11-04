@@ -5,6 +5,7 @@ from utils.utils_visible import set_visible
 from validation_submission.add_json import add_data_tmp
 
 def on_select_behavior(behavior_checkbox): 
+    behavior_checkbox = [behavior.lower() for behavior in behavior_checkbox]
     add_data_tmp("wounded_dead", "behaviors_type", behavior_checkbox)
 
 def retrieve_behavior_options_description():

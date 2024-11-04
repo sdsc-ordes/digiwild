@@ -73,7 +73,7 @@ def get_options(value):
 def on_select(evt: gr.SelectData):  # SelectData is a subclass of EventData
     options_label, options_dropdown, open_field, extras, extras_label = get_options(evt.value)
     add_data_tmp("wounded_dead", 
-                    "cirumstance_type", 
+                    "circumstance_type", 
                     {"type": (evt.value).lower(),
                      "option_dropdown_label" : options_label.lower() if options_label is not None else 'NA',
                      "open_field_label" : open_field.lower() if open_field is not None else 'NA',
@@ -98,14 +98,15 @@ def on_select(evt: gr.SelectData):  # SelectData is a subclass of EventData
 def on_select_dropdown_level2(evt: gr.SelectData): 
     add_data_tmp("wounded_dead", 
                 "circumstance_option_dropdown", 
-                evt.value)
+                evt.value.lower())
 
-def on_select_openfield_level2(evt: gr.SelectData): 
+def on_change_openfield_level2(evt: gr.EventData): 
+    print("Saving open field")
     add_data_tmp("wounded_dead", 
                 "circumstance_open_field", 
-                evt.value)
+                evt.value.lower())
 
 def on_select_dropdown_extra_level2(evt: gr.SelectData):  
     add_data_tmp("wounded_dead", 
                  "circumstance_extra", 
-                 evt.value)
+                 evt.value.lower())

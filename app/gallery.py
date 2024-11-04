@@ -1,84 +1,18 @@
 import gradio as gr
 import pandas as pd
-import numpy as np
-from dotenv import load_dotenv
-import os
 
-from utils.utils_config import load_config
-from validation_submission.get_json import get_json_one_individual
-from validation_submission.submission import save_to_all_individuals
-from validation_submission.validation import validate_individual
+from validation_submission.submission import validate_save_individual
+from validation_submission.get_json import get_json_all_individuals
+
+HEADERS = ["Identifier", "Location", "Wounded", "Dead"]
 
 
-load_dotenv()
-PATH = os.getcwd() + "/"
-PATH_ASSETS = os.getenv('PATH_ASSETS')
-PATH_CONFIG = PATH + PATH_ASSETS + "config/"
-
-def get_headers(): 
-    headers_config = load_config(PATH_CONFIG + "config_headers.json")
-    headers = headers_config["headers"]
-    return headers
-
-def get_fields(): 
-    fields_config = load_config(PATH_CONFIG + "config_fields.json")
-    fields = fields_config["fields"]
-    return fields
-
-def match_data_to_fields(fields, one_individual): 
-    new_row = {}
-    for key in fields:
-        if key in one_individual:
-            if key=="image": 
-                new_row[key] = one_individual[key]
-            elif type(one_individual[key])==list:
-                new_row[key] = ' , '.join(one_individual[key])
-            else:
-                new_row[key] = one_individual[key]
-        else:
-            new_row[key] = "NA"
-    return new_row
-
-
-
-def process_animals(all_animals): 
-    processed_animals = []
-    for _, animal in all_animals.items(): 
-        image = np.array(animal["image"])
-        caption = []
-        for key, val in animal.items(): 
-            if key!="image": 
-                if key=="latitude": 
-                    caption.extend([
-                        " | Latitude: " + str(animal["latitude"])])
-                elif key=="longitude": 
-                    caption.extend([
-                        " | Longitude: " + str(animal["longitude"])])
-                elif key=="wounded" and val=="True": 
-                    caption.extend([" | Wounded: " + animal["wounded"]])
-                elif key=="dead" and val=="True":
-                    caption.extend([" | Dead: " + animal["dead"]])
-                # elif key=="circumstance": 
-                #     caption.extend([" | Circumstances: " , 
-                #                     animal["circumstance"],
-                #                     animal["circumstance_dropdown_level1"], 
-                #                     animal["circumstance_dropdown_level2"],
-                #                     animal["circumstance_openfield_level2"], 
-                #                     animal["circumstance_dropdown_extra_level2"]])
-                # elif key=="behavior": 
-                #     caption.extend([" | Behavior: ", animal[key]])
-                # elif "physical_changes" in key:
-                #     if not(" | Physical Changes: " in caption) :
-                #         caption.extend([" | Physical Changes: ",
-                #                         "Beak: " + animal["physical_changes_beak"],
-                #                         "Body: " + animal["physical_changes_body"], 
-                #                         "Head: " + animal["physical_changes_head"],
-                #                         "Feathers: " + animal["physical_changes_feathers"], 
-                #                         "Legs: " + animal["physical_changes_legs"]])
-        caption_str = " ".join(caption)
-        animal = (image, caption_str)
-        processed_animals.append(animal)
-    return processed_animals
+from PIL import Image
+from io import BytesIO
+import base64
+def convert_image(image_base64_str): 
+    im = Image.open(BytesIO(base64.b64decode(image_base64_str)))
+    return im
 
 def set_gallery_size(len_animals): 
     if len_animals < 10: 
@@ -89,62 +23,92 @@ def set_gallery_size(len_animals):
         num_rows = len_animals/(num_cols)
     return num_cols, num_rows
 
-def save_individual_to_gallery(gallery):
-    validate_individual()
-    one_individual = get_json_one_individual()
-    fields = get_fields()
-    one_individual_matched = match_data_to_fields(fields, one_individual)
-    all_animals = save_to_all_individuals(one_individual_matched)
-    num_cols, num_rows = set_gallery_size(len(all_animals))
-    processed_animals = process_animals(all_animals)
+def save_individual_to_gallery(gallery, df):
+    validate_save_individual()
+    all_animals = get_json_all_individuals()
+    gallery_animals = process_animals_for_gallery(all_animals)
+    gallery = make_gallery(gallery_animals)
+    df_animals = process_animals_for_df(all_animals)
+    df = make_df(df_animals)
+    return gallery, df
+
+def process_animals_for_gallery(all_animals): 
+    gallery_animals = []
+    for _, animal in all_animals.items(): 
+        image = convert_image(animal["image"]["image"])
+        caption = animal["identifier"]
+        animal = (image, caption)
+        gallery_animals.append(animal)
+    return gallery_animals
+
+def make_gallery(gallery_animals):
+    num_cols, num_rows = set_gallery_size(len(gallery_animals))
     gallery = gr.Gallery(
         label="Gallery of Records", elem_id="gallery", 
         columns=[num_cols], rows=[num_rows],
-        value=processed_animals,
+        value=gallery_animals,
         object_fit="contain", height="auto", interactive=False)
     return gallery
-    
-# def save_individual_to_df(df): 
-#     fields = get_fields()
-#     one_individual = get_json_one_individual()
-#     headers = get_headers()
-#     new_row = match_data_to_fields(fields, one_individual)
-#     new_row = format_row(new_row, headers)
-#     new_row_df = pd.DataFrame([new_row], columns=headers)  
-#     df_new = pd.concat([df, new_row_df], ignore_index=True)
-#     df_gr = gr.DataFrame(visible=True,
-#                          value=df_new,
-#                          headers=headers)
-#     return df_gr
 
-# def save_and_rest_df(df):
-#     save_all_animals(df)
-#     df = gr.Dataframe(fields=get_fields(),
-#                       visible=False)
-#     return df
+def keep_only_values(dict_to_filter): 
+    info_text = ""
+    values_to_ignore = ["Yes", "No", "NA"]
+    if dict_to_filter:
+        for key, val in dict_to_filter.items(): 
+            if type(val) is dict: 
+                subset_text = keep_only_values(val)
+                info_text += f"{subset_text}"
+            elif type(val) is list:
+                for item in val: 
+                    if type(item) is dict: 
+                        subset_text = keep_only_values(item)
+                        info_text += f"{subset_text}"
+            elif (val is not None) and (type(val) is not bool) and (val not in values_to_ignore): 
+                info_text += f" {key} : {val} |"
+            else:
+                print("Ignoring value: ", val)
+                print("Associated key: ", key)
+    else: 
+        info_text = "NaN"
+    return info_text
 
-# def format_row(new_row, headers):
-#     formatted_row = {}
-#     #formatted_row["image"] = new_row["image"]
-#     for header in headers: 
-#         if header=="location": 
-#             formatted_row[header] = " | ".join(["Latitude: " + str(new_row["latitude"]), 
-#                                                 "Longitude: " + str(new_row["longitude"])])
-#         elif header=="state": 
-#             formatted_row[header] = " | ".join(["Wounded: " + new_row["wounded"], 
-#                                                 "Dead: " + new_row["dead"]])
-#         elif header=="circumstance": 
-#             formatted_row[header] = " | ".join([new_row["circumstance"],
-#                                                 new_row["circumstance_dropdown_level1"], 
-#                                                 new_row["circumstance_dropdown_level2"],
-#                                                 new_row["circumstance_openfield_level2"], 
-#                                                 new_row["circumstance_dropdown_extra_level2"]])
-#         elif header=="behavior": 
-#             formatted_row[header] = new_row[header]
-#         elif header=="physical_changes":
-#             formatted_row[header] = " | ".join([new_row["physical_changes_beak"],
-#                                                 new_row["physical_changes_body"], 
-#                                                 new_row["physical_changes_head"],
-#                                                 new_row["physical_changes_feathers"], 
-#                                                 new_row["physical_changes_legs"]])
-#     return list(formatted_row.values())
+
+def process_animals_for_df(all_animals):
+    df_animals = {}
+    identifiers =[]
+    geo =[]
+    wounded =[]
+    dead =[]
+    for _, animal in all_animals.items(): 
+        identifier_value = animal["identifier"]
+        identifiers.append(identifier_value)
+        geo_dict = animal["geolocalisation"]
+        geo_values = keep_only_values(geo_dict)
+        geo.append(geo_values)
+        wounded_dict = animal["wounded"]
+        wounded_values = keep_only_values(wounded_dict)
+        wounded.append(wounded_values)
+        dead_dict = animal["dead"]
+        dead_values = keep_only_values(dead_dict)
+        dead.append(dead_values)
+    df_animals["Identifier"] = identifiers
+    df_animals["Location"] = geo
+    df_animals["Wounded"] = wounded
+    df_animals["Dead"] = dead
+    return df_animals
+
+
+def make_df(df_animals):
+    df = pd.DataFrame.from_dict(df_animals)
+    styled_df = df.style.set_properties(**{
+    'max-width': '100px',  # Adjust width as needed
+    'white-space': 'normal',  # Allows text to wrap to the next line
+    'word-wrap': 'break-word'  # Breaks long words to fit within the width
+    })
+    df_gradio = gr.DataFrame(visible=True,
+                         value=df,
+                         headers=HEADERS, interactive=False)
+    # df = gr.DataFrame(visible=True,    
+    #                     headers=HEADERS)
+    return df_gradio
+
