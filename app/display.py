@@ -1,5 +1,9 @@
 import gradio as gr
 import pandas as pd
+from gradio_modal import Modal
+from PIL import Image
+from io import BytesIO
+import base64
 
 from validation_submission.submission import validate_save_individual
 from validation_submission.get_json import get_json_all_individuals
@@ -7,9 +11,19 @@ from validation_submission.get_json import get_json_all_individuals
 HEADERS = ["Identifier", "Location", "Wounded", "Dead"]
 
 
-from PIL import Image
-from io import BytesIO
-import base64
+def save_display_individual(gallery, df, error_box):
+    individual, error_box = validate_save_individual(error_box)
+    if individual:
+        all_animals = get_json_all_individuals()
+        gallery_animals = process_animals_for_gallery(all_animals)
+        gallery = make_gallery(gallery_animals)
+        df_animals = process_animals_for_df(all_animals)
+        df = make_df(df_animals)
+    return gallery, df, error_box
+
+# ---------------------------------- 
+# GALLERY 
+
 def convert_image(image_base64_str): 
     im = Image.open(BytesIO(base64.b64decode(image_base64_str)))
     return im
@@ -22,15 +36,6 @@ def set_gallery_size(len_animals):
         num_cols = len_animals/2
         num_rows = len_animals/(num_cols)
     return num_cols, num_rows
-
-def save_individual_to_gallery(gallery, df):
-    validate_save_individual()
-    all_animals = get_json_all_individuals()
-    gallery_animals = process_animals_for_gallery(all_animals)
-    gallery = make_gallery(gallery_animals)
-    df_animals = process_animals_for_df(all_animals)
-    df = make_df(df_animals)
-    return gallery, df
 
 def process_animals_for_gallery(all_animals): 
     gallery_animals = []
@@ -72,6 +77,8 @@ def keep_only_values(dict_to_filter):
         info_text = "NaN"
     return info_text
 
+# ---------------------------------- 
+# DATAFRAME 
 
 def process_animals_for_df(all_animals):
     df_animals = {}
@@ -101,14 +108,13 @@ def process_animals_for_df(all_animals):
 def make_df(df_animals):
     df = pd.DataFrame.from_dict(df_animals)
     styled_df = df.style.set_properties(**{
-    'max-width': '100px',  # Adjust width as needed
+    'min-width': '25px',
+    'max-width': '50px',  # Adjust width as needed
     'white-space': 'normal',  # Allows text to wrap to the next line
     'word-wrap': 'break-word'  # Breaks long words to fit within the width
     })
     df_gradio = gr.DataFrame(visible=True,
-                         value=df,
+                         value=styled_df,
                          headers=HEADERS, interactive=False)
-    # df = gr.DataFrame(visible=True,    
-    #                     headers=HEADERS)
     return df_gradio
 

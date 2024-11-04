@@ -11,26 +11,9 @@ def process_circumstance(data):
                 key = data["circumstance_type"][field+"_label"]
                 data["circumstance_type"][key] = val
                 data["circumstance_type"].pop(field+"_label")
-    # {"circumstance_radio": true, 
-    #  "circumstance": "destruction / deliberatly removed", 
-    #  "cirumstance_type": {"type": "removal or direct capture", 
-    #                       "option_dropdown_label": "method",
-    #                       "open_field_label": "NA", 
-    #                       "extra_label": "NA"}, 
-    # "circumstance_option_dropdown": "Traffic/Trade"}
     return data
 
 def process_behaviors(data):
-    # INPUT  : 
-    #"behaviors_radio": true, 
-    # "behaviors_type": ["Crash, Falling From The Sky", "Neurological"]
-    #OUTPUT: 
-#     "behaviors_radio": "Yes",
-#   "behaviors_type": [
-#     {
-#       "type": "abnormal breathing",
-#       "description": "Problems breathing, breathing sounds"
-#     }
     behaviors =[]
     if data["behaviors_radio"] == "Yes":
         for type in data["behaviors_type"]: 
@@ -41,21 +24,6 @@ def process_behaviors(data):
     return data 
 
 def process_physical(data):
-    # INPUT
-    # "physical_type_feathers": "feathers", 
-    # "physical_anomaly_type_feathers": ["Blood", "Swelling"]}
-
-    # OUTPUT
-#     "physical_radio": "Yes",
-#   "physical_anomalies_type": [
-#     {
-#       "type": "beak",
-#       "anomaly_type": "deformation"
-#     },
-#     {
-#       "type": "body",
-#       "anomaly_type": "fluffed up"
-#     },
     body_parts= ["beak", "body", "legs", "feathers/wings/tail", "head incl. eyes"]
     anomalies=[]
     reformatted = {}
@@ -74,29 +42,6 @@ def process_physical(data):
     return reformatted
 
 def process_followup(data):
-    #     "follow_up_events": [
-#     {
-#       "type": "animal collected",
-#       "option": "Yes"
-#     },
-#     {
-#       "type": "recipient",
-#       "option": "Veterinary",
-#       "name_recipient": "Dr. Jane Smith"
-#     },
-#     {
-#       "type": "radiography",
-#       "option": "Unknown"
-#     },
-#     {
-#       "type": "given answer",
-#       "option": "Discussion with the speaker"
-#     },
-#     {
-#       "type": "collection reference",
-#       "reference": "Specimen ID: 12345, Collected on 2023-09-15"
-#     }
-#   ]
     followup_events = []
     for key, val in data.items(): 
         followup_event={}

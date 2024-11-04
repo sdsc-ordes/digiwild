@@ -14,3 +14,7 @@ def create_tmp(tmp_name="wounded_dead", tmp={}):
     tmp = json.dumps(tmp)
     with open(f"app/assets/tmp_json/tmp_{tmp_name}.json", "w") as outfile:
         outfile.write(tmp)
+
+def reset_json(): 
+    create_json_one_individual()
+    create_tmp()

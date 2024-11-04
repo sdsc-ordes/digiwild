@@ -6,11 +6,11 @@
             "Options": {
                 "road_type" : ["highway", "main road", "secondary road", "local road/path/trail", "parking lot", "other road", "unknown road"]
             },
-            "Open": "Infrastructure number"
+            "Open": "Infrastructure_number"
         },
         "train": 
         {
-            "Open": "Infrastructure number"
+            "Open": "Infrastructure_number"
         },
         "aircraft": {},
         "boat": {},

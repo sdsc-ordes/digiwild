@@ -100,13 +100,13 @@ def on_select_dropdown_level2(evt: gr.SelectData):
                 "circumstance_option_dropdown", 
                 evt.value.lower())
 
-def on_change_openfield_level2(evt: gr.EventData): 
-    print("Saving open field")
-    add_data_tmp("wounded_dead", 
-                "circumstance_open_field", 
-                evt.value.lower())
-
 def on_select_dropdown_extra_level2(evt: gr.SelectData):  
     add_data_tmp("wounded_dead", 
                  "circumstance_extra", 
                  evt.value.lower())
+    
+def on_change_openfield_level2(openfield_level2_dead): 
+    print("Saving open field")
+    add_data_tmp("wounded_dead", 
+                "circumstance_open_field", 
+                str(openfield_level2_dead).lower())
