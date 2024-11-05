@@ -1,11 +1,15 @@
 import gradio as gr
-# from gradio_image_prompter import ImagePrompter
+from dotenv import load_dotenv
+import os
 from typing import List
 from shapely.geometry import Point
-from physical_checkbox import *
-from physical_boxes_define import gdf
-from utils_visible import set_visible
 
+from physical.physical_checkbox import *
+from physical.physical_boxes_define import gdf
+from utils.utils_visible import set_visible
+
+load_dotenv()
+PATH_ASSETS = os.getenv('PATH_ASSETS')
 
 # Function to find the matching bounding box for a given point and return the image with boxes
 def find_bounding_box(evt: gr.SelectData, img, section: str):
@@ -25,7 +29,8 @@ def find_bounding_box(evt: gr.SelectData, img, section: str):
 # Gradio app
 def create_bird_anatomy(visible, section: str):
     # Draw bounding boxes on the image
-    img_with_boxes = gr.Image(value='assets/images/bird_boxed.png', 
+    print
+    img_with_boxes = gr.Image(value=PATH_ASSETS+'images/bird_boxed.png', 
                             show_label=False, 
                             height="600px",
                             elem_id=section,
@@ -35,6 +40,7 @@ def create_bird_anatomy(visible, section: str):
 def show_physical(choice, section: str): 
     visible = set_visible(choice)
     physical_boxes = create_bird_anatomy(visible, section)
+    add_data_tmp("wounded_dead", "physical_radio", choice)
     return physical_boxes
 
 

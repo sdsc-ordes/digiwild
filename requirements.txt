@@ -1,4 +1,6 @@
 gradio
+gradio_modal
 geopy
 geopandas
 pillow
+dotenv

@@ -1,9 +1,10 @@
 import gradio as gr
-from utils_config import get_custom_config_dropdowns
-from utils_checkbox import create_checkbox
+from utils.utils_config import get_custom_config_dropdowns
+from utils.utils_checkbox import create_checkbox
+from validation_submission.add_json import add_data_tmp 
 #--------------------------------------------------------- 
 def get_body_parts():
-    dropdown_config = get_custom_config_dropdowns("/assets/config/config_checkbox_physical.json")
+    dropdown_config = get_custom_config_dropdowns("config_checkbox_physical.json")
     return list(dropdown_config.keys())
 
 def retrieve_config_options(label, dropdown_config):
@@ -12,7 +13,7 @@ def retrieve_config_options(label, dropdown_config):
     return options
 
 def get_options_description(value):
-        dropdown_config = get_custom_config_dropdowns("/assets/config/config_checkbox_physical.json")
+        dropdown_config = get_custom_config_dropdowns("config_checkbox_physical.json")
         # get options
         options_common = retrieve_config_options("Common", dropdown_config)
         options_for_value = retrieve_config_options(value, dropdown_config)
@@ -68,4 +69,16 @@ def process_body_parts(section, matched_box):
     checkbox_legs, text_legs = create_checkbox_legs(section, label_checkbox, visibles[4])
     return checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
           
+#--------------------------------------------------------- 
+
+def on_select_body_part(body_part_checkbox, body_part): 
+    add_data_tmp("wounded_dead", "physical_type_"+body_part.lower(), body_part.lower())
+    body_part_checkbox = [body_part_check.lower() for body_part_check in body_part_checkbox]
+    add_data_tmp("wounded_dead", "physical_anomaly_"+body_part.lower(), body_part_checkbox)
+
+#--------------------------------------------------------- 
+
+def hide_physical():
+    checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs = process_body_parts("wounded", "None")
+    return checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
      

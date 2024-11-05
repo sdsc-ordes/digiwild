@@ -7,6 +7,8 @@ __pycache__/
 
 #Data 
 test/data/**
+data/**
+app/assets/tmp_json/** 
 
 # C extensions
 *.so

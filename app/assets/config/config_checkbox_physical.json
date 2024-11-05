@@ -11,7 +11,7 @@
             "Description": "Obvious bone fracture"},
         "Injury": {
             "Description": "Visible skin injury"},
-        "Parasites": {
+        "Parasite": {
             "Description": "Maggots, fleas, lice, louseflies"},
         "Swelling": {
             "Description": "Marked swelling without injury"},

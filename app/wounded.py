@@ -1,17 +1,22 @@
 import gradio as gr
-from circumstances import create_causes
-from physical_select_animal import create_bird_anatomy
-from physical_checkbox import process_body_parts
-from behavior_checkbox import create_behavior_checkbox
-from followup_events import create_followup_section
+from circumstances.circumstances import create_circumstances
+from physical.physical_select_animal import create_bird_anatomy
+from physical.physical_checkbox import process_body_parts
+from behavior.behavior_checkbox import create_behavior_checkbox
+from follow_up.followup_events import create_followup_dropdowns, create_followup_open
+from validation_submission.add_json import add_data_to_individual  
 
 def show_section_wounded(visible):
+    if visible==True: 
+        add_data_to_individual("wounded_state", "Yes")
+        add_data_to_individual("dead_state", "No")
+        
     with gr.Column(visible=visible, elem_id="wounded") as wounded_section:
         gr.Markdown("# Wounded Animal")
         
         gr.Markdown("## Do you know what conditions caused this?", label="description")
         radio_cause = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)
-        button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_causes(visible=False)
+        button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_circumstances(visible=False)
 
         gr.Markdown("## Is the bird displaying behavioural changes?" , label="description")
         radio_behaviour = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)
@@ -25,9 +30,14 @@ def show_section_wounded(visible):
             with gr.Column():
                 checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs = process_body_parts("wounded", "None")
 
-
+            
         gr.Markdown("## Follow-Up Events", label="Title")
-        create_followup_section()
+        gr.Markdown("Please tell us what you did with the animal.", label="description")
+        with gr.Row(): 
+            fe_collection_dropdown, fe_recepient_dropdown, fe_radio_dropdown, fe_answer_dropdown = create_followup_dropdowns(visible, "wounded")
+        with gr.Row(): 
+            fe_name_recipient, fe_collection_ref = create_followup_open(visible, "wounded")
+
 
     # Change variables and names
     return wounded_section, radio_cause, radio_behaviour, radio_physical, \
@@ -35,4 +45,5 @@ def show_section_wounded(visible):
         dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2, \
         behavior_checkbox, behavior_text, \
         physical_boxes, \
-        checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
+        checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs, \
+        fe_collection_dropdown, fe_recepient_dropdown, fe_radio_dropdown, fe_answer_dropdown, fe_name_recipient, fe_collection_ref
