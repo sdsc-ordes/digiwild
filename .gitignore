@@ -6,8 +6,8 @@ __pycache__/
 *$py.class
 
 #Data 
-test/data/**
-data/**
+test/data/*.json
+data/*.json
 app/assets/tmp_json/*.json 
 
 # C extensions
