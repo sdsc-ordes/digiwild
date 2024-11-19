@@ -39,7 +39,10 @@ RUN apt-get update && apt-get -y upgrade \
 
 RUN mkdir /app
 COPY . /digiwild
+
 RUN pip3 install -r /digiwild/requirements.txt
+
+RUN chmod -R 777 /digiwild/data /digiwild/assets
 
 WORKDIR /digiwild
 
