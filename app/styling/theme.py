@@ -1,6 +1,7 @@
 import gradio as gr
 
-css = """
+css= ""
+css_old = """
 .gradio-container {background: url(https://openclipart.org/image/2000px/279687)}
 
 /* Main background */

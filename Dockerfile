@@ -1,7 +1,11 @@
-From ubuntu:latest
+# From ubuntu:latest
 
-RUN apt-get update
-RUN apt-get install python3 python3-pip -y
+# RUN apt-get update
+# RUN apt-get install python3 python3-pip -y
+FROM ubuntu:22.04
+
+RUN apt update
+RUN apt install python3.10 python3-pip -y 
 
 # https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-every-time-i-use-pip-3
 # https://veronneau.org/python-311-pip-and-breaking-system-packages.html
@@ -38,4 +42,4 @@ RUN pip3 install -r /digiwild/requirements.txt
 
 WORKDIR /digiwild
 
-ENTRYPOINT python3 main.py
+ENTRYPOINT python3 app/main.py
