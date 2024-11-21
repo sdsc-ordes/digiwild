@@ -37,15 +37,27 @@ RUN apt-get update && apt-get -y upgrade \
 # ODTP setup
 ##################################################
 
-COPY . /digiwild_building
-RUN pip3 install -r /digiwild_building/requirements.txt
+# Set up a new user named "user" with user ID 1000
+RUN useradd -m -u 1000 user
 
-RUN useradd -m -u 1001 user
+# Switch to the "user" user
 USER user
 
-COPY --chown=user:user . /digiwild
+# Set home to the user's home directory
+ENV HOME=/home/user \
+	PATH=/home/user/.local/bin:$PATH
 
-RUN chown -R user:user /digiwild/data /digiwild/app/assets
+# Set the working directory to the user's home directory
+WORKDIR $HOME/digiwild
 
-WORKDIR /digiwild
+# Try and run pip command after setting the user with `USER user` to avoid permission issues with Python
+RUN pip install --no-cache-dir --upgrade pip
+
+# Copy the current directory contents into the container at $HOME/app setting the owner to the user
+COPY --chown=user . $HOME/digiwild
+
+RUN pip3 install -r $HOME/digiwild/requirements.txt
+
+#RUN chown -R user:user /digiwild/data /digiwild/app/assets
+
 ENTRYPOINT python3 app/main.py
