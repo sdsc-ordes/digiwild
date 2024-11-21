@@ -20,14 +20,14 @@ import gradio as gr
 
 # with gr.Blocks(theme=theme, css=css) as demo:
 #with gr.Blocks(theme='shivi/calm_seafoam') as demo:
-with gr.Blocks() as demo:
-    #create_json_all_individuals()
-    # ---------------------------------------------------------
-    # Intro Text
-    with gr.Row():
-        with gr.Column(scale=1):
-            title = gr.Markdown("# Welcome to Digiwild", label="Title")
-            description = gr.Markdown("Please record your wildlife observations here !", label="description")
+# with gr.Blocks() as demo:
+#     #create_json_all_individuals()
+#     # ---------------------------------------------------------
+#     # Intro Text
+#     with gr.Row():
+#         with gr.Column(scale=1):
+#             title = gr.Markdown("# Welcome to Digiwild", label="Title")
+#             description = gr.Markdown("Please record your wildlife observations here !", label="description")
     # with gr.Row(): 
     #     show_modal = gr.Button("Add an Animal", scale=3)
     #     submit_button = gr.Button("Submit All Animals", scale=1)
