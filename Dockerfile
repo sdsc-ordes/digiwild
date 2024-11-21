@@ -60,4 +60,4 @@ RUN pip3 install -r $HOME/digiwild/requirements.txt
 
 #RUN chown -R user:user /digiwild/data /digiwild/app/assets
 
-ENTRYPOINT ["python3", "app/main.py"]
+ENTRYPOINT ["python3", "$HOME/digiwild/app/main.py"]
