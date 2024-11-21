@@ -41,7 +41,7 @@ RUN apt-get update && apt-get -y upgrade \
 #RUN useradd -m -u 1000 user
 
 # Switch to the "user" user
-USER user
+USER 1000
 
 # Set home to the user's home directory
 ENV HOME=/home/user \
