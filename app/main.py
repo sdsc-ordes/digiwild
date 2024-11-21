@@ -332,6 +332,20 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
     #submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
 
 
+# Simple landing page with Gradio
+with gr.Blocks(theme='shivi/calm_seafoam') as demo2:
+    with gr.Row():
+        with gr.Column(scale=1):
+            title = gr.Markdown("# Welcome to the Simple Landing Page", label="Title")
+            description = gr.Markdown("This is a simple landing page created with Gradio.", label="description")
+    with gr.Row():
+        button = gr.Button("Click Me", scale=1)
+        output = gr.Textbox(label="Output", interactive=False)
+    
+    def on_button_click():
+        return "Button Clicked!"
+    
+    button.click(on_button_click, outputs=output)
      
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=3333)
+    demo2.launch(server_name="0.0.0.0", server_port=3333)

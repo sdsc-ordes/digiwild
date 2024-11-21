@@ -43,7 +43,5 @@ COPY . /digiwild
 RUN pip3 install -r /digiwild/requirements.txt
 
 RUN chmod -R 777 /digiwild/data /digiwild/app/assets
-
 WORKDIR /digiwild
-
 ENTRYPOINT python3 app/main.py
