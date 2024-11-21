@@ -19,7 +19,8 @@ import gradio as gr
 # from styling.theme import css
 
 # with gr.Blocks(theme=theme, css=css) as demo:
-with gr.Blocks(theme='shivi/calm_seafoam') as demo:
+#with gr.Blocks(theme='shivi/calm_seafoam') as demo:
+with gr.Blocks() as demo:
     #create_json_all_individuals()
     # ---------------------------------------------------------
     # Intro Text
