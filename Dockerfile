@@ -37,12 +37,12 @@ RUN apt-get update && apt-get -y upgrade \
 # ODTP setup
 ##################################################
 
+RUN pip3 install -r /digiwild/requirements.txt
+
 RUN useradd -m -u 1001 user
 USER user
 
 COPY --chown=user:user . /digiwild
-
-RUN pip3 install -r /digiwild/requirements.txt
 
 RUN chown -R user:user /digiwild/data /digiwild/app/assets
 
