@@ -1,22 +1,22 @@
 import gradio as gr
-from gradio_modal import Modal
+# from gradio_modal import Modal
 
-from validation_submission.create_json import create_json_all_individuals, create_json_one_individual, create_tmp, reset_json
-from validation_submission.add_json import add_data_to_individual
-from validation_submission.validation import reset_error_box
-from display import save_display_individual
-from geolocalisation.maps import get_location
-from functools import partial
-from dead import show_section_dead
-from wounded import show_section_wounded
-from circumstances.circumstances import show_circumstances
-from circumstances.circumstances_dropdowns import *
-from physical.physical_select_animal import show_physical, find_bounding_box
-from physical.physical_checkbox import on_select_body_part, hide_physical
-from behavior.behavior_checkbox import show_behavior, on_select_behavior
-from follow_up.followup_events import save_fe
-from styling.style import *
-from styling.theme import css
+# from validation_submission.create_json import create_json_all_individuals, create_json_one_individual, create_tmp, reset_json
+# from validation_submission.add_json import add_data_to_individual
+# from validation_submission.validation import reset_error_box
+# from display import save_display_individual
+# from geolocalisation.maps import get_location
+# from functools import partial
+# from dead import show_section_dead
+# from wounded import show_section_wounded
+# from circumstances.circumstances import show_circumstances
+# from circumstances.circumstances_dropdowns import *
+# from physical.physical_select_animal import show_physical, find_bounding_box
+# from physical.physical_checkbox import on_select_body_part, hide_physical
+# from behavior.behavior_checkbox import show_behavior, on_select_behavior
+# from follow_up.followup_events import save_fe
+# from styling.style import *
+# from styling.theme import css
 
 # with gr.Blocks(theme=theme, css=css) as demo:
 with gr.Blocks(theme='shivi/calm_seafoam') as demo:
