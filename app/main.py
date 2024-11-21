@@ -332,7 +332,11 @@ with gr.Blocks() as demo:
     # show_modal.click(create_tmp)
     # #submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
 
+def greet(name):
+    return f"Hello, {name}!"
+
+demo2 = gr.Interface(fn=greet, inputs="text", outputs="text")
      
 if __name__ == "__main__":
-    demo.launch()
+    demo2.launch()
     #demo.launch(server_name="0.0.0.0", server_port=3333)
