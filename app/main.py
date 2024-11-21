@@ -28,14 +28,14 @@ with gr.Blocks() as demo:
         with gr.Column(scale=1):
             title = gr.Markdown("# Welcome to Digiwild", label="Title")
             description = gr.Markdown("Please record your wildlife observations here !", label="description")
-    with gr.Row(): 
-        show_modal = gr.Button("Add an Animal", scale=3)
-        submit_button = gr.Button("Submit All Animals", scale=1)
-    df = gr.Dataframe(headers=["Identifier", "Location", "Wounded", "Dead"], visible=False, interactive=False)
-    gallery = gr.Gallery(
-        label="Gallery of Records", elem_id="gallery", 
-        columns=[1], rows=[1],
-        object_fit="contain", height="auto", interactive=False)
+    # with gr.Row(): 
+    #     show_modal = gr.Button("Add an Animal", scale=3)
+    #     submit_button = gr.Button("Submit All Animals", scale=1)
+    # df = gr.Dataframe(headers=["Identifier", "Location", "Wounded", "Dead"], visible=False, interactive=False)
+    # gallery = gr.Gallery(
+    #     label="Gallery of Records", elem_id="gallery", 
+    #     columns=[1], rows=[1],
+    #     object_fit="contain", height="auto", interactive=False)
 
     # with Modal(visible=False) as modal:
     #     # ---------------------------------------------------------
