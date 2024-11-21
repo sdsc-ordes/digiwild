@@ -37,7 +37,7 @@ RUN apt-get update && apt-get -y upgrade \
 # ODTP setup
 ##################################################
 
-RUN useradd -m -u 1000 user
+#RUN useradd -m -u 1000 user
 USER user
 
 RUN mkdir /app
