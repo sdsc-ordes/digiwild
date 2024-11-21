@@ -43,9 +43,9 @@ RUN apt-get update && apt-get -y upgrade \
 # Switch to the "user" user
 USER 1000
 
-# Set home to the user's home directory
-ENV HOME=/home/user \
-	PATH=/home/user/.local/bin:$PATH
+# # Set home to the user's home directory
+# ENV HOME=/home/user \
+# 	PATH=/home/user/.local/bin:$PATH
 
 # Set the working directory to the user's home directory
 WORKDIR $HOME/digiwild
@@ -54,7 +54,7 @@ WORKDIR $HOME/digiwild
 RUN pip install --no-cache-dir --upgrade pip
 
 # Copy the current directory contents into the container at $HOME/app setting the owner to the user
-COPY --chown=user . $HOME/digiwild
+COPY --chown=1000:1000 . $HOME/digiwild
 
 RUN pip3 install -r $HOME/digiwild/requirements.txt
 
