@@ -333,4 +333,5 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
 
      
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=3333)
+    demo.launch()
+    #demo.launch(server_name="0.0.0.0", server_port=3333)
