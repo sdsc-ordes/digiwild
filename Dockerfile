@@ -38,7 +38,7 @@ RUN apt-get update && apt-get -y upgrade \
 ##################################################
 
 # Set up a new user named "user" with user ID 1000
-RUN useradd -m -u 1000 user
+#RUN useradd -m -u 1000 user
 
 # Switch to the "user" user
 USER user
