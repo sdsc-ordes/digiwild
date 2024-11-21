@@ -40,7 +40,6 @@ RUN apt-get update && apt-get -y upgrade \
 RUN useradd -m -u 1001 user
 USER user
 
-RUN mkdir /app
 COPY --chown=user:user . /digiwild
 
 RUN pip3 install -r /digiwild/requirements.txt
