@@ -43,9 +43,9 @@ RUN apt-get update && apt-get -y upgrade \
 # Switch to the "user" user
 USER 1000
 
-# # Set home to the user's home directory
-# ENV HOME=/home/user \
-# 	PATH=/home/user/.local/bin:$PATH
+# Set home to the user's home directory
+ENV HOME=/home/user \
+	PATH=/home/user/.local/bin:$PATH
 
 # Set the working directory to the user's home directory
 WORKDIR $HOME/digiwild
@@ -60,4 +60,4 @@ RUN pip3 install -r $HOME/digiwild/requirements.txt
 
 #RUN chown -R user:user /digiwild/data /digiwild/app/assets
 
-ENTRYPOINT python3 app/main.py
+ENTRYPOINT ["python3", "app/main.py"]
