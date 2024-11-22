@@ -20,7 +20,7 @@ from styling.theme import css
 
 # with gr.Blocks(theme=theme, css=css) as demo:
 with gr.Blocks(theme='shivi/calm_seafoam') as demo:
-    #create_json_all_individuals()
+    create_json_all_individuals()
     # ---------------------------------------------------------
     # Intro Text
     with gr.Row():
