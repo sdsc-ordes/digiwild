@@ -70,6 +70,11 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
                                                     visible=True, interactive=True, scale=1
                                                     )
                     clear_location.click()
+
+                # TODO: Introduce text_box for Species
+
+                # TODO: Introduce text_box for comments 
+
         
         # ---------------------------------------------------------
          # ---------------------------------------------------------
