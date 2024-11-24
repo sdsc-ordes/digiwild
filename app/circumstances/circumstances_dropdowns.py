@@ -21,24 +21,24 @@ def create_dropdown_level1(label):
     dropdown_level2, openfield_level2, dropdown_extra_level2 = reinitialise_level2()
     return dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2
     
-def dropdown_collision():
+def dropdown_collision(session_id):
     label = "Collision with a means of transport"
-    add_data_tmp("wounded_dead", "circumstance", label.lower())
+    add_data_tmp(session_id, "wounded_dead", "circumstance", label.lower())
     return create_dropdown_level1(label)
 
-def dropdown_deliberate_destruction():
+def dropdown_deliberate_destruction(session_id):
     label = "Destruction / Deliberatly removed"
-    add_data_tmp("wounded_dead", "circumstance", label.lower())
+    add_data_tmp(session_id, "wounded_dead", "circumstance", label.lower())
     return create_dropdown_level1(label)     
 
-def dropdown_indirect_destruction(): 
+def dropdown_indirect_destruction(session_id): 
     label = "Indirect destruction"
-    add_data_tmp("wounded_dead", "circumstance", label.lower())
+    add_data_tmp(session_id, "wounded_dead", "circumstance", label.lower())
     return create_dropdown_level1(label) 
 
-def dropdown_natural_cause(): 
+def dropdown_natural_cause(session_id): 
     label = "Natural cause"
-    add_data_tmp("wounded_dead", "circumstance", label.lower())
+    add_data_tmp(session_id, "wounded_dead", "circumstance", label.lower())
     return create_dropdown_level1(label)         
 
 
@@ -70,7 +70,7 @@ def get_options(value):
         return options_label, options_dropdown, open_field, extras, extras_label
 
        
-def on_select(evt: gr.SelectData):  # SelectData is a subclass of EventData
+def on_select(session_id, evt: gr.SelectData):  # SelectData is a subclass of EventData
     options_label, options_dropdown, open_field, extras, extras_label = get_options(evt.value)
     add_data_tmp("wounded_dead", 
                     "circumstance_type", 
@@ -95,18 +95,18 @@ def on_select(evt: gr.SelectData):  # SelectData is a subclass of EventData
         dropdown_extra_level2 = gr.Dropdown(choices=[], visible=False)
     return dropdown_level2, openfield_level2, dropdown_extra_level2
 
-def on_select_dropdown_level2(evt: gr.SelectData): 
-    add_data_tmp("wounded_dead", 
+def on_select_dropdown_level2(session_id, evt: gr.SelectData): 
+    add_data_tmp(session_id, "wounded_dead", 
                 "circumstance_option_dropdown", 
                 evt.value.lower())
 
-def on_select_dropdown_extra_level2(evt: gr.SelectData):  
-    add_data_tmp("wounded_dead", 
+def on_select_dropdown_extra_level2(session_id, evt: gr.SelectData):  
+    add_data_tmp(session_id, "wounded_dead", 
                  "circumstance_extra", 
                  evt.value.lower())
     
-def on_change_openfield_level2(openfield_level2_dead): 
+def on_change_openfield_level2(session_id, openfield_level2_dead): 
     print("Saving open field")
-    add_data_tmp("wounded_dead", 
+    add_data_tmp(session_id, "wounded_dead", 
                 "circumstance_open_field", 
                 str(openfield_level2_dead).lower())

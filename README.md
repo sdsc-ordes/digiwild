@@ -29,7 +29,7 @@ python3 main.py
 ### How to develop on docker
 
 ```
-docker run -it -p 7860:3333 -v $(pwd):/home/user/digiwild/
+docker run -it -p 7860:7860 -v $(pwd):/home/user/digiwild/ ordes/digiwild
 ```
 
 ## TODO

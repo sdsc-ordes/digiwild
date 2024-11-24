@@ -59,5 +59,6 @@ COPY --chown=1000:1000 . $HOME/digiwild
 RUN pip3 install -r $HOME/digiwild/requirements.txt
 
 #RUN chown -R user:user /digiwild/data /digiwild/app/assets
+ENV PYTHONPATH=/home/user/digiwild/
 
 ENTRYPOINT ["python3", "/home/user/digiwild/app/main.py"]

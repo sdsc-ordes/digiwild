@@ -6,10 +6,10 @@ from behavior.behavior_checkbox import create_behavior_checkbox
 from follow_up.followup_events import create_followup_dropdowns, create_followup_open
 from validation_submission.add_json import add_data_to_individual  
 
-def show_section_wounded(visible):
+def show_section_wounded(session_id, visible):
     if visible==True: 
-        add_data_to_individual("wounded_state", "Yes")
-        add_data_to_individual("dead_state", "No")
+        add_data_to_individual(session_id, "wounded_state", "Yes")
+        add_data_to_individual(session_id, "dead_state", "No")
         
     with gr.Column(visible=visible, elem_id="wounded") as wounded_section:
         gr.Markdown("# Wounded Animal")

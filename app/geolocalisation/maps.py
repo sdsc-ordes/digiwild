@@ -15,11 +15,11 @@ def create_geolocalisation_object(lat, long, name):
         print("Pydantic Error for Geolocalisation")
     return geolocalisation
 
-def save_geolocalisation_to_json(geolocalisation): 
+def save_geolocalisation_to_json(session_id, geolocalisation): 
     geo_dict = geolocalisation.dict()
-    add_data_to_individual("geolocalisation", geo_dict)
+    add_data_to_individual(session_id, "geolocalisation", geo_dict)
 
-def get_location(address):
+def get_location(session_id, address):
     try: 
         # calling the Nominatim tool
         loc = Nominatim(user_agent="GetLoc")
@@ -33,7 +33,7 @@ def get_location(address):
 
         # Save values
         geolocalisation = create_geolocalisation_object(lat, lon, address)
-        save_geolocalisation_to_json(geolocalisation)
+        save_geolocalisation_to_json(session_id, geolocalisation)
 
         #display location processing
         value = "Latitude = " + str(lat) + "\n" + "Longitude = " + str(lon)
