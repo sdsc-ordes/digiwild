@@ -17,9 +17,9 @@ def get_fields(data_dict, keyword):
             extract[key] = val
     return extract
 
-def validate_individual(error_box):
+def validate_individual(session_state, error_box):
     error_box = reset_error_box(error_box)
-    data = get_json_one_individual()
+    data = get_json_one_individual(session_state)
     data["identifier"] = str(uuid.uuid4())
     if "image" in data.keys():
         img = ImageBase64.to_base64(data["image"])
@@ -39,7 +39,7 @@ def validate_individual(error_box):
         data["wounded_state"] = "No"
         data["dead_state"] = "No"
     if (data["wounded_state"] == "Yes") or (data["dead_state"] == "Yes"):
-        data_wounded_dead = get_json_tmp("wounded_dead")
+        data_wounded_dead = get_json_tmp(session_state, "wounded_dead")
         circumstance, error_circumstance = validate_circumstance(data_wounded_dead)
         physical, error_physical = validate_physical(data_wounded_dead)
         followup, error_followup = validate_follow_up(data_wounded_dead)

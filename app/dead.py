@@ -5,10 +5,10 @@ from physical.physical_checkbox import process_body_parts
 from follow_up.followup_events import create_followup_dropdowns, create_followup_open
 from validation_submission.add_json import add_data_to_individual
 
-def show_section_dead(visible):
+def show_section_dead(session_state, visible):
     if visible==True: 
-        add_data_to_individual("wounded_state", "No")
-        add_data_to_individual("dead_state", "Yes")
+        session_state = add_data_to_individual(session_state, "wounded_state", "No")
+        session_state = add_data_to_individual(session_state, "dead_state", "Yes")
         
     with gr.Column(visible=visible, elem_id="dead") as section_dead:
         gr.Markdown("# Dead Animal")
@@ -32,7 +32,7 @@ def show_section_dead(visible):
             fe_name_recipient, fe_collection_ref = create_followup_open(visible, "dead")
 
 
-    return section_dead, radio_cause, radio_physical,\
+    return session_state, section_dead, radio_cause, radio_physical,\
          button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, \
           dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2, \
           physical_boxes, \

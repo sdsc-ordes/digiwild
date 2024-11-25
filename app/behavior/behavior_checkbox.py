@@ -4,9 +4,10 @@ from utils.utils_checkbox import create_checkbox
 from utils.utils_visible import set_visible
 from validation_submission.add_json import add_data_tmp
 
-def on_select_behavior(behavior_checkbox): 
+def on_select_behavior(session_sate, behavior_checkbox): 
     behavior_checkbox = [behavior.lower() for behavior in behavior_checkbox]
-    add_data_tmp("wounded_dead", "behaviors_type", behavior_checkbox)
+    session_sate = add_data_tmp(session_sate, "wounded_dead", "behaviors_type", behavior_checkbox)
+    return session_sate
 
 def retrieve_behavior_options_description():
     dropdown_config = get_custom_config_dropdowns("config_checkbox_behavior.json")
@@ -23,8 +24,8 @@ def create_behavior_checkbox(section: str, visible):
     checkbox, text = create_checkbox("", section, label_checkbox, visible, options, descriptions)
     return checkbox, text
 
-def show_behavior(choice, section: str): 
+def show_behavior(session_sate, choice, section: str): 
     visible = set_visible(choice)
     checkbox, text = create_behavior_checkbox(section, visible)
-    add_data_tmp("wounded_dead", "behaviors_radio", choice)
-    return checkbox, text
+    session_sate = add_data_tmp(session_sate, "wounded_dead", "behaviors_radio", choice)
+    return session_sate, checkbox, text

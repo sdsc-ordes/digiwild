@@ -20,6 +20,13 @@ from styling.theme import css
 
 # with gr.Blocks(theme=theme, css=css) as demo:
 with gr.Blocks(theme='shivi/calm_seafoam') as demo:
+#with gr.Blocks() as demo:
+    session_state = gr.State({
+        "one_individual": {},
+        "all_individuals": {},
+        "tmp_wounded_dead": {}
+    })
+
     create_json_all_individuals()
     # ---------------------------------------------------------
     # Intro Text
@@ -47,11 +54,12 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
         # ---------------------------------------------------------
         # Camera
         with gr.Row():
-            def save_image(camera):
-                add_data_to_individual("image", camera.tolist())
+            def save_image(session_state, camera):
+                session_state = add_data_to_individual(session_state, "image", camera.tolist())
+                return session_state
 
             camera = gr.Image(elem_id="image")
-            camera.input(save_image, inputs=[camera])
+            camera.input(save_image, inputs=[session_state, camera], outputs=[session_state])
         # ---------------------------------------------------------
         # Location
         #with gr.Row():
@@ -73,6 +81,8 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
 
                 # TODO: Introduce text_box for Species
 
+                # TODO: Introduce number of individuals
+
                 # TODO: Introduce text_box for comments 
 
         
@@ -89,15 +99,15 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
 
         # ---------------------------------------------------------
         # Initiate sections
-        section_dead, radio_circumstance_dead, radio_physical_dead,\
+        session_state, section_dead, radio_circumstance_dead, radio_physical_dead,\
             button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, \
                 dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead, \
                     physical_boxes_dead, \
                     checkbox_beak_dead, text_beak_dead, checkbox_body_dead, text_body_dead, checkbox_feathers_dead, text_feathers_dead, checkbox_head_dead, text_head_dead, checkbox_legs_dead, text_legs_dead, \
                     fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, \
                     fe_name_recipient_dead, fe_collection_ref_dead \
-                    = show_section_dead(False)
-        section_wounded, radio_circumstance_wounded, radio_behavior_wounded, radio_physical_wounded, \
+                    = show_section_dead(session_state, False)
+        session_state, section_wounded, radio_circumstance_wounded, radio_behavior_wounded, radio_physical_wounded, \
             button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, \
                 dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded, \
                     behavior_checkbox, behavior_text, \
@@ -105,17 +115,17 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
                             checkbox_beak_wounded, text_beak_wounded, checkbox_body_wounded, text_body_wounded, checkbox_feathers_wounded, text_feathers_wounded, checkbox_head_wounded, text_head_wounded, checkbox_legs_wounded, text_legs_wounded, \
                             fe_collection_dropdown_wounded, fe_recepient_dropdown_wounded, fe_radio_dropdown_wounded, fe_answer_dropdown_wounded, \
                                 fe_name_recipient_wounded, fe_collection_ref_wounded \
-                                = show_section_wounded(False)
+                                = show_section_wounded(session_state, False)
     
         # ---------------------------------------------------------
         # ---------------------------------------------------------
         # ---------------------------------------------------------
         # Dead Button Logic
-        partial_show_section_dead = partial(show_section_dead, True)
-        partial_hide_section_wounded = partial(show_section_wounded, False)
-        butt_dead.click(partial_show_section_dead, 
-                        inputs=None, 
-                        outputs=[section_dead, 
+        #partial_show_section_dead = partial(show_section_dead, True)
+        #partial_hide_section_wounded = partial(show_section_wounded, False)
+        butt_dead.click(show_section_dead, 
+                        inputs=[session_state, gr.State(True)], 
+                        outputs=[session_state, section_dead, 
                                 radio_circumstance_dead, radio_physical_dead,
                                 button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
                                 dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead, \
@@ -124,9 +134,9 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
                                 fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, \
                                 fe_name_recipient_dead, fe_collection_ref_dead \
                                 ])
-        butt_dead.click(partial_hide_section_wounded, 
-                        inputs=None, 
-                        outputs=[section_wounded, 
+        butt_dead.click(show_section_wounded, 
+                        inputs=[session_state, gr.State(False)], 
+                        outputs=[session_state, section_wounded, 
                                 radio_circumstance_wounded, radio_behavior_wounded, radio_physical_wounded,
                                 button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
                                 dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded,
@@ -139,12 +149,12 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
         
         # ---------------------------------------------------------
         # Wounded Button Logic
-        partial_show_section_wounded = partial(show_section_wounded, True)
-        partial_hide_section_dead = partial(show_section_dead, False)
+        #partial_show_section_wounded = partial(show_section_wounded, True)
+        #partial_hide_section_dead = partial(show_section_dead, False)
 
-        butt_wounded.click(partial_show_section_wounded, 
-                        inputs=None, 
-                        outputs=[section_wounded, 
+        butt_wounded.click(show_section_wounded, 
+                        inputs=[session_state, gr.State(True)], 
+                        outputs=[session_state, section_wounded, 
                                     radio_circumstance_wounded, radio_behavior_wounded, radio_physical_wounded,
                                     button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
                                     dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded,
@@ -154,15 +164,17 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
                                     fe_collection_dropdown_wounded, fe_recepient_dropdown_wounded, fe_radio_dropdown_wounded, fe_answer_dropdown_wounded, \
                                     fe_name_recipient_wounded, fe_collection_ref_wounded \
                                     ])
-        butt_wounded.click(partial_hide_section_dead, inputs=None, outputs=[section_dead, 
-                                                                            radio_circumstance_dead, radio_physical_dead,
-                                                                            button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
-                                                                            dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead, \
-                                                                            physical_boxes_dead, \
-                                                                            checkbox_beak_dead, text_beak_dead, checkbox_body_dead, text_body_dead, checkbox_feathers_dead, text_feathers_dead, checkbox_head_dead, text_head_dead, checkbox_legs_dead, text_legs_dead, \
-                                                                            fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, \
-                                                                            fe_name_recipient_dead, fe_collection_ref_dead \
-                                                                            ])
+        butt_wounded.click(show_section_dead, 
+                           inputs=[session_state, gr.State(False)], 
+                           outputs=[session_state, section_dead, 
+                                        radio_circumstance_dead, radio_physical_dead,
+                                        button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
+                                        dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead, \
+                                        physical_boxes_dead, \
+                                        checkbox_beak_dead, text_beak_dead, checkbox_body_dead, text_body_dead, checkbox_feathers_dead, text_feathers_dead, checkbox_head_dead, text_head_dead, checkbox_legs_dead, text_legs_dead, \
+                                        fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, \
+                                        fe_name_recipient_dead, fe_collection_ref_dead \
+                                        ])
         # ---------------------------------------------------------
         # ---------------------------------------------------------
         # ---------------------------------------------------------
@@ -171,26 +183,33 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
         # ---------------------------------------------------------
         # Radio Circumstance Dead
         radio_circumstance_dead.change(fn=show_circumstances,
-                                inputs=[radio_circumstance_dead],
+                                inputs=[session_state, radio_circumstance_dead],
                                 outputs=[button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
                                             dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead]
                                 )
         
         # Dropdowns Dead
-        button_collision_dead.click(dropdown_collision,  
-                                    outputs=[dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
-        button_deliberate_destruction_dead.click(dropdown_deliberate_destruction, outputs=[dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
-        button_indirect_destruction_dead.click(dropdown_indirect_destruction, outputs=[dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
-        button_natural_cause_dead.click(dropdown_natural_cause, outputs=[dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
+        button_collision_dead.click(dropdown_collision,
+                                    inputs=[session_state],
+                                    outputs=[session_state, dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
+        button_deliberate_destruction_dead.click(dropdown_deliberate_destruction,
+                                                 inputs=[session_state],
+                                                 outputs=[dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
+        button_indirect_destruction_dead.click(dropdown_indirect_destruction,
+                                               inputs=[session_state],
+                                               outputs=[dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
+        button_natural_cause_dead.click(dropdown_natural_cause, 
+                                        inputs=[session_state],
+                                        outputs=[dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
 
-        dropdown_dead.select(on_select, None, [dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
-        dropdown_level2_dead.select(on_select_dropdown_level2)
-        openfield_level2_dead.change(on_change_openfield_level2, inputs=[openfield_level2_dead])
-        dropdown_extra_level2_dead.select(on_select_dropdown_extra_level2)
+        dropdown_dead.select(on_select, inputs=[session_state, gr.State(None)], outputs=[dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead])
+        dropdown_level2_dead.select(on_select_dropdown_level2, inputs=[session_state, gr.State(None)])
+        openfield_level2_dead.change(on_change_openfield_level2, inputs=[session_state, openfield_level2_dead])
+        dropdown_extra_level2_dead.select(on_select_dropdown_extra_level2, inputs=[session_state, gr.State(None)])
         # ---------------------------------------------------------
         # Radio Physical Dead
         radio_physical_dead.change(fn=show_physical,
-                                    inputs=[radio_physical_dead, gr.Text("dead", visible=False)],
+                                    inputs=[session_state, radio_physical_dead, gr.Text("dead", visible=False)],
                                     outputs=[physical_boxes_dead])
 
         # Checkbox Physical Dead
@@ -202,11 +221,11 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
                                  checkbox_head_dead, text_head_dead, 
                                  checkbox_legs_dead, text_legs_dead
                                     ])
-        checkbox_beak_dead.select(on_select_body_part, inputs=[checkbox_beak_dead, gr.Text("beak", visible=False)])
-        checkbox_body_dead.select(on_select_body_part, inputs=[checkbox_body_dead, gr.Text("body", visible=False)])
-        checkbox_feathers_dead.select(on_select_body_part, inputs=[checkbox_feathers_dead, gr.Text("feathers", visible=False)])
-        checkbox_head_dead.select(on_select_body_part, inputs=[checkbox_head_dead, gr.Text("head", visible=False)])
-        checkbox_legs_dead.select(on_select_body_part, inputs=[checkbox_legs_dead, gr.Text("legs", visible=False)])
+        checkbox_beak_dead.select(on_select_body_part, inputs=[session_state, checkbox_beak_dead, gr.Text("beak", visible=False)])
+        checkbox_body_dead.select(on_select_body_part, inputs=[session_state, checkbox_body_dead, gr.Text("body", visible=False)])
+        checkbox_feathers_dead.select(on_select_body_part, inputs=[session_state, checkbox_feathers_dead, gr.Text("feathers", visible=False)])
+        checkbox_head_dead.select(on_select_body_part, inputs=[session_state, checkbox_head_dead, gr.Text("head", visible=False)])
+        checkbox_legs_dead.select(on_select_body_part, inputs=[session_state, checkbox_legs_dead, gr.Text("legs", visible=False)])
         # ---------------------------------------------------------
         # ---------------------------------------------------------
         # ---------------------------------------------------------
@@ -215,33 +234,34 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
         # ---------------------------------------------------------
         # Radio Circumstance Wounded
         radio_circumstance_wounded.change(fn=show_circumstances,
-                                inputs=[radio_circumstance_wounded],
+                                inputs=[session_state, radio_circumstance_wounded],
                                 outputs=[button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
                                             dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded]
                                 )
         
         # Dropdowns Circumstance Wounded
-        button_collision_wounded.click(dropdown_collision,  
-                                    outputs=[dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
-        button_deliberate_destruction_wounded.click(dropdown_deliberate_destruction, outputs=[dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
-        button_indirect_destruction_wounded.click(dropdown_indirect_destruction, outputs=[dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
-        button_natural_cause_wounded.click(dropdown_natural_cause, outputs=[dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
+        button_collision_wounded.click(dropdown_collision,
+                                    inputs=[session_state],  
+                                    outputs=[session_state, dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
+        button_deliberate_destruction_wounded.click(dropdown_deliberate_destruction, inputs=[session_state], outputs=[dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
+        button_indirect_destruction_wounded.click(dropdown_indirect_destruction, inputs=[session_state], outputs=[dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
+        button_natural_cause_wounded.click(dropdown_natural_cause, inputs=[session_state], outputs=[dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
         
-        dropdown_wounded.select(on_select, None, [dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
-        dropdown_level2_wounded.select(on_select_dropdown_level2)
-        openfield_level2_wounded.change(on_change_openfield_level2, inputs=[openfield_level2_wounded])
-        dropdown_extra_level2_wounded.select(on_select_dropdown_extra_level2)
+        dropdown_wounded.select(on_select, inputs=[session_state, gr.State(None)], outputs=[dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded])
+        dropdown_level2_wounded.select(on_select_dropdown_level2, inputs=[session_state, gr.State(None)])
+        openfield_level2_wounded.change(on_change_openfield_level2, inputs=[session_state, openfield_level2_wounded])
+        dropdown_extra_level2_wounded.select(on_select_dropdown_extra_level2, inputs=[session_state, gr.State(None)])
         # ---------------------------------------------------------
         # Radio Behavior Wounded
         radio_behavior_wounded.change(fn=show_behavior,
-                                    inputs=[radio_behavior_wounded, gr.Text("wounded", visible=False)],
-                                    outputs=[behavior_checkbox, behavior_text])
+                                    inputs=[session_state, radio_behavior_wounded, gr.Text("wounded", visible=False)],
+                                    outputs=[session_state, behavior_checkbox, behavior_text])
         behavior_checkbox.select(on_select_behavior, 
-                                 inputs=[behavior_checkbox])
+                                 inputs=[session_state, behavior_checkbox], outputs=[session_state])
         # ---------------------------------------------------------
         # Radio Physical Wounded
         radio_physical_wounded.change(fn=show_physical,
-                                    inputs=[radio_physical_wounded, gr.Text("wounded", visible=False)],
+                                    inputs=[session_state, radio_physical_wounded, gr.Text("wounded", visible=False)],
                                     outputs=[physical_boxes_wounded])
 
         # Checkbox Physical Wounded
@@ -253,29 +273,29 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
                                  checkbox_head_wounded, text_head_wounded, 
                                  checkbox_legs_wounded, text_legs_wounded
                                     ])
-        checkbox_beak_wounded.select(on_select_body_part, inputs=[checkbox_beak_wounded, gr.Text("beak", visible=False)])
-        checkbox_body_wounded.select(on_select_body_part, inputs=[checkbox_body_wounded, gr.Text("body", visible=False)])
-        checkbox_feathers_wounded.select(on_select_body_part, inputs=[checkbox_feathers_wounded, gr.Text("feathers", visible=False)])
-        checkbox_head_wounded.select(on_select_body_part, inputs=[checkbox_head_wounded, gr.Text("head", visible=False)])
-        checkbox_legs_wounded.select(on_select_body_part, inputs=[checkbox_legs_wounded, gr.Text("legs", visible=False)])
+        checkbox_beak_wounded.select(on_select_body_part, inputs=[session_state, checkbox_beak_wounded, gr.Text("beak", visible=False)])
+        checkbox_body_wounded.select(on_select_body_part, inputs=[session_state, checkbox_body_wounded, gr.Text("body", visible=False)])
+        checkbox_feathers_wounded.select(on_select_body_part, inputs=[session_state, checkbox_feathers_wounded, gr.Text("feathers", visible=False)])
+        checkbox_head_wounded.select(on_select_body_part, inputs=[session_state, checkbox_head_wounded, gr.Text("head", visible=False)])
+        checkbox_legs_wounded.select(on_select_body_part, inputs=[session_state, checkbox_legs_wounded, gr.Text("legs", visible=False)])
         
         # ---------------------------------------------------------
         # Follow Up Events Wounded 
-        fe_collection_dropdown_wounded.select(save_fe, inputs=[fe_collection_dropdown_wounded, gr.Textbox("animal collected", visible=False)])
-        fe_recepient_dropdown_wounded.select(save_fe, inputs=[fe_recepient_dropdown_wounded, gr.Textbox("recipient", visible=False)])
-        fe_radio_dropdown_wounded.select(save_fe, inputs=[fe_radio_dropdown_wounded, gr.Textbox("radiography", visible=False)]) 
-        fe_answer_dropdown_wounded.select(save_fe, inputs=[fe_answer_dropdown_wounded, gr.Textbox("given answer", visible=False)])
-        fe_name_recipient_wounded.input(save_fe, inputs=[fe_name_recipient_wounded, gr.Textbox("recipient name", visible=False)])
-        fe_collection_ref_wounded.input(save_fe, inputs=[fe_collection_ref_wounded, gr.Textbox("collection reference", visible=False)])
+        fe_collection_dropdown_wounded.select(save_fe, inputs=[session_state, fe_collection_dropdown_wounded, gr.Textbox("animal collected", visible=False)])
+        fe_recepient_dropdown_wounded.select(save_fe, inputs=[session_state, fe_recepient_dropdown_wounded, gr.Textbox("recipient", visible=False)])
+        fe_radio_dropdown_wounded.select(save_fe, inputs=[session_state, fe_radio_dropdown_wounded, gr.Textbox("radiography", visible=False)]) 
+        fe_answer_dropdown_wounded.select(save_fe, inputs=[session_state, fe_answer_dropdown_wounded, gr.Textbox("given answer", visible=False)])
+        fe_name_recipient_wounded.input(save_fe, inputs=[session_state, fe_name_recipient_wounded, gr.Textbox("recipient name", visible=False)])
+        fe_collection_ref_wounded.input(save_fe, inputs=[session_state, fe_collection_ref_wounded, gr.Textbox("collection reference", visible=False)])
 
         # ---------------------------------------------------------
         # Follow Up Events Dead 
-        fe_collection_dropdown_dead.select(save_fe, inputs=[fe_collection_dropdown_dead, gr.Textbox("animal collected", visible=False)])
-        fe_recepient_dropdown_dead.select(save_fe, inputs=[fe_recepient_dropdown_dead, gr.Textbox("recipient", visible=False)])
-        fe_radio_dropdown_dead.select(save_fe, inputs=[fe_radio_dropdown_dead, gr.Textbox("radiography", visible=False)]) 
-        fe_answer_dropdown_dead.select(save_fe, inputs=[fe_answer_dropdown_dead, gr.Textbox("given answer", visible=False)])
-        fe_name_recipient_dead.input(save_fe, inputs=[fe_name_recipient_dead, gr.Textbox("recipient name", visible=False)])
-        fe_collection_ref_dead.input(save_fe, inputs=[fe_collection_ref_dead, gr.Textbox("collection reference", visible=False)])
+        fe_collection_dropdown_dead.select(save_fe, inputs=[session_state, fe_collection_dropdown_dead, gr.Textbox("animal collected", visible=False)])
+        fe_recepient_dropdown_dead.select(save_fe, inputs=[session_state, fe_recepient_dropdown_dead, gr.Textbox("recipient", visible=False)])
+        fe_radio_dropdown_dead.select(save_fe, inputs=[session_state, fe_radio_dropdown_dead, gr.Textbox("radiography", visible=False)]) 
+        fe_answer_dropdown_dead.select(save_fe, inputs=[session_state, fe_answer_dropdown_dead, gr.Textbox("given answer", visible=False)])
+        fe_name_recipient_dead.input(save_fe, inputs=[session_state, fe_name_recipient_dead, gr.Textbox("recipient name", visible=False)])
+        fe_collection_ref_dead.input(save_fe, inputs=[session_state, fe_collection_ref_dead, gr.Textbox("collection reference", visible=False)])
 
         # ---------------------------------------------------------
         # Error Box
@@ -324,17 +344,33 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
         button_clear.click(reset_json)
 
         button_df.click(save_display_individual, 
-                        inputs=[gallery, df, error_box],
-                        outputs=[gallery, df, error_box]
+                        inputs=[session_state, gallery, df, error_box],
+                        outputs=[session_state, gallery, df, error_box]
                         )
         button_close.click(lambda: Modal(visible=False), None, modal)
+
+
+        # Debugging
+        def refresh_state_display(state):
+            session_state_display = gr.JSON(value=state, label="Session State", visible=True)
+            return session_state_display
+
+        session_state_display = gr.JSON(value=None, label="Session State", visible=True)
+        refresh_button = gr.Button("🔄 Refresh State")
+        refresh_button.click(
+            fn=refresh_state_display,
+            inputs=[session_state],
+            outputs=[session_state_display]
+        )
+
     
     # ---------------------------------------------------------
     # Event Functions of the landing page buttons
     show_modal.click(lambda: Modal(visible=True), None, modal)
-    show_modal.click(create_json_one_individual)
-    show_modal.click(create_tmp)
+    #show_modal.click(create_json_one_individual)
+    #show_modal.click(create_tmp)
     #submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
+    # Display session state for debugging
 
 
 if __name__ == "__main__":

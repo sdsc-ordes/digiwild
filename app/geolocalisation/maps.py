@@ -15,9 +15,10 @@ def create_geolocalisation_object(lat, long, name):
         print("Pydantic Error for Geolocalisation")
     return geolocalisation
 
-def save_geolocalisation_to_json(geolocalisation): 
+def save_geolocalisation_to_json(session_state, geolocalisation): 
     geo_dict = geolocalisation.dict()
-    add_data_to_individual("geolocalisation", geo_dict)
+    session_state = add_data_to_individual(session_state, "geolocalisation", geo_dict)
+    return session_state
 
 def get_location(address):
     try: 
