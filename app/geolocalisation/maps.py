@@ -15,11 +15,12 @@ def create_geolocalisation_object(lat, long, name):
         print("Pydantic Error for Geolocalisation")
     return geolocalisation
 
-def save_geolocalisation_to_json(geolocalisation): 
+def save_geolocalisation_to_json(geolocalisation, individual): 
     geo_dict = geolocalisation.dict()
-    add_data_to_individual("geolocalisation", geo_dict)
+    individual = add_data_to_individual("geolocalisation", geo_dict, individual)
+    return individual
 
-def get_location(address):
+def get_location(address, individual):
     try: 
         # calling the Nominatim tool
         loc = Nominatim(user_agent="GetLoc")
@@ -33,18 +34,18 @@ def get_location(address):
 
         # Save values
         geolocalisation = create_geolocalisation_object(lat, lon, address)
-        save_geolocalisation_to_json(geolocalisation)
+        individual = save_geolocalisation_to_json(geolocalisation, individual)
 
         #display location processing
         value = "Latitude = " + str(lat) + "\n" + "Longitude = " + str(lon)
         identified_location= gr.Textbox(visible=True, interactive=False, 
                                         label="Identified GPS Location", 
                                         value=value)
-        return identified_location
+        return identified_location, individual
     
     except:
         error = "Please try another less precise location."
         identified_location= gr.Textbox(visible=True, interactive=False, 
                                         label="Identified GPS Location", 
                                         value=error)
-        return identified_location
+        return identified_location, individual

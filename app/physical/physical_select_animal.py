@@ -37,11 +37,11 @@ def create_bird_anatomy(visible, section: str):
                             visible=visible)
     return img_with_boxes
 
-def show_physical(choice, section: str): 
+def show_physical(choice, section: str, individual): 
     visible = set_visible(choice)
     physical_boxes = create_bird_anatomy(visible, section)
-    add_data_tmp("wounded_dead", "physical_radio", choice)
-    return physical_boxes
+    individual = add_data_tmp("wounded_dead", "physical_radio", choice, individual)
+    return physical_boxes, individual
 
 
 

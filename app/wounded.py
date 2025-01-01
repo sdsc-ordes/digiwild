@@ -6,13 +6,13 @@ from behavior.behavior_checkbox import create_behavior_checkbox
 from follow_up.followup_events import create_followup_dropdowns, create_followup_open
 from validation_submission.add_json import add_data_to_individual  
 
-def show_section_wounded(visible):
+def show_section_wounded(visible, individual):
     if visible==True: 
-        add_data_to_individual("wounded_state", "Yes")
-        add_data_to_individual("dead_state", "No")
+        individual = add_data_to_individual("wounded_state", "Yes", individual)
+        individual = add_data_to_individual("dead_state", "No", individual)
         
     with gr.Column(visible=visible, elem_id="wounded") as wounded_section:
-        gr.Markdown("# Wounded Animal")
+        gr.Markdown("# Wounded / Sick Animal")
         
         gr.Markdown("## Do you know what conditions caused this?", label="description")
         radio_cause = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)
@@ -40,7 +40,7 @@ def show_section_wounded(visible):
 
 
     # Change variables and names
-    return wounded_section, radio_cause, radio_behaviour, radio_physical, \
+    return wounded_section, individual, radio_cause, radio_behaviour, radio_physical, \
         button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, \
         dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2, \
         behavior_checkbox, behavior_text, \

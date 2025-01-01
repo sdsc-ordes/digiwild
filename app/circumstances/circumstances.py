@@ -13,13 +13,13 @@ LOGO_PATH = PATH + PATH_ASSETS + "logos"
 CAUSE_COL_WIDTH = "50px"
 
 
-def show_circumstances(choice): 
+def show_circumstances(choice, individual): 
     visible = set_visible(choice)
-    add_data_tmp("wounded_dead", 
+    individual = add_data_tmp("wounded_dead", 
                     "circumstance_radio", 
-                    choice)
+                    choice, individual)
     button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_circumstances(visible)
-    return button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2
+    return button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2, individual
 
 def create_circumstances(visible):
     button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause = create_circumstances_buttons(visible)      
