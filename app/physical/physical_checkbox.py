@@ -71,10 +71,11 @@ def process_body_parts(section, matched_box):
           
 #--------------------------------------------------------- 
 
-def on_select_body_part(body_part_checkbox, body_part): 
-    add_data_tmp("wounded_dead", "physical_type_"+body_part.lower(), body_part.lower())
+def on_select_body_part(body_part_checkbox, body_part, individual): 
+    individual = add_data_tmp("wounded_dead", "physical_type_"+body_part.lower(), body_part.lower(), individual)
     body_part_checkbox = [body_part_check.lower() for body_part_check in body_part_checkbox]
-    add_data_tmp("wounded_dead", "physical_anomaly_"+body_part.lower(), body_part_checkbox)
+    individual = add_data_tmp("wounded_dead", "physical_anomaly_"+body_part.lower(), body_part_checkbox, individual)
+    return individual
 
 #--------------------------------------------------------- 
 

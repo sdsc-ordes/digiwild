@@ -11,15 +11,16 @@ from validation_submission.get_json import get_json_all_individuals
 HEADERS = ["Identifier", "Location", "Wounded", "Dead"]
 
 
-def save_display_individual(gallery, df, error_box):
-    individual, error_box = validate_save_individual(error_box)
+def save_display_individual(gallery, df, error_box, data):
+    #print(data)
+    individual, error_box, data = validate_save_individual(data, error_box)
     if individual:
         all_animals = get_json_all_individuals()
         gallery_animals = process_animals_for_gallery(all_animals)
         gallery = make_gallery(gallery_animals)
         df_animals = process_animals_for_df(all_animals)
         df = make_df(df_animals)
-    return gallery, df, error_box
+    return gallery, df, error_box, data
 
 # ---------------------------------- 
 # GALLERY 

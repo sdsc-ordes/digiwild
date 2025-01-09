@@ -10,16 +10,16 @@ from follow_up.class_follow_up import FollowUpEvents
 from classes import Report, Wounded, Dead, ImageBase64
 from validation_submission.processing import process_circumstance, process_behaviors, process_physical, process_followup
 
-def get_fields(data_dict, keyword): 
+def get_fields(data_dict, keyword):
     extract = {} 
     for key, val in data_dict.items():
         if keyword in key:
             extract[key] = val
     return extract
 
-def validate_individual(error_box):
+def validate_individual(data, error_box):
     error_box = reset_error_box(error_box)
-    data = get_json_one_individual()
+    #data = get_json_one_individual() # TODO: This should change
     data["identifier"] = str(uuid.uuid4())
     if "image" in data.keys():
         img = ImageBase64.to_base64(data["image"])
@@ -39,7 +39,7 @@ def validate_individual(error_box):
         data["wounded_state"] = "No"
         data["dead_state"] = "No"
     if (data["wounded_state"] == "Yes") or (data["dead_state"] == "Yes"):
-        data_wounded_dead = get_json_tmp("wounded_dead")
+        data_wounded_dead = data #get_json_tmp("wounded_dead")
         circumstance, error_circumstance = validate_circumstance(data_wounded_dead)
         physical, error_physical = validate_physical(data_wounded_dead)
         followup, error_followup = validate_follow_up(data_wounded_dead)

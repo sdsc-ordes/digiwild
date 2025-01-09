@@ -1,6 +1,7 @@
 #### PROCESS FUNCTIONS 
 
 def process_circumstance(data):
+
     fields_to_check = ["option_dropdown", "open_field", "extra"]
     if data["circumstance_radio"] == "Yes":
         for field in fields_to_check:
