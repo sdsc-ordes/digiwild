@@ -5,9 +5,13 @@ def get_json_one_individual():
         one_individual = json.load(openfile)
     return one_individual
 
+## TO DO : check this works
+import os
 def get_json_all_individuals():
-    with open("data/all_individuals.json", "r") as openfile:
-        all_individuals = json.load(openfile)
+    all_animals = os.getfiles("data")
+    all_individuals = []
+    for animal in all_animals: 
+        all_individuals.append(animal)
     return all_individuals
 
 def get_json_tmp(tmp_name):

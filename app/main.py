@@ -20,6 +20,12 @@ from styling.theme import css
 
 from geolocalisation.js_geolocation import js_geocode, display_location
 
+from datasets import disable_caching
+disable_caching()
+
+dataset_id = "SDSC/digiwild-dataset"
+data_files = "data/train-00000-of-00001.parquet"
+
 # with gr.Blocks(theme=theme, css=css) as demo:
 with gr.Blocks(theme='shivi/calm_seafoam') as demo:
     individual = gr.State({})
@@ -396,6 +402,7 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
     show_modal.click(lambda: Modal(visible=True), None, modal)
     show_modal.click(create_json_one_individual)
     show_modal.click(create_tmp)
+
     #submit_button.click(save_and_rest_df, inputs=[df], outputs=[df])
 
 

@@ -12,7 +12,6 @@ HEADERS = ["Identifier", "Location", "Wounded", "Dead"]
 
 
 def save_display_individual(gallery, df, error_box, data):
-    #print(data)
     individual, error_box, data = validate_save_individual(data, error_box)
     if individual:
         all_animals = get_json_all_individuals()
