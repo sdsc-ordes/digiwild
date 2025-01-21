@@ -4,7 +4,7 @@ from physical.physical_select_animal import create_bird_anatomy
 from physical.physical_checkbox import process_body_parts
 from behavior.behavior_checkbox import create_behavior_checkbox
 from follow_up.followup_events import create_followup_dropdowns, create_followup_open
-from validation_submission.add_json import add_data_to_individual  
+from validation_submission.utils_individual import add_data_to_individual  
 
 def show_section_wounded(visible, individual):
     if visible==True: 

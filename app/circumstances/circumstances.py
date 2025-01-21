@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 from utils.utils_visible import set_visible
-from validation_submission.add_json import add_data_tmp
+from validation_submission.utils_individual import add_data_to_individual
 
 load_dotenv()
 PATH = os.getcwd() + "/"
@@ -15,7 +15,7 @@ CAUSE_COL_WIDTH = "50px"
 
 def show_circumstances(choice, individual): 
     visible = set_visible(choice)
-    individual = add_data_tmp("wounded_dead", 
+    individual = add_data_to_individual("wounded_dead", 
                     "circumstance_radio", 
                     choice, individual)
     button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_circumstances(visible)

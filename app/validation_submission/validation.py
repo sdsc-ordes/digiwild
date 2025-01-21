@@ -2,7 +2,7 @@ import uuid
 from pydantic import ValidationError
 import gradio as gr
 
-from validation_submission.get_json import get_json_tmp, get_json_one_individual
+# from validation_submission.get_json import get_json_tmp, get_json_one_individual
 from circumstances.class_circumstance import Circumstances
 from behavior.class_behavior import Behaviors
 from physical.class_physical import PhysicalAnomalies
@@ -50,6 +50,7 @@ def validate_individual(data, error_box):
             try : 
                 individual = Report(identifier = data["identifier"],
                                     image = img,
+                                    image_md5 = data["image_md5"],
                                     geolocalisation = geolocalisation,
                                     wounded_state = data["wounded_state"],
                                     wounded = Wounded(circumstances = circumstance,
@@ -65,6 +66,7 @@ def validate_individual(data, error_box):
             try: 
                 individual = Report(identifier = data["identifier"],
                                     image = img,
+                                    image_md5 = data["image_md5"],
                                     geolocalisation = geolocalisation,
                                     wounded_state = data["wounded_state"],
                                     dead_state = data["dead_state"],
@@ -79,6 +81,7 @@ def validate_individual(data, error_box):
         try: 
             individual = Report(identifier = data["identifier"],
                                     image = img,
+                                    image_md5 = data["image_md5"],
                                     geolocalisation = geolocalisation,
                                     wounded_state = data["wounded_state"],
                                     dead_state = data["dead_state"])

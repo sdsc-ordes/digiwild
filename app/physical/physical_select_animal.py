@@ -29,7 +29,6 @@ def find_bounding_box(evt: gr.SelectData, img, section: str):
 # Gradio app
 def create_bird_anatomy(visible, section: str):
     # Draw bounding boxes on the image
-    print
     img_with_boxes = gr.Image(value=PATH_ASSETS+'images/bird_boxed.png', 
                             show_label=False, 
                             height="600px",

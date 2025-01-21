@@ -39,6 +39,7 @@ class ImageBase64(BaseModel):
 class Report(BaseModel):
     identifier: str
     image: ImageBase64
+    image_md5: str
     geolocalisation: Geolocalisation
     wounded_state: str
     wounded: Optional[Wounded] = None  
