@@ -14,7 +14,6 @@ from physical.physical_checkbox import on_select_body_part, hide_physical
 from behavior.behavior_checkbox import show_behavior, on_select_behavior
 from follow_up.followup_events import save_fe
 from styling.style import *
-from styling.theme import css
 
 from geolocalisation.js_geolocation import js_geocode, display_location
 from validation_submission.utils_individual import generate_random_md5
@@ -25,7 +24,6 @@ disable_caching()
 dataset_id = "SDSC/digiwild-dataset"
 data_files = "data/train-00000-of-00001.parquet"
 
-# with gr.Blocks(theme=theme, css=css) as demo:
 with gr.Blocks(theme='shivi/calm_seafoam') as demo:
     individual = gr.State({})
     individual.value = add_data_to_individual("image_md5", generate_random_md5(), individual.value)
@@ -53,38 +51,10 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
 
         camera = gr.Image(elem_id="image")
         camera.input(save_image, inputs=[camera, individual], outputs=[individual])
-    # ---------------------------------------------------------
-    # Location
-    #with gr.Row():
+        
         with gr.Column(scale=1):
-            gr.Markdown("### Location")
-            gr.Markdown("#### Location (Using address)")
-            location = gr.Textbox(visible=True, interactive=True, label="Location of Sighting")
-            #display location processing
-            identified_location= gr.Textbox(visible=False, interactive=False, 
-                                            label="Identified GPS Location")
-            with gr.Row():
-                #to submit it
-                submit_location = gr.Button("Get Coordinates using address", 
-                                            visible=True, interactive=True, scale=3)
-                submit_location.click(get_location, inputs=[location, individual], outputs=[identified_location, individual])
-                #to clear it
-                clear_location = gr.ClearButton(components=[location, identified_location], 
-                                                visible=True, interactive=True, scale=1
-                                                )
-                clear_location.click()
-
-            # Geolocation
-            gr.Markdown("#### Location (Using GPS)")
-            location_data = gr.JSON(label="Identified GPS Location")
-            hidden_input = gr.Textbox(visible=False, elem_id="textbox_id")
-            btn_gpslocation = gr.Button("Get Coordinates using GPS (Permission required)")
-            btn_gpslocation.click(None, [], [], js=js_geocode)
-            hidden_input.change(display_location, inputs=hidden_input, outputs=location_data)
-
-            
-            # Introducing text_box for Species
             gr.Markdown("### General details")
+            
             with gr.Row():
                 specie = gr.Textbox(
                     label="Species (if known)",
@@ -119,9 +89,39 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
                     interactive=True
                 )
 
+    # ---------------------------------------------------------
+    # Location
+    gr.Markdown("## Location")
+    with gr.Row():
+        with gr.Column(scale=1):
+            gr.Markdown("#### Location (Using address)")
+            location = gr.Textbox(visible=True, interactive=True, label="Location of Sighting")
+            #display location processing
+            identified_location= gr.Textbox(visible=False, interactive=False, 
+                                            label="Identified GPS Location")
+            with gr.Row():
+                #to submit it
+                submit_location = gr.Button("Get Coordinates using address", 
+                                            visible=True, interactive=True, scale=3)
+                submit_location.click(get_location, inputs=[location, individual], outputs=[identified_location, individual])
+                #to clear it
+                clear_location = gr.ClearButton(components=[location, identified_location], 
+                                                visible=True, interactive=True, scale=1
+                                                )
+                clear_location.click()
+        
+        with gr.Column(scale=1):
+            # Geolocation
+            gr.Markdown("#### Location (Using GPS)")
+            location_data = gr.JSON(label="Identified GPS Location")
+            hidden_input = gr.Textbox(visible=False, elem_id="textbox_id")
+            btn_gpslocation = gr.Button("Get Coordinates using GPS (Permission required)")
+            btn_gpslocation.click(None, [], [], js=js_geocode)
+            hidden_input.change(display_location, inputs=hidden_input, outputs=location_data)
+            
+
         
     # ---------------------------------------------------------
-        # ---------------------------------------------------------
     # Dead and Wounded Buttons
     gr.Markdown("## The State of the Animal", label="Title")
     gr.Markdown("Please tell us if the animal was wounded / sick or dead.", label="description")
