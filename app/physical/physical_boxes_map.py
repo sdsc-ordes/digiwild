@@ -17,9 +17,6 @@ def draw_bounding_boxes(image_path, gdf):
     # try:
     font = ImageFont.truetype(PATH_ASSETS + "fonts/LiberationSans-Regular.ttf", 
                               20)
-    # except IOError:
-    #     print("default")
-    #     font = ImageFont.load_default()
 
     # Draw each bounding box on the image
     for _, row in gdf.iterrows():

@@ -3,7 +3,7 @@ from circumstances.circumstances import create_circumstances
 from physical.physical_select_animal import create_bird_anatomy
 from physical.physical_checkbox import process_body_parts
 from follow_up.followup_events import create_followup_dropdowns, create_followup_open
-from validation_submission.add_json import add_data_to_individual
+from validation_submission.utils_individual import add_data_to_individual
 
 from dotenv import load_dotenv
 import os
@@ -18,7 +18,7 @@ def show_section_dead(visible, individual):
         individual = add_data_to_individual("dead_state", "Yes", individual)
         
     with gr.Column(visible=visible, elem_id="dead") as section_dead:
-        gr.Markdown("# Dead Animal")
+        gr.Markdown("## The animal is dead.")
         gr.Button("Do you know what conditions caused this?",
                   icon=PATH_ICONS + "eye.png",
                   variant= "primary")
@@ -26,7 +26,7 @@ def show_section_dead(visible, individual):
         radio_cause = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)
         button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_circumstances(visible=False)      
         
-        gr.Button("Are there physical changes on the bird?",
+        gr.Button("Are there physical changes on the animal?",
                   icon=PATH_ICONS + "cardiogram.png",
                   variant= "primary")
         radio_physical = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)

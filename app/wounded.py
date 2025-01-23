@@ -4,7 +4,7 @@ from physical.physical_select_animal import create_bird_anatomy
 from physical.physical_checkbox import process_body_parts
 from behavior.behavior_checkbox import create_behavior_checkbox
 from follow_up.followup_events import create_followup_dropdowns, create_followup_open
-from validation_submission.add_json import add_data_to_individual  
+from validation_submission.utils_individual import add_data_to_individual  
 
 from dotenv import load_dotenv
 import os
@@ -19,7 +19,7 @@ def show_section_wounded(visible, individual):
         individual = add_data_to_individual("dead_state", "No", individual)
         
     with gr.Column(visible=visible, elem_id="wounded") as wounded_section:
-        gr.Markdown("# Wounded / Sick Animal")
+        gr.Markdown("## The animal is wounded / sick.")
         
         gr.Button("Do you know what conditions caused this?",
                   icon=PATH_ICONS + "eye.png",
@@ -27,14 +27,14 @@ def show_section_wounded(visible, individual):
         radio_cause = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)
         button_collision, button_deliberate_destruction, button_indirect_destruction, button_natural_cause, dropdown, dropdown_level2, openfield_level2, dropdown_extra_level2 = create_circumstances(visible=False)
 
-        gr.Button("Is the bird displaying behavioural changes?",
+        gr.Button("Is the animal displaying behavioural changes?",
                   icon=PATH_ICONS + "neuron.png",
                   variant= "primary")
         radio_behaviour = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)
         with gr.Row():
             behavior_checkbox, behavior_text = create_behavior_checkbox("wounded", False)
 
-        gr.Button("Are there physical changes on the bird?",
+        gr.Button("Are there physical changes on the animal?",
                   icon=PATH_ICONS + "cardiogram.png",
                   variant= "primary")
         radio_physical = gr.Radio(["Yes", "No"], value=None, show_label=False, interactive=True)

@@ -1,6 +1,6 @@
 from geopy.geocoders import Nominatim
 import gradio as gr
-from validation_submission.add_json import add_data_to_individual
+from validation_submission.utils_individual import add_data_to_individual
 from geolocalisation.class_geolocalisation import Geolocalisation
 
 
