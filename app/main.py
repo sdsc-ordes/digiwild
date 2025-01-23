@@ -2,6 +2,7 @@ import gradio as gr
 from gradio_modal import Modal
 
 from validation_submission.utils_individual import add_data_to_individual
+from validation_submission.submission import validate_save_individual
 from validation_submission.validation import reset_error_box
 from geolocalisation.maps import get_location
 from functools import partial
@@ -14,6 +15,7 @@ from physical.physical_checkbox import on_select_body_part, hide_physical
 from behavior.behavior_checkbox import show_behavior, on_select_behavior
 from follow_up.followup_events import save_fe
 from styling.style import *
+from credits import credits_text
 
 from geolocalisation.js_geolocation import js_geocode, display_location
 from validation_submission.utils_individual import generate_random_md5
@@ -47,17 +49,6 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
             description = gr.Markdown("Please record your wildlife observations here !", label="description")
 
     # ---------------------------------------------------------
-    # Intro Text
-    with gr.Row():
-        gr.Image(PATH_ICONS+"pigeon.png", scale =0.1, 
-                interactive=False,
-                show_fullscreen_button = False, show_share_button=False, 
-                show_download_button=False, show_label=False)
-        with gr.Column(scale=1):
-            title = gr.Markdown("# Animal Report", label="Title")
-            description = gr.Markdown("Please record your observation here.", label="description")
-
-    # ---------------------------------------------------------
     # Camera
     with gr.Row():
         def save_image(camera, individual):
@@ -66,50 +57,50 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
         camera = gr.Image(elem_id="image")
         camera.input(save_image, inputs=[camera, individual], outputs=[individual])
     
-    # ---------------------------------------------------------
-    # General Details
-    with gr.Column(scale=1):
-        gr.Button("General Details", icon=PATH_ICONS+"bird.png", variant="primary")
+        # ---------------------------------------------------------
+        # General Details
+        with gr.Column(scale=1):
+            gr.Button("General Details", icon=PATH_ICONS+"bird.png", variant="primary")
 
-        with gr.Row():
-            specie = gr.Textbox(
-                label="Species (if known)",
-                placeholder="e.g. European Robin, Common Blackbird",
-                info="Enter the species name if you can identify it. If unsure, provide your best guess or general description (e.g. 'small brown bird')",
-                visible=True,
-                interactive=True
-            )
+            with gr.Row():
+                specie = gr.Textbox(
+                    label="Species (if known)",
+                    placeholder="e.g. European Robin, Common Blackbird",
+                    info="Enter the species name if you can identify it. If unsure, provide your best guess or general description (e.g. 'small brown bird')",
+                    visible=True,
+                    interactive=True
+                )
 
-        # Number of individuals
-        with gr.Row():
-            num_individuals = gr.Number(
-                label="Number of Individuals",
-                value=1,  # Default value
-                minimum=1,
-                precision=0,  # Only whole numbers
-                info="Enter the number of animals observed",
-                #placeholder="Enter number...",
-                visible=True,
-                interactive=True
-            )
+            # Number of individuals
+            with gr.Row():
+                num_individuals = gr.Number(
+                    label="Number of Individuals",
+                    value=1,  # Default value
+                    minimum=1,
+                    precision=0,  # Only whole numbers
+                    info="Enter the number of animals observed",
+                    #placeholder="Enter number...",
+                    visible=True,
+                    interactive=True
+                )
 
-        # Introducing text_box for comments 
-        with gr.Row():
-            comments = gr.TextArea(
-                label="Additional Comments",
-                placeholder="Enter any additional observations or notes about the sighting...",
-                info="Optional: Add any relevant details about the animal(s) or circumstances",
-                lines=3,
-                max_lines=5,
-                visible=True,
-                interactive=True
-            )
+            # Introducing text_box for comments 
+            with gr.Row():
+                comments = gr.TextArea(
+                    label="Additional Comments",
+                    placeholder="Enter any additional observations or notes about the sighting...",
+                    info="Optional: Add any relevant details about the animal(s) or circumstances",
+                    lines=3,
+                    max_lines=5,
+                    visible=True,
+                    interactive=True
+                )
 
     # ---------------------------------------------------------
     # Location
     gr.Button("Location", icon=PATH_ICONS+"pin.png", variant="primary")
     with gr.Row():
-      with gr.Column(scale=1):
+        with gr.Column(scale=1):
           gr.Markdown("#### Location (Using address)")
           location = gr.Textbox(visible=True, interactive=True, label="Location of Sighting")
           #display location processing
@@ -130,13 +121,14 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
             # Geolocation
             gr.Markdown("#### Location (Using GPS)")
             location_data = gr.JSON(label="Identified GPS Location")
-            hidden_input = gr.Textbox(visible=False, elem_id="textbox_id")
+            hidden_input = gr.Textbox(visible=False, elem_id="textbox_id") 
             btn_gpslocation = gr.Button("Get Coordinates using GPS (Permission required)")
             btn_gpslocation.click(None, [], [], js=js_geocode)
             hidden_input.change(display_location, inputs=hidden_input, outputs=location_data)
             
     # ---------------------------------------------------------
     # Dead and Wounded Buttons
+    gr.Button("State of the Animal", variant="primary")
     with gr.Row():
         gr.Image(PATH_ICONS+"medical-app.png", scale =0.1, 
                  interactive=False,
@@ -146,12 +138,12 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
             gr.Markdown("## The State of the Animal", label="Title")
             gr.Markdown("Please tell us if the animal was wounded / sick or dead.", label="description")
             gr.Markdown("Please fill out as many fields as you can, based on what you can see.", label="description")
-            gr.Markdown("Do not touch the animal unless absolutely necessary.", label="description")
+            gr.Markdown("### Do not touch the animal unless absolutely necessary.", label="description")
     with gr.Row() as block_form:
         with gr.Column(scale=1):
-            butt_wounded = gr.Button("Wounded / Sick", elem_id="wounded")
+            butt_wounded = gr.Button("Wounded / Sick", elem_id="wounded", variant="primary")
         with gr.Column(scale=1):
-            butt_dead = gr.Button("Dead", elem_id="dead")
+            butt_dead = gr.Button("Dead", elem_id="dead", variant="primary")
 
     # ---------------------------------------------------------
     # Initiate sections
@@ -363,8 +355,10 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
     # ---------------------------------------------------------
     # Allow clearing of all previous output
     with gr.Row(): 
-        button_df = gr.Button("Submit Animal Report", scale = 3)
-        button_clear = gr.ClearButton(scale = 1, 
+        button_df = gr.Button("SUBMIT OBSERVATION", icon=PATH_ICONS+"effective.png",
+                              scale = 3)
+        button_clear = gr.ClearButton(value="CLEAR",
+                                      scale = 1,
                                         components=[
             camera,
             location, identified_location, 
@@ -387,7 +381,7 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
             fe_name_recipient_wounded, fe_collection_ref_wounded,
             error_box
             ])
-        show_creds = gr.Button("Credits", icon=PATH_ICONS+"copyright.png", scale=0.5)
+        show_creds = gr.Button("CREDITS", icon=PATH_ICONS+"copyright.png", scale=0.5)
 
     # ---------------------------------------------------------
     # Button Click Logic
@@ -399,12 +393,12 @@ with gr.Blocks(theme='shivi/calm_seafoam') as demo:
     button_clear.click(reset_error_box, inputs=[error_box], outputs=[error_box])  
             
    
-    from validation_submission.submission import validate_save_individual
+    # ---------------------------------------------------------
+    # VALIDATE ANIMAL 
     button_df.click(validate_save_individual, inputs=[individual, error_box],
                     outputs=[error_box])
     # ---------------------------------------------------------
-    Credits
-    from credits import credits_text
+    #CREDITS
     with Modal(visible=False) as modal_creds:
         gr.Markdown(credits_text)
     show_creds.click(lambda: Modal(visible=True), None, modal_creds)
