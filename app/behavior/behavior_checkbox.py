@@ -9,8 +9,12 @@ def on_select_behavior(behavior_checkbox, individual):
     individual = add_data_to_individual("behaviors_type", behavior_checkbox, individual)
     return individual
 
-def retrieve_behavior_options_description():
-    dropdown_config = get_custom_config_dropdowns("config_checkbox_behavior.json")
+def retrieve_behavior_options_description(mode:str):
+    print(mode)
+    if mode =="simple": 
+        dropdown_config = get_custom_config_dropdowns("config_checkbox_behavior_simple.json")
+    elif mode=="advanced": 
+        dropdown_config = get_custom_config_dropdowns("config_checkbox_behavior.json")
     options = list(dropdown_config.keys())
     options = [option.title() for option in options]
     descriptions =[]
@@ -18,14 +22,15 @@ def retrieve_behavior_options_description():
         descriptions.append(subdict["Description"])
     return options, descriptions
 
-def create_behavior_checkbox(section: str, visible):
-    options, descriptions = retrieve_behavior_options_description()
+def create_behavior_checkbox(section: str, mode: str, visible):
+    options, descriptions = retrieve_behavior_options_description(mode)
     label_checkbox = "Behavior changes observed"
     checkbox, text = create_checkbox("", section, label_checkbox, visible, options, descriptions)
     return checkbox, text
 
-def show_behavior(choice, section: str, individual): 
+def show_behavior(choice, section: str, mode: str, individual): 
+    print(mode)
     visible = set_visible(choice)
-    checkbox, text = create_behavior_checkbox(section, visible)
+    checkbox, text = create_behavior_checkbox(section, mode, visible)
     individual = add_data_to_individual("behaviors_radio", choice, individual)
     return checkbox, text, individual

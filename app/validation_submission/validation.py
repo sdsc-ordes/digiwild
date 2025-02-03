@@ -5,7 +5,9 @@ import gradio as gr
 # from validation_submission.get_json import get_json_tmp, get_json_one_individual
 from circumstances.class_circumstance import Circumstances
 from behavior.class_behavior import Behaviors
+from behavior.class_behavior_simple import BehaviorsSimple
 from physical.class_physical import PhysicalAnomalies
+from physical.class_physical_simple import PhysicalAnomaliesSimple
 from follow_up.class_follow_up import FollowUpEvents
 from classes import Report, Wounded, Dead, ImageBase64
 from validation_submission.processing import process_circumstance, process_behaviors, process_physical, process_followup
@@ -17,7 +19,7 @@ def get_fields(data_dict, keyword):
             extract[key] = val
     return extract
 
-def validate_individual(data, error_box):
+def validate_individual(data, error_box, mode:str):
     error_box = reset_error_box(error_box)
     #data = get_json_one_individual() # TODO: This should change
     data["identifier"] = str(uuid.uuid4())
@@ -40,13 +42,14 @@ def validate_individual(data, error_box):
         data["dead_state"] = "No"
     if (data["wounded_state"] == "Yes") or (data["dead_state"] == "Yes"):
         data_wounded_dead = data #get_json_tmp("wounded_dead")
+        print(data_wounded_dead)
         circumstance, error_circumstance = validate_circumstance(data_wounded_dead)
-        physical, error_physical = validate_physical(data_wounded_dead)
+        physical, error_physical = validate_physical(data_wounded_dead, mode)
         followup, error_followup = validate_follow_up(data_wounded_dead)
 
         if data["wounded_state"]=="Yes":
             print(physical)
-            behavior, error_behavior = validate_behavior(data_wounded_dead)
+            behavior, error_behavior = validate_behavior(data_wounded_dead, mode)
             try : 
                 individual = Report(identifier = data["identifier"],
                                     image = img,
@@ -130,12 +133,16 @@ def validate_circumstance(data):
     return circumstances, error
         
 
-def validate_behavior(data): 
+def validate_behavior(data, mode): 
     behaviors_raw = get_fields(data, "behaviors")
     behaviors_formatted = process_behaviors(behaviors_raw)
     try:
-        Behaviors.model_validate(behaviors_formatted)
-        behavior = Behaviors(**behaviors_formatted)
+        if mode=="simple":
+            BehaviorsSimple.model_validate(behaviors_formatted)
+            behavior = BehaviorsSimple(**behaviors_formatted)
+        elif mode=="advanced": 
+            Behaviors.model_validate(behaviors_formatted)
+            behavior = Behaviors(**behaviors_formatted)
         error = None
     except ValidationError as e:
         print(e)
@@ -145,12 +152,17 @@ def validate_behavior(data):
     return behavior, error
         
 
-def validate_physical(data): 
+def validate_physical(data, mode): 
     physical_raw = get_fields(data, "physical")
     physical_formatted = process_physical(physical_raw)
+    print(physical_formatted)
     try: 
-        PhysicalAnomalies.model_validate(physical_formatted)
-        physical = PhysicalAnomalies(**physical_formatted)
+        if mode=="simple":
+            PhysicalAnomaliesSimple.model_validate(physical_formatted)
+            physical = PhysicalAnomaliesSimple(**physical_formatted)
+        elif mode=="advanced":
+            PhysicalAnomalies.model_validate(physical_formatted)
+            physical = PhysicalAnomalies(**physical_formatted)
         error = None
     except ValidationError as e:
         print(e)

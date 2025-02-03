@@ -8,20 +8,22 @@ from physical.physical_checkbox import *
 from physical.physical_boxes_define import gdf
 from utils.utils_visible import set_visible
 
+from validation_submission.utils_individual import add_data_to_individual
+
 load_dotenv()
 PATH_ASSETS = os.getenv('PATH_ASSETS')
 
 # Function to find the matching bounding box for a given point and return the image with boxes
-def find_bounding_box(evt: gr.SelectData, img, section: str):
+def find_bounding_box(evt: gr.SelectData, img, section: str, mode: str):
     x, y = evt.index[0], evt.index[1]
     point = Point(x, y)
     match = gdf[gdf.contains(point)]
     if not match.empty:
         matched_box = match.iloc[0]['name']
-        checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs = process_body_parts(section, matched_box)
+        checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs = process_body_parts(section, mode, matched_box)
     else:
         matched_box = None
-        checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs = process_body_parts(section, matched_box)
+        checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs = process_body_parts(section, mode, matched_box)
     return checkbox_beak, text_beak, checkbox_body, text_body, checkbox_feathers, text_feathers, checkbox_head, text_head, checkbox_legs, text_legs
 
     
@@ -39,7 +41,7 @@ def create_bird_anatomy(visible, section: str):
 def show_physical(choice, section: str, individual): 
     visible = set_visible(choice)
     physical_boxes = create_bird_anatomy(visible, section)
-    individual = add_data_tmp("wounded_dead", "physical_radio", choice, individual)
+    individual = add_data_to_individual("physical_radio", choice, individual)
     return physical_boxes, individual
 
 

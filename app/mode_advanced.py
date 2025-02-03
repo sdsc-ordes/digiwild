@@ -1,6 +1,8 @@
 import gradio as gr
 from gradio_modal import Modal
 
+from geolocalisation.js_geolocation import js_geocode, display_location
+from validation_submission.utils_individual import generate_random_md5
 from validation_submission.utils_individual import add_data_to_individual
 from validation_submission.submission import validate_save_individual
 from validation_submission.validation import reset_error_box
@@ -17,9 +19,6 @@ from follow_up.followup_events import save_fe
 from styling.style import *
 from credits import credits_text
 
-from geolocalisation.js_geolocation import js_geocode, display_location
-from validation_submission.utils_individual import generate_random_md5
-
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -28,6 +27,7 @@ PATH_ASSETS = os.getenv('PATH_ASSETS')
 PATH_ICONS = PATH + PATH_ASSETS + "icons/"
 
 with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
+    mode = "advanced"
     individual = gr.State({})
     individual.value = add_data_to_individual("image_md5", generate_random_md5(), individual.value)
 
@@ -149,7 +149,7 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
                 checkbox_beak_dead, text_beak_dead, checkbox_body_dead, text_body_dead, checkbox_feathers_dead, text_feathers_dead, checkbox_head_dead, text_head_dead, checkbox_legs_dead, text_legs_dead, \
                 fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, \
                 fe_name_recipient_dead, fe_collection_ref_dead \
-                = show_section_dead(False, individual)
+                = show_section_dead(False, mode, individual)
     
     section_wounded, individual, radio_circumstance_wounded, radio_behavior_wounded, radio_physical_wounded, \
         button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, \
@@ -159,7 +159,7 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
                         checkbox_beak_wounded, text_beak_wounded, checkbox_body_wounded, text_body_wounded, checkbox_feathers_wounded, text_feathers_wounded, checkbox_head_wounded, text_head_wounded, checkbox_legs_wounded, text_legs_wounded, \
                         fe_collection_dropdown_wounded, fe_recepient_dropdown_wounded, fe_radio_dropdown_wounded, fe_answer_dropdown_wounded, \
                             fe_name_recipient_wounded, fe_collection_ref_wounded \
-                            = show_section_wounded(False, individual)
+                            = show_section_wounded(False, mode, individual)
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
@@ -168,7 +168,8 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
     partial_show_section_dead = partial(show_section_dead, True)
     partial_hide_section_wounded = partial(show_section_wounded, False)
     butt_dead.click(partial_show_section_dead, 
-                    inputs=[individual], 
+                    inputs=[gr.Text(mode, visible=False),
+                            individual], 
                     outputs=[section_dead, 
                             individual,
                             radio_circumstance_dead, radio_physical_dead,
@@ -181,7 +182,8 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
                             ])
     
     butt_dead.click(partial_hide_section_wounded, 
-                    inputs=[individual], 
+                    inputs=[gr.Text(mode, visible=False),
+                            individual], 
                     outputs=[section_wounded, 
                             individual,
                             radio_circumstance_wounded, radio_behavior_wounded, radio_physical_wounded,
@@ -200,7 +202,8 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
     partial_hide_section_dead = partial(show_section_dead, False)
 
     butt_wounded.click(partial_show_section_wounded, 
-                    inputs=[individual], 
+                    inputs=[gr.Text(mode, visible=False),
+                            individual], 
                     outputs=[section_wounded, 
                             individual,
                             radio_circumstance_wounded, radio_behavior_wounded, radio_physical_wounded,
@@ -214,7 +217,8 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
                             ])
     
     butt_wounded.click(partial_hide_section_dead, 
-                        inputs=[individual], 
+                        inputs=[gr.Text(mode, visible=False),
+                                individual], 
                         outputs=[section_dead, 
                                 individual,
                                 radio_circumstance_dead, radio_physical_dead,
@@ -254,7 +258,9 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
     # ---------------------------------------------------------
     # Radio Physical Dead
     radio_physical_dead.change(fn=show_physical,
-                                inputs=[radio_physical_dead, gr.Text("dead", visible=False), individual],
+                                inputs=[radio_physical_dead, 
+                                        gr.Text("dead", visible=False), 
+                                        individual],
                                 outputs=[physical_boxes_dead, individual])
 
     # Checkbox Physical Dead
@@ -299,7 +305,10 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
     # ---------------------------------------------------------
     # Radio Behavior Wounded
     radio_behavior_wounded.change(fn=show_behavior,
-                                inputs=[radio_behavior_wounded, gr.Text("wounded / sick", visible=False), individual],
+                                inputs=[radio_behavior_wounded, 
+                                        gr.Text("wounded / sick", visible=False), 
+                                        gr.Text(mode, visible=False), 
+                                        individual],
                                 outputs=[behavior_checkbox, behavior_text, individual])
     behavior_checkbox.select(on_select_behavior, 
                                 inputs=[behavior_checkbox, individual],
@@ -307,7 +316,9 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
     # ---------------------------------------------------------
     # Radio Physical Wounded
     radio_physical_wounded.change(fn=show_physical,
-                                inputs=[radio_physical_wounded, gr.Text("wounded / sick", visible=False), individual],
+                                inputs=[radio_physical_wounded, 
+                                        gr.Text("wounded / sick", visible=False), 
+                                        individual],
                                 outputs=[physical_boxes_wounded, individual])
 
     # Checkbox Physical Wounded
@@ -405,7 +416,10 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
    
     # ---------------------------------------------------------
     # VALIDATE ANIMAL 
-    button_df.click(validate_save_individual, inputs=[individual, error_box],
+    button_df.click(validate_save_individual, 
+                    inputs=[individual, 
+                            error_box,
+                            gr.Text(mode, visible=False)],
                     outputs=[error_box])
     # ---------------------------------------------------------
     #CREDITS
