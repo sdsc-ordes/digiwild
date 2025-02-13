@@ -5,13 +5,8 @@ from validation_submission.utils_individual import add_data_to_individual
 
 
 # ---------------------------------------------------------
-def get_body_parts(mode):
-    if mode == "simple":
-        dropdown_config = get_custom_config_dropdowns(
-            "config_checkbox_physical_simple.json"
-        )
-    elif mode == "advanced":
-        dropdown_config = get_custom_config_dropdowns("config_checkbox_physical.json")
+def get_body_parts():
+    dropdown_config = get_custom_config_dropdowns("config_checkbox_physical.json")
     return list(dropdown_config.keys())
 
 
@@ -89,7 +84,7 @@ def create_checkbox_legs(section, mode, label_checkbox, visible):
 # ---------------------------------------------------------
 def process_body_parts(section, mode, matched_box):
     # take all except "Common"
-    body_parts = get_body_parts(mode)
+    body_parts = get_body_parts()
     body_parts = body_parts[1:]
     label_checkbox = "Physical changes to "
     visibles = [True if matched_box == body_part else False for body_part in body_parts]

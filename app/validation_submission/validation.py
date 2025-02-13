@@ -17,6 +17,13 @@ from validation_submission.processing import (
     process_followup,
 )
 
+from dotenv import load_dotenv
+import os
+load_dotenv()
+PATH = os.getcwd() + "/"
+PATH_ASSETS = os.getenv('PATH_ASSETS')
+PATH_ICONS = PATH + PATH_ASSETS + "icons/"
+
 
 def get_fields(data_dict, keyword):
     extract = {}
@@ -26,8 +33,8 @@ def get_fields(data_dict, keyword):
     return extract
 
 
-def validate_individual(data, error_box, mode: str):
-    error_box = reset_error_box(error_box)
+def validate_individual(data, error_icon, error_box, mode: str):
+    error_icon, error_box = reset_error_box(error_icon, error_box)
     # data = get_json_one_individual() # TODO: This should change
     data["identifier"] = str(uuid.uuid4())
     if "image" in data.keys():
@@ -48,14 +55,12 @@ def validate_individual(data, error_box, mode: str):
         data["wounded_state"] = "No"
         data["dead_state"] = "No"
     if (data["wounded_state"] == "Yes") or (data["dead_state"] == "Yes"):
-        data_wounded_dead = data  # get_json_tmp("wounded_dead")
-        # print(f"Data Wounded Dead: {data_wounded_dead}")
+        data_wounded_dead = data 
         circumstance, error_circumstance = validate_circumstance(data_wounded_dead)
         physical, error_physical = validate_physical(data_wounded_dead, mode)
         followup, error_followup = validate_follow_up(data_wounded_dead)
 
         if data["wounded_state"] == "Yes":
-            # print(f"Physical: {physical}")
             behavior, error_behavior = validate_behavior(data_wounded_dead, mode)
             try:
                 individual = Report(
@@ -116,6 +121,11 @@ def validate_individual(data, error_box, mode: str):
         or error_physical
         or error_individual
     ):
+        error_icon = gr.Image(PATH_ICONS+"supprimer.png", height=80, width=80,
+                        interactive=False,
+                        show_fullscreen_button = False, show_share_button=False, 
+                        show_download_button=False, show_label=False,
+                        visible=True)
         error_box = show_error(
             error_box,
             error_behavior,
@@ -126,13 +136,18 @@ def validate_individual(data, error_box, mode: str):
         )
         individual = None
     else:
+        error_icon = gr.Image(PATH_ICONS+"correct.png", height=80, width=80,
+                        interactive=False,
+                        show_fullscreen_button = False, show_share_button=False, 
+                        show_download_button=False, show_label=False,
+                        visible=True)
         error_box = gr.Text(
             label="ALL VALID.",
-            value="Record Registered. You can return to the Display.",
+            value="Record Registered. Remember to press the CLEAR button before submitting a new record.",
             visible=True,
             elem_id="valid",
         )
-    return individual, error_box
+    return individual, error_icon, error_box
 
 
 def show_error(
@@ -161,9 +176,10 @@ def show_error(
     return error_box
 
 
-def reset_error_box(error_box):
+def reset_error_box(error_icon, error_box):
+    error_icon = gr.Image(PATH_ICONS+"supprimer.png", height=80, width=80, visible=False)
     error_box = gr.Text(value=None, visible=False)
-    return error_box
+    return error_icon, error_box
 
 
 #### VALIDATION FUNCTIONS

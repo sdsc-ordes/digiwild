@@ -1,15 +1,16 @@
 import json
 from validation_submission.validation import validate_individual
-
+import gradio as gr 
 from huggingface_hub import HfApi
 import os
 
 
-def validate_save_individual(data, error_box, mode):
-    individual, error_box = validate_individual(data, error_box, mode)
+def validate_save_individual(data, error_icon, error_box, mode):
+    individual, error_icon, error_box = validate_individual(data, error_icon, error_box, mode)
     if individual:
+        print("pushing to hugging face")
         push_to_dataset_hf(individual.model_dump())
-    return error_box
+    return individual, error_icon, error_box
 
 
 def push_to_dataset_hf(individual):

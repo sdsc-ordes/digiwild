@@ -49,4 +49,10 @@ schedule: <a href="https://www.flaticon.com/free-icons/follow-up" title="follow 
 
 Effective: <a href="https://www.flaticon.com/free-icons/cog" title="cog icons">Cog icons created by monkik - Flaticon</a>
 
+correct: <a href="https://www.flaticon.com/fr/icones-gratuites/termine" title="terminé icônes">Terminé icônes créées par kliwir art - Flaticon</a>
+
+supprimer: <a href="https://www.flaticon.com/fr/icones-gratuites/faux" title="faux icônes">Faux icônes créées par hqrloveq - Flaticon</a>
+
+balai-magique: <a href="https://www.flaticon.com/fr/icones-gratuites/la-magie" title="la magie icônes">La magie icônes créées par Freepik - Flaticon</a>
+
 """

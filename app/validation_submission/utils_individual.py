@@ -1,6 +1,7 @@
 import random
 import string
 import hashlib
+import gradio as gr
 
 def generate_random_md5():
     # Generate a random string
@@ -11,5 +12,9 @@ def generate_random_md5():
 
 def add_data_to_individual(key, value, individual): 
     individual[key] = value
+    return individual
+
+def reset_individual(individual):
+    individual = gr.State({})
     return individual
     

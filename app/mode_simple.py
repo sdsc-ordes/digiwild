@@ -1,10 +1,12 @@
 import gradio as gr
 from gradio_modal import Modal
+from functools import partial
 
 from validation_submission.utils_individual import add_data_to_individual
 from validation_submission.submission import validate_save_individual
 from validation_submission.validation import reset_error_box
-from functools import partial
+
+
 from dead import show_section_dead
 from wounded import show_section_wounded
 from circumstances.circumstances import show_circumstances
@@ -15,6 +17,7 @@ from behavior.behavior_checkbox import show_behavior, on_select_behavior
 from follow_up.followup_events import save_fe
 from styling.style import *
 from credits import credits_text
+from validation_submission.utils_individual import reset_individual
 
 from geolocalisation.js_geolocation import js_geocode, display_location
 from validation_submission.utils_individual import generate_random_md5
@@ -357,10 +360,6 @@ with gr.Blocks(theme='shivi/calm_seafoam') as simple:
     fe_collection_ref_dead.input(save_fe, inputs=[fe_collection_ref_dead, gr.Textbox("collection reference", visible=False), individual], outputs=[individual])
 
     # ---------------------------------------------------------
-    # Error Box
-    error_box = gr.Text(value=None, visible=False)
-
-    # ---------------------------------------------------------
     # Spacer
     with gr.Row(elem_id="centered-row"):
             gr.Image(PATH_ICONS+"chicken.png", height=80, width=80,
@@ -375,13 +374,20 @@ with gr.Blocks(theme='shivi/calm_seafoam') as simple:
                 """
             
     # ---------------------------------------------------------
+    # Error Box
+    with gr.Row(): 
+        error_icon = gr.Image(PATH_ICONS+"chicken.png", height=80, width=80, visible=False, scale=1)
+        error_box = gr.Text(value=None, visible=False, scale=4)
+            
+    # ---------------------------------------------------------
     # Allow clearing of all previous output
     with gr.Row(): 
         button_df = gr.Button("SUBMIT OBSERVATION", icon=PATH_ICONS+"effective.png",
                               scale = 3)
         button_clear = gr.ClearButton(value="CLEAR",
                                       scale = 1,
-                                        components=[
+                                      icon = PATH_ICONS+"balai-magique.png",
+                                      components=[
             camera,
             #dead reset
             radio_circumstance_dead, radio_physical_dead,
@@ -400,7 +406,7 @@ with gr.Blocks(theme='shivi/calm_seafoam') as simple:
             checkbox_beak_wounded, text_beak_wounded, checkbox_body_wounded, text_body_wounded, checkbox_feathers_wounded, text_feathers_wounded, checkbox_head_wounded, text_head_wounded, checkbox_legs_wounded, text_legs_wounded,
             fe_collection_dropdown_wounded, fe_recepient_dropdown_wounded, fe_radio_dropdown_wounded, fe_answer_dropdown_wounded, 
             fe_name_recipient_wounded, fe_collection_ref_wounded,
-            error_box
+            error_icon, error_box
             ])
         show_creds = gr.Button("CREDITS", icon=PATH_ICONS+"copyright.png", scale=0.5)
 
@@ -408,19 +414,30 @@ with gr.Blocks(theme='shivi/calm_seafoam') as simple:
     # Button Click Logic
     button_clear.click()
     button_clear.click(hide_physical,
-                        outputs=[checkbox_beak_wounded, text_beak_wounded, checkbox_body_wounded, text_body_wounded, checkbox_feathers_wounded, text_feathers_wounded, checkbox_head_wounded, text_head_wounded, checkbox_legs_wounded, text_legs_wounded])
+                        inputs=[gr.Text(mode, visible=False)],
+                        outputs=[checkbox_beak_wounded, text_beak_wounded, 
+                                 checkbox_body_wounded, text_body_wounded, 
+                                 checkbox_feathers_wounded, text_feathers_wounded, 
+                                 checkbox_head_wounded, text_head_wounded, 
+                                 checkbox_legs_wounded, text_legs_wounded])
     button_clear.click(hide_physical,
-                        outputs=[checkbox_beak_dead, text_beak_dead, checkbox_body_dead, text_body_dead, checkbox_feathers_dead, text_feathers_dead, checkbox_head_dead, text_head_dead, checkbox_legs_dead, text_legs_dead])
-    button_clear.click(reset_error_box, inputs=[error_box], outputs=[error_box])  
-            
+                        inputs=[gr.Text(mode, visible=False)],
+                        outputs=[checkbox_beak_dead, text_beak_dead, 
+                                 checkbox_body_dead, text_body_dead, 
+                                 checkbox_feathers_dead, text_feathers_dead, 
+                                 checkbox_head_dead, text_head_dead, 
+                                 checkbox_legs_dead, text_legs_dead])
+    button_clear.click(reset_error_box, inputs=[error_icon, error_box], outputs=[error_icon, error_box])  
+    button_clear.click(reset_individual, inputs=[individual], outputs=[individual])
    
     # ---------------------------------------------------------
     # VALIDATE ANIMAL 
     button_df.click(validate_save_individual, 
                     inputs=[individual, 
+                            error_icon,
                             error_box,
                             gr.Text(mode, visible=False)],
-                    outputs=[error_box])
+                    outputs=[individual, error_icon, error_box])
     # ---------------------------------------------------------
     #CREDITS
     with Modal(visible=False) as modal_creds:
