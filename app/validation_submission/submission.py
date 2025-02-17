@@ -23,10 +23,9 @@ def push_to_dataset_hf(individual):
     f.flush()
     f.close()
     path_in_repo = f"data/{individual['image_md5']}.json"
-    # print(path_in_repo)
-    # api.upload_file(
-    #     path_or_fileobj=f.name,
-    #     path_in_repo=path_in_repo,
-    #     repo_id="SDSC/digiwild-dataset",
-    #     repo_type="dataset",
-    # )
+    api.upload_file(
+        path_or_fileobj=f.name,
+        path_in_repo=path_in_repo,
+        repo_id="SDSC/digiwild-dataset",
+        repo_type="dataset",
+    )
