@@ -1,27 +1,46 @@
+import gradio as gr
+
+from dotenv import load_dotenv
+import os
+load_dotenv()
+PATH = os.getcwd() + "/"
+PATH_ASSETS = os.getenv('PATH_ASSETS')
+PATH_ICONS = PATH + PATH_ASSETS + "icons/"
+
 credits_text = """
 # Credits
 
-## Scientific Expertise
+This work stemmed from a fruitful collaboration between SDSC and FIWI. 
 
-- Isabelle Wethli (Institute for Fish and Wildlife Health, University of Bern)
-- Dr. Mirjam Pewsner (Institute for Fish and Wildlife Health, University of Bern)
-- Dr. Saskia Keller (Institute for Fish and Wildlife Health, University of Bern)
+## Scientific Expertise : FIWI from UniBE 
 
-## Front End Development
+From the [Institute for Fish and Wildlife Health, University of Bern](https://www.fiwi.vetsuisse.unibe.ch)
+- **Isabelle Wethli**
+- **Dr. Mirjam Pewsner**
+- **Dr. Saskia Keller**
 
-- Carlos Viviar Rios (Swiss Data Science Center)
-- Laure Vancauwenberghe (Swiss Data Science Center)
+## Front End Development: SDSC
 
+From the [Swiss Data Science Center](https://www.datascience.ch)
+- **Carlos Viviar Rios**
+- **Laure Vancauwenberghe**
 
+## How to Contact Us? 
 
+Please reach out to FIWI via [their contacts](https://www.fiwi.vetsuisse.unibe.ch/about_us/team/index_eng.html).
 
+## Special Thanks 
 
+- **Vogelwarte** for their advice, especially Samuel Wechsler.
+- **Biolovision SA**, providers of **ornitho.ch**, for their collaboration: circumstances are matched to their current data collection schema on ornitho.ch
 
+"""
 
+icons_text = """
+### Icons' Attributions
+(scroll to see all)
 
-### Icons 
-
-copyright: <a href="https://www.flaticon.com/free-icons/copyright" title="copyright icons">Copyright icons created by Freepik - Flaticon</a>
+Biolovision for the circumstances icons. 
 
 flying-doves-group: <a href="https://www.flaticon.com/free-icons/animal" title="animal icons">Animal icons created by Freepik - Flaticon</a>
 
@@ -55,4 +74,25 @@ supprimer: <a href="https://www.flaticon.com/fr/icones-gratuites/faux" title="fa
 
 balai-magique: <a href="https://www.flaticon.com/fr/icones-gratuites/la-magie" title="la magie icônes">La magie icônes créées par Freepik - Flaticon</a>
 
+contact-information: <a href="https://www.flaticon.com/free-icons/contact-information" title="contact information icons">Contact information icons created by Freepik - Flaticon</a>
+
+help: <a href="https://www.flaticon.com/free-icons/help" title="help icons">Help icons created by Freepik - Flaticon</a>
+
+question: <a href="https://www.flaticon.com/free-icons/question" title="question icons">Question icons created by Freepik - Flaticon</a>
 """
+
+with gr.Blocks(theme='shivi/calm_seafoam') as about: 
+    with gr.Row(scale = 1): 
+        gr.Image(PATH_ICONS+"sdsc.png", 
+                 height=200,
+                 interactive=False,
+                 show_fullscreen_button = False, show_share_button=False, 
+                 show_download_button=False, show_label=False)
+        gr.Image(PATH_ICONS+"fiwi.png",
+                 height=200,
+                 interactive=False,
+                 show_fullscreen_button = False, show_share_button=False, 
+                 show_download_button=False, show_label=False)
+         
+    gr.Markdown(credits_text, show_label=False)
+    gr.Markdown(icons_text, show_label=False, height=100)

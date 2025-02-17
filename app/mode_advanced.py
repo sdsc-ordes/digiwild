@@ -1,24 +1,23 @@
 import gradio as gr
 from gradio_modal import Modal
+from functools import partial
 
 from geolocalisation.js_geolocation import js_geocode, display_location
-from validation_submission.utils_individual import generate_random_md5
-from validation_submission.utils_individual import add_data_to_individual
-from validation_submission.submission import validate_save_individual
-from validation_submission.validation import reset_error_box 
-from validation_submission.utils_individual import reset_individual
 from geolocalisation.maps import get_location
-from functools import partial
-from dead import show_section_dead
-from wounded import show_section_wounded
+from dead_wounded.dead import show_section_dead
+from dead_wounded.wounded import show_section_wounded
 from circumstances.circumstances import show_circumstances
 from circumstances.circumstances_dropdowns import *
 from physical.physical_select_animal import show_physical, find_bounding_box
 from physical.physical_checkbox import on_select_body_part, hide_physical
 from behavior.behavior_checkbox import show_behavior, on_select_behavior
 from follow_up.followup_events import save_fe
+from validation_submission.utils_individual import generate_random_md5
+from validation_submission.utils_individual import add_data_to_individual
+from validation_submission.submission import validate_save_individual
+from validation_submission.validation import reset_error_box 
+from validation_submission.utils_individual import reset_individual
 from styling.style import *
-from credits import credits_text
 
 from dotenv import load_dotenv
 import os
@@ -407,10 +406,18 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
             fe_name_recipient_wounded, fe_collection_ref_wounded,
             error_icon, error_box
             ])
-        show_creds = gr.Button("CREDITS", icon=PATH_ICONS+"copyright.png", scale=0.5)
-
+        
     # ---------------------------------------------------------
-    # Button Click Logic
+    # VALIDATE ANIMAL 
+    button_df.click(validate_save_individual, 
+                    inputs=[individual, 
+                            error_icon,
+                            error_box,
+                            gr.Text(mode, visible=False)],
+                    outputs=[error_icon, error_box])
+    
+    # ---------------------------------------------------------
+    # CLEAR BUTTON
     button_clear.click()
     button_clear.click(hide_physical,
                        inputs =[gr.Text(mode, visible=False)],
@@ -428,17 +435,4 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
                                  checkbox_legs_dead, text_legs_dead])
     button_clear.click(reset_error_box, inputs=[error_icon, error_box], outputs=[error_icon, error_box])  
     button_clear.click(reset_individual, inputs=[individual], outputs=[individual])
-   
-    # ---------------------------------------------------------
-    # VALIDATE ANIMAL 
-    button_df.click(validate_save_individual, 
-                    inputs=[individual, 
-                            error_icon,
-                            error_box,
-                            gr.Text(mode, visible=False)],
-                    outputs=[individual, error_icon, error_box])
-    # ---------------------------------------------------------
-    #CREDITS
-    with Modal(visible=False) as modal_creds:
-        gr.Markdown(credits_text)
-    show_creds.click(lambda: Modal(visible=True), None, modal_creds)
+
