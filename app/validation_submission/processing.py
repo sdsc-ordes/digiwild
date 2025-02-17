@@ -1,24 +1,23 @@
 #### PROCESS FUNCTIONS 
 
 def process_circumstance(data):
-    print(data)
     fields_to_check = ["option_dropdown", "open_field", "extra"]
     reformatted ={}
     if ("circumstance_radio" in data.keys()) and ("circumstance" in data.keys()) and ("circumstance_type" in data.keys()) and (data["circumstance_radio"] == "Yes"):
         reformatted["circumstance_radio"] = data["circumstance_radio"]
         reformatted["circumstance"] = data["circumstance"]
         reformatted["circumstance_type"] = {}
+        if "type" in data["circumstance_type"]: 
+            reformatted["circumstance_type"]["type"] = data["circumstance_type"]["type"]
         for field in fields_to_check:
             if not data["circumstance_type"][field+"_label"] == "NA":
                 val = data[f"circumstance_{field}"]
                 key = data["circumstance_type"][field+"_label"]
-                print("TYPE: ", key)
                 reformatted["circumstance_type"][key] = val
     else: 
         reformatted["circumstance_radio"] = None
         reformatted["circumstance"] = None
         reformatted["circumstance_type"] = {}
-    print (reformatted)
     return reformatted
 
 def process_behaviors(data):

@@ -10,7 +10,7 @@ def validate_save_individual(data, error_icon, error_box, mode):
     if individual:
         print("pushing to hugging face")
         push_to_dataset_hf(individual.model_dump())
-    return individual, error_icon, error_box
+    return error_icon, error_box
 
 
 def push_to_dataset_hf(individual):

@@ -437,7 +437,7 @@ with gr.Blocks(theme='shivi/calm_seafoam') as simple:
                             error_icon,
                             error_box,
                             gr.Text(mode, visible=False)],
-                    outputs=[individual, error_icon, error_box])
+                    outputs=[error_icon, error_box])
     # ---------------------------------------------------------
     #CREDITS
     with Modal(visible=False) as modal_creds:
