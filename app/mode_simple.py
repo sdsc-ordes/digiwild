@@ -98,25 +98,6 @@ with gr.Blocks(theme='shivi/calm_seafoam') as simple:
                     btn_gpslocation = gr.Button("Get Coordinates using GPS (Permission required)")
                     btn_gpslocation.click(None, [], [], js=js_geocode)
                     hidden_input.change(display_location, inputs=hidden_input, outputs=location_data)
-
-                    from geolocalisation.maps import get_location
-                    with gr.Column(scale=1):
-                        gr.Markdown("#### Location (Using address)")
-                        location = gr.Textbox(visible=True, interactive=True, 
-                                                label="Location of Sighting")
-                        #display location processing
-                        identified_location= gr.Textbox(visible=False, interactive=False, 
-                                                        label="Identified GPS Location")
-                        with gr.Row():
-                            #to submit it
-                            submit_location = gr.Button("Get Coordinates using address", 
-                                                        visible=True, interactive=True, scale=3)
-                            submit_location.click(get_location, inputs=[location, individual], outputs=[identified_location, individual])
-                            #to clear it
-                            clear_location = gr.ClearButton(components=[location, identified_location], 
-                                                            visible=True, interactive=True, scale=1
-                                                            )
-                            clear_location.click()
             
     # ---------------------------------------------------------
     # Dead and Wounded Buttons
