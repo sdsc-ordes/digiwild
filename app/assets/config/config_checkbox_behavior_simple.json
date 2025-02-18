@@ -1,0 +1,18 @@
+{
+    "General weakness":
+    {
+        "Description": "Abnormal breathing (dyspnoea), sudden crash, apathy, lethargy, unable to fly but responsive."
+    },
+    "Vomiting":
+    {
+        "Description": "Throwing up undigested food, regurgitating"
+    },
+    "Atypical behavior":
+    {
+        "Description": "Circling, incoordination, tremors, convulsions"
+    },
+    "No changes": 
+    {
+        "Description": "Animal is acting normally"
+    }
+}

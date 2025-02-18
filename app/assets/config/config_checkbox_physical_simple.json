@@ -1,0 +1,30 @@
+{
+    "Common":
+    {
+        "Abnormal position": {
+            "Description": "Hanging wing, tilted head, lameness"},
+        "Injury": {
+            "Description": "Visible blood, fracture, missing limb, swelling without visible injury, foreign body"}
+    },
+    "Beak":
+    {
+        "Adhesion/Discharge": {
+            "Description": "Material (food, saliva) around/ in the beak, discharge from ears/ eyes/ beak/ nose"
+            }
+    },
+    "Body": 
+    {},
+    "Feathers/Wings/Tail":
+    {
+        "Feathers and skin change": {
+            "Description": "Blackened/ burnt skin or feathers, deformed feathers, ear changes (swollen, crusts, plugged, discharge), discolored/ missing/ broken/ stained feathers, fluffed up plumage, warts/ crusts/ tumor-like growth, parasites"}
+    },
+    "Head incl. eyes": 
+    {
+        "Eye changes": {
+            "Description": "Swollen, reddened, closed, discharge, crusts"}
+    },
+    "Legs":
+    {}
+
+}

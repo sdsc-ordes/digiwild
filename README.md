@@ -13,7 +13,7 @@ short_description: Digiwild
 ## Docker
 
 ``` bash
-docker build -t ordes/digiwild . 
+docker build -t ordes/digiwild .
 ```
 
 
@@ -29,18 +29,17 @@ python3 main.py
 ### How to develop on docker
 
 ``` bash
-docker run -it -p 7860:7860 -v $(pwd):/home/user/digiwild/ ordes/digiwild
+docker run -it -p 7860:7860 -v $(pwd):/home/user/digiwild/ --entrypoint bash ordes/digiwild
 ```
 
 ## TODO
 
 - [x] Change `wounded` to `wounded / sick`
 - [x] Info formatting
-- [ ] Use in memory object instead of files to avoid writting / reading problems.
+- [x] Use in memory object instead of files to avoid writting / reading problems.
 - [ ] Connection to a database? Maybe an open MongoDB
 - [x] GPS Compatibility
 - [x] New fields suggested: Number individuals, Species, Comments
-- [ ] Save new fields values into the JSON. Perform validation too.
 - [ ] Add info and placeholder information to the different components.
 
 ## Needs
@@ -50,5 +49,3 @@ docker run -it -p 7860:7860 -v $(pwd):/home/user/digiwild/ ordes/digiwild
 - GPS location
 - Comments
 - Symptomps selection (Dropdown)
-
-## PR Updates
