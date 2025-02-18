@@ -24,4 +24,4 @@ jobs:
       - name: Sync Datasets
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: python sync_dataset_hf.py
+        run: python app/sync_dataset_hf.py
