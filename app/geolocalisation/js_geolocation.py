@@ -37,6 +37,7 @@ js_geocode = """
 
 def display_location(location_json, individual):
     geo_dict = json.loads(location_json)
+    print(geo_dict)
     latitude = geo_dict["latitude"]
     longitude = geo_dict["longitude"]
     geolocalisation = create_geolocalisation_object(latitude, longitude, "NA")
@@ -46,6 +47,7 @@ def display_location(location_json, individual):
         visible=True, 
         show_label=False,
         interactive=False) 
+    print("Done displaying location")
     return locationtext, individual
 
 # def display_location(location_json):
