@@ -98,10 +98,10 @@ class VegetalForestWorkDestruction(CircumstanceTypeBase):
                        'other forest work', 'unknown forest work']
 
 class OtherIndirectDestruction(CircumstanceTypeBase):
-    type: Literal['other indirect desctruction']
+    type: Literal['other indirect destruction']
 
 class UnknownIndirectDestruction(CircumstanceTypeBase):
-    type: Literal['unknown indirect desctruction']
+    type: Literal['unknown indirect destruction']
 
 # Natural cause
 class Predation(CircumstanceTypeBase):
