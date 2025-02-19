@@ -402,7 +402,9 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
             #dead reset
             radio_circumstance_dead, radio_physical_dead,
             button_collision_dead, button_deliberate_destruction_dead, button_indirect_destruction_dead, button_natural_cause_dead, 
-            dropdown_dead, dropdown_level2_dead, openfield_level2_dead, dropdown_extra_level2_dead,
+            dropdown_dead, dropdown_level2_dead, 
+            #openfield_level2_dead, 
+            dropdown_extra_level2_dead,
             physical_boxes_dead,
             checkbox_beak_dead, text_beak_dead, checkbox_body_dead, text_body_dead, checkbox_feathers_dead, text_feathers_dead, checkbox_head_dead, text_head_dead, checkbox_legs_dead, text_legs_dead, 
             fe_collection_dropdown_dead, fe_recepient_dropdown_dead, fe_radio_dropdown_dead, fe_answer_dropdown_dead, 
@@ -410,7 +412,9 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
             #wounded reset
             radio_circumstance_wounded, radio_behavior_wounded, radio_physical_wounded,
             button_collision_wounded, button_deliberate_destruction_wounded, button_indirect_destruction_wounded, button_natural_cause_wounded, 
-            dropdown_wounded, dropdown_level2_wounded, openfield_level2_wounded, dropdown_extra_level2_wounded,
+            dropdown_wounded, dropdown_level2_wounded, 
+            #openfield_level2_wounded, 
+            dropdown_extra_level2_wounded,
             behavior_checkbox, behavior_text, 
             physical_boxes_wounded, 
             checkbox_beak_wounded, text_beak_wounded, checkbox_body_wounded, text_body_wounded, checkbox_feathers_wounded, text_feathers_wounded, checkbox_head_wounded, text_head_wounded, checkbox_legs_wounded, text_legs_wounded,
