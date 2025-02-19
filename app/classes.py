@@ -48,6 +48,9 @@ class Report(BaseModel):
     image: ImageBase64
     image_md5: str
     geolocalisation: Geolocalisation
+    specie: Optional[str]
+    number: Optional[int]
+    comments: Optional[str]
     wounded_state: str
     wounded: Optional[Wounded] = None
     dead_state: str

@@ -2,7 +2,6 @@ import uuid
 from pydantic import ValidationError
 import gradio as gr
 
-# from validation_submission.get_json import get_json_tmp, get_json_one_individual
 from circumstances.class_circumstance import Circumstances
 from behavior.class_behavior import Behaviors
 from behavior.class_behavior_simple import BehaviorsSimple
@@ -32,19 +31,19 @@ def get_fields(data_dict, keyword):
             extract[key] = val
     return extract
 
+def field_checker(data):
+    img = ImageBase64.to_base64(data["image"]) if "image" in data.keys() else None
+    geolocalisation = data["geolocalisation"] if "geolocalisation" in data.keys() else None
+    specie = data["specie"] if "specie" in data.keys() else "NA"
+    number =  data["number"] if "specie" in data.keys() else 1
+    comments = data["comments"] if "specie" in data.keys() else "NA"
+    return img, geolocalisation, specie, number, comments
 
 def validate_individual(data, error_icon, error_box, mode: str):
     error_icon, error_box = reset_error_box(error_icon, error_box)
     # data = get_json_one_individual() # TODO: This should change
     data["identifier"] = str(uuid.uuid4())
-    if "image" in data.keys():
-        img = ImageBase64.to_base64(data["image"])
-    else:
-        img = None
-    if "geolocalisation" in data.keys():
-        geolocalisation = data["geolocalisation"]
-    else:
-        geolocalisation = None
+    img, geolocalisation, specie, number, comments = field_checker(data)
 
     error_behavior = None
     error_circumstance = None
@@ -68,6 +67,9 @@ def validate_individual(data, error_icon, error_box, mode: str):
                     image=img,
                     image_md5=data["image_md5"],
                     geolocalisation=geolocalisation,
+                    specie=specie,
+                    number=number,
+                    comments=comments,
                     wounded_state=data["wounded_state"],
                     wounded=Wounded(
                         circumstances=circumstance,
@@ -89,6 +91,9 @@ def validate_individual(data, error_icon, error_box, mode: str):
                     image=img,
                     image_md5=data["image_md5"],
                     geolocalisation=geolocalisation,
+                    specie=specie,
+                    number=number,
+                    comments=comments,
                     wounded_state=data["wounded_state"],
                     dead_state=data["dead_state"],
                     dead=Dead(
@@ -108,6 +113,9 @@ def validate_individual(data, error_icon, error_box, mode: str):
                 image=img,
                 image_md5=data["image_md5"],
                 geolocalisation=geolocalisation,
+                specie=specie,
+                number=number,
+                comments=comments,
                 wounded_state=data["wounded_state"],
                 dead_state=data["dead_state"],
             )

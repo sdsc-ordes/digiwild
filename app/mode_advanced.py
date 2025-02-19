@@ -12,12 +12,14 @@ from physical.physical_select_animal import show_physical, find_bounding_box
 from physical.physical_checkbox import on_select_body_part, hide_physical
 from behavior.behavior_checkbox import show_behavior, on_select_behavior
 from follow_up.followup_events import save_fe
+from styling.style import *
 from validation_submission.utils_individual import generate_random_md5
 from validation_submission.utils_individual import add_data_to_individual
 from validation_submission.submission import validate_save_individual
 from validation_submission.validation import reset_error_box 
 from validation_submission.utils_individual import reset_individual
-from styling.style import *
+from validation_submission.utils_save import save_details, save_image
+
 
 from dotenv import load_dotenv
 import os
@@ -45,9 +47,6 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
     # ---------------------------------------------------------
     # Camera
     with gr.Row():
-        def save_image(camera, individual):
-            individual = add_data_to_individual("image", camera.tolist(), individual)
-            return individual
         camera = gr.Image(elem_id="image")
         camera.input(save_image, inputs=[camera, individual], outputs=[individual])
     
@@ -64,6 +63,10 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
                     visible=True,
                     interactive=True
                 )
+                specie.change(save_details,
+                              inputs=[gr.Textbox("specie", visible=False),
+                                      specie],
+                              outputs=individual)
 
             # Number of individuals
             with gr.Row():
@@ -77,6 +80,10 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
                     visible=True,
                     interactive=True
                 )
+                num_individuals.change(save_details,
+                              inputs=[gr.Textbox("number", visible=False),
+                                      num_individuals],
+                              outputs=individual)
 
             # Introducing text_box for comments 
             with gr.Row():
@@ -89,6 +96,10 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
                     visible=True,
                     interactive=True
                 )
+                comments.change(save_details,
+                              inputs=[gr.Textbox("comments", visible=False),
+                                      comments],
+                              outputs=individual)
 
     # ---------------------------------------------------------
     # Location
@@ -114,12 +125,15 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
         
         with gr.Column(scale=1):
             # Geolocation
-            gr.Markdown("#### Location (Using GPS)")
-            location_data = gr.JSON(label="Identified GPS Location")
+            gr.Button("Location", icon=PATH_ICONS+"pin.png", variant="primary")
+            location_data = gr.JSON(label="Identified GPS Location", visible=False)
             hidden_input = gr.Textbox(visible=False, elem_id="textbox_id") 
+            locationtext = gr.Textbox(visible=False, elem_id="textbox_id") 
             btn_gpslocation = gr.Button("Get Coordinates using GPS (Permission required)")
             btn_gpslocation.click(None, [], [], js=js_geocode)
-            hidden_input.change(display_location, inputs=hidden_input, outputs=location_data)
+            hidden_input.change(display_location, 
+                                    inputs=[hidden_input, individual], 
+                                    outputs=[locationtext, individual])
             
     # ---------------------------------------------------------
     # Dead and Wounded Buttons

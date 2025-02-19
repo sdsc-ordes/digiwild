@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Literal, List, Union
+from typing import Literal, List, Union, Optional
 
 class Longitude(BaseModel):
     type: Literal['longitude']
@@ -12,5 +12,5 @@ class Latitude(BaseModel):
 class Geolocalisation(BaseModel):
     longitude: Longitude
     latitude: Latitude
-    name: str
+    name: Optional[str]
 
