@@ -110,8 +110,7 @@ with gr.Blocks(theme='shivi/calm_seafoam') as simple:
                     btn_gpslocation.click(None, [], [], js=js_geocode)
                     hidden_input.change(display_location, 
                                           inputs=[hidden_input, individual], 
-                                          #outputs=[locationtext, individual])
-                                           outputs=[location_data, individual])
+                                          outputs=[locationtext, individual])
             
     # ---------------------------------------------------------
     # Dead and Wounded Buttons

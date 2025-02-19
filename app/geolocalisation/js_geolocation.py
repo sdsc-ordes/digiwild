@@ -37,20 +37,18 @@ js_geocode = """
 
 def display_location(location_json, individual):
     geo_dict = json.loads(location_json)
-    print(geo_dict)
-    # latitude = geo_dict["latitude"]
-    # longitude = geo_dict["longitude"]
-    # geolocalisation = create_geolocalisation_object(latitude, longitude, "NA")
-    # individual = save_geolocalisation_to_json(geolocalisation, individual)
-    # locationtext = gr.Textbox(
-    #     f"Latitude: {latitude} | Longitude: {longitude}",
-    #     visible=True, 
-    #     show_label=False,
-    #     interactive=False) 
-    # print("Done displaying location")
-    location_data = gr.JSON(value=geo_dict, label="Identified GPS Location", visible=True)
-    #return locationtext, individual
-    return location_data, individual
-
-# def display_location(location_json):
-#     return location_json
+    if "latitude" in geo_dict.keys():
+        latitude = geo_dict["latitude"]
+        longitude = geo_dict["longitude"]
+        geolocalisation = create_geolocalisation_object(latitude, longitude, "NA")
+        individual = save_geolocalisation_to_json(geolocalisation, individual)
+        geo_text = f"Latitude: {latitude} | Longitude: {longitude}"
+    else: 
+        error = geo_dict["error"]
+        geo_text = f"Error occured ({error}). Give your browser permission to use your geolocalisation or change browsers."
+    locationtext = gr.Textbox(
+        geo_text,
+        visible=True, 
+        show_label=False,
+        interactive=False) 
+    return locationtext, individual

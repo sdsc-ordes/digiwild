@@ -15,6 +15,6 @@ def add_data_to_individual(key, value, individual):
     return individual
 
 def reset_individual(individual):
-    individual = gr.State({})
+    individual = {}
     return individual
     
