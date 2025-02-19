@@ -17,7 +17,6 @@ def retrieve_config_options(label, dropdown_config):
 
 
 def get_options_description(value, mode):
-    # print(f"Get options description: {mode}")
     if mode == "simple":
         dropdown_config = get_custom_config_dropdowns(
             "config_checkbox_physical_simple.json"
@@ -132,32 +131,3 @@ def on_select_body_part(body_part_checkbox, body_part, individual):
     )
     return individual
 
-
-# ---------------------------------------------------------
-
-
-def hide_physical(mode):
-    (
-        checkbox_beak,
-        text_beak,
-        checkbox_body,
-        text_body,
-        checkbox_feathers,
-        text_feathers,
-        checkbox_head,
-        text_head,
-        checkbox_legs,
-        text_legs,
-    ) = process_body_parts("wounded", mode, "None")
-    return (
-        checkbox_beak,
-        text_beak,
-        checkbox_body,
-        text_body,
-        checkbox_feathers,
-        text_feathers,
-        checkbox_head,
-        text_head,
-        checkbox_legs,
-        text_legs,
-    )

@@ -15,6 +15,8 @@ from validation_submission.processing import (
     process_physical,
     process_followup,
 )
+from validation_submission.utils_individual import generate_random_md5
+from validation_submission.resets import reset_error_box
 
 from dotenv import load_dotenv
 import os
@@ -43,6 +45,7 @@ def validate_individual(data, error_icon, error_box, mode: str):
     error_icon, error_box = reset_error_box(error_icon, error_box)
     # data = get_json_one_individual() # TODO: This should change
     data["identifier"] = str(uuid.uuid4())
+    data["image_md5"] = generate_random_md5()
     img, geolocalisation, specie, number, comments = field_checker(data)
 
     error_behavior = None
@@ -80,8 +83,6 @@ def validate_individual(data, error_icon, error_box, mode: str):
                     dead_state=data["dead_state"],
                 )
             except ValidationError as e:
-                print("Error in wounded_state:")
-                print(e.json())
                 error_individual = e
 
         elif data["dead_state"] == "Yes":
@@ -103,8 +104,6 @@ def validate_individual(data, error_icon, error_box, mode: str):
                     ),
                 )
             except ValidationError as e:
-                print("Error in dead_state:")
-                print(e.json())
                 error_individual = e
     else:
         try:
@@ -120,7 +119,6 @@ def validate_individual(data, error_icon, error_box, mode: str):
                 dead_state=data["dead_state"],
             )
         except ValidationError as e:
-            print(f"""Error in individual else: {e}""")
             error_individual = e
     if (
         error_behavior
@@ -184,12 +182,6 @@ def show_error(
     return error_box
 
 
-def reset_error_box(error_icon, error_box):
-    error_icon = gr.Image(PATH_ICONS+"supprimer.png", height=80, width=80, visible=False)
-    error_box = gr.Text(value=None, visible=False)
-    return error_icon, error_box
-
-
 #### VALIDATION FUNCTIONS
 def validate_circumstance(data):
     circumstance_raw = get_fields(data, "circumstance")
@@ -200,7 +192,6 @@ def validate_circumstance(data):
         error = None
     except ValidationError as e:
         error = e
-        print(f"""Error in Validate_circumstance: {e}""")
         circumstances = None
     return circumstances, error
 
@@ -217,7 +208,6 @@ def validate_behavior(data, mode):
             behavior = Behaviors(**behaviors_formatted)
         error = None
     except ValidationError as e:
-        print(f"""Error in behaviors validation: {e}""")
         behavior = None
         error = e
     return behavior, error
@@ -226,7 +216,6 @@ def validate_behavior(data, mode):
 def validate_physical(data, mode):
     physical_raw = get_fields(data, "physical")
     physical_formatted = process_physical(physical_raw)
-    # print(physical_formatted)
     try:
         if mode == "simple":
             PhysicalAnomaliesSimple.model_validate(physical_formatted)
@@ -236,7 +225,6 @@ def validate_physical(data, mode):
             physical = PhysicalAnomalies(**physical_formatted)
         error = None
     except ValidationError as e:
-        print(f"""Error in physical_anomalies validation: {e}""")
         physical = None
         error = e
     return physical, error
@@ -250,7 +238,5 @@ def validate_follow_up(data):
         followup = FollowUpEvents(**followup_formatted)
         error = None
     except ValidationError as e:
-        print(f"""Error in follow-up events validation: {e}""")
-
         followup = None
     return followup, error

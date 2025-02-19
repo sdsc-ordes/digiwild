@@ -135,7 +135,6 @@ def on_select_dropdown_extra_level2(evt: gr.SelectData, individual):
 
 
 def on_change_openfield_level2(openfield_level2_dead, individual):
-    # print("Saving open field")
     individual = add_data_to_individual(
         "circumstance_open_field", str(openfield_level2_dead).lower(), individual
     )

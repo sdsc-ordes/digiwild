@@ -9,17 +9,15 @@ from dead_wounded.wounded import show_section_wounded
 from circumstances.circumstances import show_circumstances
 from circumstances.circumstances_dropdowns import *
 from physical.physical_select_animal import show_physical, find_bounding_box
-from physical.physical_checkbox import on_select_body_part, hide_physical
+from physical.physical_checkbox import on_select_body_part
 from behavior.behavior_checkbox import show_behavior, on_select_behavior
 from follow_up.followup_events import save_fe
 from styling.style import *
 from validation_submission.utils_individual import generate_random_md5
 from validation_submission.utils_individual import add_data_to_individual
 from validation_submission.submission import validate_save_individual
-from validation_submission.validation import reset_error_box 
-from validation_submission.utils_individual import reset_individual
 from validation_submission.utils_save import save_details, save_image
-
+from validation_submission.resets import reset_individual, reset_error_box, hide_physical
 
 from dotenv import load_dotenv
 import os
@@ -129,7 +127,7 @@ with gr.Blocks(theme='shivi/calm_seafoam') as advanced:
             location_data = gr.JSON(label="Identified GPS Location", visible=False)
             hidden_input = gr.Textbox(visible=False, elem_id="textbox_id") 
             locationtext = gr.Textbox(visible=False, elem_id="textbox_id") 
-            btn_gpslocation = gr.Button("Get Coordinates using GPS (Permission required)")
+            btn_gpslocation = gr.Button("Get Coordinates using GPS (Permission required - May take a few seconds)")
             btn_gpslocation.click(None, [], [], js=js_geocode)
             hidden_input.change(display_location, 
                                     inputs=[hidden_input, individual], 
