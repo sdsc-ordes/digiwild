@@ -10,7 +10,8 @@ short_description: Digiwild
 
 # Digiwild
 
-# Wilf Life monitoring - Bird Monitoring Use-Case
+# Citizen-Science Wilf Life Monitoring 
+## Bird Monitoring Use-Case
 
 ## About
 
