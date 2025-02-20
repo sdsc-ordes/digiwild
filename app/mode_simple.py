@@ -46,7 +46,11 @@ with gr.Blocks(theme="shivi/calm_seafoam") as simple:
         with gr.Column(scale=1):
             title = gr.Markdown("# Welcome to Digiwild", label="Title")
             description = gr.Markdown(
-                "## Please record your wildlife observations here !",
+                """
+                ## A **Citizen-Science Reporting System**, for professionals and amateurs alike. 
+                
+                ## Please record your wildlife observations here !
+                """,
                 label="description",
             )
 

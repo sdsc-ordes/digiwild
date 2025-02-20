@@ -55,7 +55,11 @@ with gr.Blocks(theme="shivi/calm_seafoam") as advanced:
                 "# Welcome to Digiwild - Advanced Reporting", label="Title"
             )
             description = gr.Markdown(
-                "### Please record your wildlife observations here !",
+                """
+                ## You are in **advanced** mode. If you are not a field professional, we recommend you switch to the **simple** reporting mode. 
+                
+                ## Please record your wildlife observations here !
+                """,
                 label="description",
             )
 
