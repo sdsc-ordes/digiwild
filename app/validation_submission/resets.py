@@ -4,17 +4,22 @@ from physical.physical_checkbox import process_body_parts
 
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 PATH = os.getcwd() + "/"
-PATH_ASSETS = os.getenv('PATH_ASSETS')
+PATH_ASSETS = os.getenv("PATH_ASSETS")
 PATH_ICONS = PATH + PATH_ASSETS + "icons/"
+
 
 def reset_individual(individual):
     individual = {}
     return individual
 
+
 def reset_error_box(error_icon, error_box):
-    error_icon = gr.Image(PATH_ICONS+"supprimer.png", height=80, width=80, visible=False)
+    error_icon = gr.Image(
+        PATH_ICONS + "supprimer.png", height=80, width=80, visible=False
+    )
     error_box = gr.Text(value=None, visible=False)
     return error_icon, error_box
 

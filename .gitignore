@@ -5,10 +5,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-#Data 
+#Data
 test/data/*.json
 data/*.json
-app/assets/tmp_json/*.json 
+app/assets/tmp_json/*.json
 
 # C extensions
 *.so

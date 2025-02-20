@@ -27,7 +27,7 @@
             "Description": "Unusual beak growth"
             }
     },
-    "Body": 
+    "Body":
     {
         "Emaciation": {
             "Description": "Breast muscles are not well developed"},
@@ -49,7 +49,7 @@
         "Missing limb": {
             "Description": "Missing limb"}
     },
-    "Head incl. eyes": 
+    "Head incl. eyes":
     {
         "Ear changes": {
             "Description": "Swollen, crusts, plugged, discharge"},

@@ -1,6 +1,7 @@
-import gradio as gr 
+import gradio as gr
 
-gr.HTML('''
+gr.HTML(
+    """
     <style>
     # .custom-button {
     #     background-color: #3B4C54;
@@ -16,7 +17,8 @@ gr.HTML('''
     #     border-radius: 8px;
     # }
     </style>
-    ''')
+    """
+)
 
 # gr.HTML('''
 #     <style>

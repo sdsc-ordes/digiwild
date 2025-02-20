@@ -12,14 +12,14 @@
             "Description": "Material (food, saliva) around/ in the beak, discharge from ears/ eyes/ beak/ nose"
             }
     },
-    "Body": 
+    "Body":
     {},
     "Feathers/Wings/Tail":
     {
         "Feathers and skin change": {
             "Description": "Blackened/ burnt skin or feathers, deformed feathers, ear changes (swollen, crusts, plugged, discharge), discolored/ missing/ broken/ stained feathers, fluffed up plumage, warts/ crusts/ tumor-like growth, parasites"}
     },
-    "Head incl. eyes": 
+    "Head incl. eyes":
     {
         "Eye changes": {
             "Description": "Swollen, reddened, closed, discharge, crusts"}

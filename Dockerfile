@@ -6,7 +6,7 @@ RUN apt-get install python3 python3-pip -y
 
 # RUN apt update
 # RUN apt-get update
-# RUN apt install python3.10 python3-pip -y 
+# RUN apt install python3.10 python3-pip -y
 
 # https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-every-time-i-use-pip-3
 # https://veronneau.org/python-311-pip-and-breaking-system-packages.html
@@ -25,7 +25,7 @@ RUN apt-get update && apt-get -y upgrade \
   && apt-get install -y --no-install-recommends \
     unzip \
     nano \
-    git \ 
+    git \
     g++ \
     gcc \
     htop \

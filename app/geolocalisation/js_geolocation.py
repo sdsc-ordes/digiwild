@@ -1,6 +1,9 @@
-import gradio as gr 
+import gradio as gr
 import json
-from geolocalisation.maps import create_geolocalisation_object, save_geolocalisation_to_json
+from geolocalisation.maps import (
+    create_geolocalisation_object,
+    save_geolocalisation_to_json,
+)
 
 # JavaScript code to get location and update hidden_input
 js_geocode = """
@@ -35,6 +38,7 @@ js_geocode = """
     }
 """
 
+
 def display_location(location_json, individual):
     geo_dict = json.loads(location_json)
     if "latitude" in geo_dict.keys():
@@ -43,12 +47,10 @@ def display_location(location_json, individual):
         geolocalisation = create_geolocalisation_object(latitude, longitude, "NA")
         individual = save_geolocalisation_to_json(geolocalisation, individual)
         geo_text = f"Latitude: {latitude} | Longitude: {longitude}"
-    else: 
+    else:
         error = geo_dict["error"]
         geo_text = f"Error occured ({error}). Give your browser permission to use your geolocalisation or change browsers."
     locationtext = gr.Textbox(
-        geo_text,
-        visible=True, 
-        show_label=False,
-        interactive=False) 
+        geo_text, visible=True, show_label=False, interactive=False
+    )
     return locationtext, individual

@@ -2,17 +2,18 @@ import gradio as gr
 
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 PATH = os.getcwd() + "/"
-PATH_ASSETS = os.getenv('PATH_ASSETS')
+PATH_ASSETS = os.getenv("PATH_ASSETS")
 PATH_ICONS = PATH + PATH_ASSETS + "icons/"
 
 credits_text = """
 # Credits
 
-This work stemmed from a fruitful collaboration between SDSC and FIWI. 
+This work stemmed from a fruitful collaboration between SDSC and FIWI.
 
-## Scientific Expertise : FIWI from UniBE 
+## Scientific Expertise : FIWI from UniBE
 
 From the [Institute for Fish and Wildlife Health, University of Bern](https://www.fiwi.vetsuisse.unibe.ch)
 - **Isabelle Wethli**
@@ -25,11 +26,11 @@ From the [Swiss Data Science Center](https://www.datascience.ch)
 - **Carlos Viviar Rios**
 - **Laure Vancauwenberghe**
 
-## How to Contact Us? 
+## How to Contact Us?
 
 Please reach out to FIWI via [their contacts](https://www.fiwi.vetsuisse.unibe.ch/about_us/team/index_eng.html).
 
-## Special Thanks 
+## Special Thanks
 
 - **Vogelwarte** for their advice, especially Samuel Wechsler.
 - **Biolovision SA**, providers of **ornitho.ch**, for their collaboration: circumstances are matched to their current data collection schema on ornitho.ch
@@ -40,7 +41,7 @@ icons_text = """
 ### Icons' Attributions
 (scroll to see all)
 
-Biolovision for the circumstances icons. 
+Biolovision for the circumstances icons.
 
 flying-doves-group: <a href="https://www.flaticon.com/free-icons/animal" title="animal icons">Animal icons created by Freepik - Flaticon</a>
 
@@ -81,18 +82,26 @@ help: <a href="https://www.flaticon.com/free-icons/help" title="help icons">Help
 question: <a href="https://www.flaticon.com/free-icons/question" title="question icons">Question icons created by Freepik - Flaticon</a>
 """
 
-with gr.Blocks(theme='shivi/calm_seafoam') as about: 
-    with gr.Row(scale = 1): 
-        gr.Image(PATH_ICONS+"sdsc.png", 
-                 height=200,
-                 interactive=False,
-                 show_fullscreen_button = False, show_share_button=False, 
-                 show_download_button=False, show_label=False)
-        gr.Image(PATH_ICONS+"fiwi.png",
-                 height=200,
-                 interactive=False,
-                 show_fullscreen_button = False, show_share_button=False, 
-                 show_download_button=False, show_label=False)
-         
+with gr.Blocks(theme="shivi/calm_seafoam") as about:
+    with gr.Row(scale=1):
+        gr.Image(
+            PATH_ICONS + "sdsc.png",
+            height=200,
+            interactive=False,
+            show_fullscreen_button=False,
+            show_share_button=False,
+            show_download_button=False,
+            show_label=False,
+        )
+        gr.Image(
+            PATH_ICONS + "fiwi.png",
+            height=200,
+            interactive=False,
+            show_fullscreen_button=False,
+            show_share_button=False,
+            show_download_button=False,
+            show_label=False,
+        )
+
     gr.Markdown(credits_text, show_label=False)
     gr.Markdown(icons_text, show_label=False, height=100)

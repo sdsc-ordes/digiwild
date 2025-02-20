@@ -1,4 +1,4 @@
-css_for_error_box= """
+css_for_error_box = """
 #error {background-color: #e82323 !important;
     color: white !important;
     font-weight: bold;}
@@ -17,10 +17,10 @@ body {
 }
 
 /* Secondary color for headers and panels */
-.gradio-container .card, 
-.gradio-container h1, 
-.gradio-container h2, 
-.gradio-container h3, 
+.gradio-container .card,
+.gradio-container h1,
+.gradio-container h2,
+.gradio-container h3,
 .gradio-container h4 {
     background-color: #3F543B;
     color: #ffffff; /* Ensuring text is readable */
@@ -36,11 +36,11 @@ body {
 }
 
 /* Olive green color for headers within the wounded section */
-#wounded h1, 
-#wounded h2, 
-#wounded h3, 
-#wounded h4, 
-#wounded h5, 
+#wounded h1,
+#wounded h2,
+#wounded h3,
+#wounded h4,
+#wounded h5,
 #wounded h6 {
     color: #ffffff; /* Olive green color for header text */
     background-color: #503B54; /* No background color for headers */
@@ -74,11 +74,11 @@ body {
 }
 
 /* Brown color for headers within the dead section */
-#dead h1, 
-#dead h2, 
-#dead h3, 
-#dead h4, 
-#dead h5, 
+#dead h1,
+#dead h2,
+#dead h3,
+#dead h4,
+#dead h5,
 #dead h6 {
     color: #ffffff; /* Olive green color for header text */
     background-color: #54433B; /* No background color for headers */

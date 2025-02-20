@@ -130,4 +130,3 @@ def on_select_body_part(body_part_checkbox, body_part, individual):
         "physical_anomaly_" + body_part.lower(), body_part_checkbox, individual
     )
     return individual
-

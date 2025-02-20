@@ -1,6 +1,6 @@
 def set_visible(choice):
-    if choice=="Yes":
+    if choice == "Yes":
         visible = True
     else:
-        visible=False
+        visible = False
     return visible

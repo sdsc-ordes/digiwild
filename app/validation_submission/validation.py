@@ -20,9 +20,10 @@ from validation_submission.resets import reset_error_box
 
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 PATH = os.getcwd() + "/"
-PATH_ASSETS = os.getenv('PATH_ASSETS')
+PATH_ASSETS = os.getenv("PATH_ASSETS")
 PATH_ICONS = PATH + PATH_ASSETS + "icons/"
 
 
@@ -33,13 +34,17 @@ def get_fields(data_dict, keyword):
             extract[key] = val
     return extract
 
+
 def field_checker(data):
     img = ImageBase64.to_base64(data["image"]) if "image" in data.keys() else None
-    geolocalisation = data["geolocalisation"] if "geolocalisation" in data.keys() else None
+    geolocalisation = (
+        data["geolocalisation"] if "geolocalisation" in data.keys() else None
+    )
     specie = data["specie"] if "specie" in data.keys() else "NA"
-    number =  data["number"] if "specie" in data.keys() else 1
+    number = data["number"] if "specie" in data.keys() else 1
     comments = data["comments"] if "specie" in data.keys() else "NA"
     return img, geolocalisation, specie, number, comments
+
 
 def validate_individual(data, error_icon, error_box, mode: str):
     error_icon, error_box = reset_error_box(error_icon, error_box)
@@ -57,7 +62,7 @@ def validate_individual(data, error_icon, error_box, mode: str):
         data["wounded_state"] = "No"
         data["dead_state"] = "No"
     if (data["wounded_state"] == "Yes") or (data["dead_state"] == "Yes"):
-        data_wounded_dead = data 
+        data_wounded_dead = data
         circumstance, error_circumstance = validate_circumstance(data_wounded_dead)
         physical, error_physical = validate_physical(data_wounded_dead, mode)
         followup, error_followup = validate_follow_up(data_wounded_dead)
@@ -127,11 +132,17 @@ def validate_individual(data, error_icon, error_box, mode: str):
         or error_physical
         or error_individual
     ):
-        error_icon = gr.Image(PATH_ICONS+"supprimer.png", height=80, width=80,
-                        interactive=False,
-                        show_fullscreen_button = False, show_share_button=False, 
-                        show_download_button=False, show_label=False,
-                        visible=True)
+        error_icon = gr.Image(
+            PATH_ICONS + "supprimer.png",
+            height=80,
+            width=80,
+            interactive=False,
+            show_fullscreen_button=False,
+            show_share_button=False,
+            show_download_button=False,
+            show_label=False,
+            visible=True,
+        )
         error_box = show_error(
             error_box,
             error_behavior,
@@ -142,11 +153,17 @@ def validate_individual(data, error_icon, error_box, mode: str):
         )
         individual = None
     else:
-        error_icon = gr.Image(PATH_ICONS+"correct.png", height=80, width=80,
-                        interactive=False,
-                        show_fullscreen_button = False, show_share_button=False, 
-                        show_download_button=False, show_label=False,
-                        visible=True)
+        error_icon = gr.Image(
+            PATH_ICONS + "correct.png",
+            height=80,
+            width=80,
+            interactive=False,
+            show_fullscreen_button=False,
+            show_share_button=False,
+            show_download_button=False,
+            show_label=False,
+            visible=True,
+        )
         error_box = gr.Text(
             label="ALL VALID.",
             value="Record Registered. Remember to press the CLEAR button before submitting a new record.",
