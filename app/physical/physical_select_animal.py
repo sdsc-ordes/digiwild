@@ -16,6 +16,15 @@ PATH_ASSETS = os.getenv("PATH_ASSETS")
 
 # Function to find the matching bounding box for a given point and return the image with boxes
 def find_bounding_box(evt: gr.SelectData, img, section: str, mode: str):
+    """ Find the bounding box for a given point and return the image with boxes
+    Args:
+        evt (gr.SelectData): Event data from the image
+        img (gr.Image): Image to display
+        section (str): Section to display the image in
+        mode (str): Mode to display the image in
+    Returns:
+        tuple of checkbox and text
+    """
     x, y = evt.index[0], evt.index[1]
     point = Point(x, y)
     match = gdf[gdf.contains(point)]

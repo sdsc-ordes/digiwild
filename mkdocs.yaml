@@ -1,0 +1,66 @@
+site_name: Digiwild Code Documentation
+dev_addr: 127.0.0.1:8888
+theme:
+  name: material
+
+markdown_extensions:
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+
+plugins:
+  - mkdocs-homepage-copier
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python: 
+          paths: [nonexistent_path_on_purpose]
+
+
+nav:
+  - README: index.md
+  - About: about.md
+  - Contacts: contacts.md
+  - Hugging Face: sync_dataset_hf.md
+  - Modes: 
+    - Simple: mode_simple.md
+    - Advanced: mode_advanced.md
+  - Dead / Wounded: 
+    - Dead: dead.md
+    - Wounded: wounded.md
+  - Report:
+    - Class Objects: classes.md
+  - Geolocalisation:
+    - User Input Localisation: maps.md
+    - Automatic Localisation: js_geolocation.md
+    - Definition: class_geolocalisation.md
+  - Behaviors: 
+    - Widgets: behavior_checkbox.md
+    - Simple Definitions: class_behavior_simple.md
+    - Advanced Definitions: class_behavior.md
+  - Circumstances: 
+    - Widgets: circumstances.md 
+    - Definitions: class_circumstance.md 
+  - Physical: 
+    - Widgets: physical.md
+    - Body Part Selection: physical_select_animal.md
+    - Simple Definitions: class_physical_simple.md
+    - Advanced Definitions: class_physical.md 
+  - Follow up events: 
+    - Widgets: followup_events.md
+    - Definitions: class_follow_up.md
+  - Validation / Submission :
+    - Validation: validation.md
+    - Processing: processing.md
+    - Submission: submission.md
+    - Resets: reset.md
+    - Utils: 
+      - Individual: utils_individual.md
+      - Save: utils_save.md
+  - Utils: 
+    - Checkbox: utils_checkbox.md
+    - Configurations: utils_config.md
+    - Visibility: utils_visibile.md

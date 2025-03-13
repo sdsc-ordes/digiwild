@@ -14,6 +14,13 @@ CAUSE_COL_WIDTH = "50px"
 
 
 def show_circumstances(choice, individual):
+    """ Show the circumstances of the animal's death 
+    Args:
+        choice (str): the choice of the user
+        individual (dict): the individual dictionary where the data will be added
+    Returns:
+        tuple: the buttons, dropdowns, and the individual dictionary
+    """
     visible = set_visible(choice)
     individual = add_data_to_individual("circumstance_radio", choice, individual)
     (
@@ -40,6 +47,12 @@ def show_circumstances(choice, individual):
 
 
 def create_circumstances(visible):
+    """ Create the circumstances buttons and dropdowns
+    Args:
+        visible (bool): the visibility of the buttons and dropdowns
+    Returns:
+        tuple: the buttons and dropdowns
+    """
     (
         button_collision,
         button_deliberate_destruction,
@@ -65,6 +78,12 @@ def create_circumstances(visible):
 
 
 def create_circumstances_buttons(visible):
+    """ Create the circumstances buttons
+    Args:
+        visible (bool): the visibility of the buttons
+    Returns:
+        tuple: the buttons
+    """
     with gr.Row() as image_row:
         with gr.Column(scale=1, min_width=CAUSE_COL_WIDTH):
             button_collision = gr.Button(
@@ -106,6 +125,12 @@ def create_circumstances_buttons(visible):
 
 
 def create_circumstances_dropdown(visible):
+    """ Create the circumstances dropdowns
+    Args:
+        visible (bool): the visibility of the dropdowns
+    Returns:
+        tuple: the dropdowns
+    """
     with gr.Row() as dropdown_row:
         dropdown = gr.Dropdown(
             choices=[],

@@ -40,6 +40,14 @@ js_geocode = """
 
 
 def display_location(location_json, individual):
+    """ Display location 
+    Args: 
+        location_json: JSON string of location
+        individual: Individual object
+    Returns:
+        locationtext: gr.Textbox
+        individual: Individual object
+    """
     geo_dict = json.loads(location_json)
     if "latitude" in geo_dict.keys():
         latitude = geo_dict["latitude"]

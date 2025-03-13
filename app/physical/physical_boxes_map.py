@@ -11,6 +11,11 @@ PATH_ASSETS = os.getenv("PATH_ASSETS")
 
 # Function to draw the bounding boxes on the image
 def draw_bounding_boxes(image_path, gdf):
+    """ Draw bounding boxes on an image and save it to a new file.
+    Args: 
+        image_path: Path to the image file
+        gdf: GeoDataFrame with the bounding boxes
+    """
     image = Image.open(image_path + "bird.png").convert("RGB")
     # Convert the image to an editable format
     draw = ImageDraw.Draw(image)

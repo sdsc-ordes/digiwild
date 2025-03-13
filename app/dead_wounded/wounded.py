@@ -16,6 +16,15 @@ PATH_ICONS = PATH + PATH_ASSETS + "icons/"
 
 
 def show_section_wounded(visible, mode, individual):
+    """ 
+    Function to display the section of the wounded animal.
+    Args:
+        visible (bool): True if the section is visible, False otherwise.
+        mode (str): The mode of the app.
+        individual (dict): The individual dictionary.
+    Returns:
+        tuple: The elements of the section
+    """
     if visible == True:
         individual = add_data_to_individual("wounded_state", "Yes", individual)
         individual = add_data_to_individual("dead_state", "No", individual)

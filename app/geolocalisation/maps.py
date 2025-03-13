@@ -5,6 +5,14 @@ from geolocalisation.class_geolocalisation import Geolocalisation
 
 
 def create_geolocalisation_object(lat, long, name):
+    """ Create Geolocalisation object
+    Args: 
+        lat: Latitude
+        long: Longitude
+        name: Name of the geolocalisation
+    Returns:
+        geolocalisation: Geolocalisation
+    """
     try:
         geolocalisation = Geolocalisation(
             longitude={"type": "longitude", "value": long},
@@ -17,12 +25,27 @@ def create_geolocalisation_object(lat, long, name):
 
 
 def save_geolocalisation_to_json(geolocalisation, individual):
+    """ Save Geolocalisation to JSON
+    Args: 
+        geolocalisation: Geolocalisation
+        individual: Individual
+    Returns:
+        individual: Individual
+    """
     geo_dict = geolocalisation.dict()
     individual = add_data_to_individual("geolocalisation", geo_dict, individual)
     return individual
 
 
 def get_location(address, individual):
+    """ Get location
+    Args: 
+        address: Address
+        individual: Individual
+    Returns:
+        identified_location: gr.Textbox
+        individual: Individual
+    """
     try:
         # calling the Nominatim tool
         loc = Nominatim(user_agent="GetLoc")

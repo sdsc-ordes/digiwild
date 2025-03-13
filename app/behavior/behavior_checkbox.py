@@ -6,13 +6,29 @@ from validation_submission.utils_individual import add_data_to_individual
 
 
 def on_select_behavior(behavior_checkbox, individual):
+    """
+    This function is called when the user selects a behavior from the checkbox.
+    It adds the selected behavior to the individual dictionary.
+    Args: 
+        behavior_checkbox: list of behaviors selected by the user
+        individual: dictionary of individual data
+    Returns:
+        individual: dictionary of individual data with the selected behavior added
+    """
     behavior_checkbox = [behavior.lower() for behavior in behavior_checkbox]
     individual = add_data_to_individual("behaviors_type", behavior_checkbox, individual)
     return individual
 
 
 def retrieve_behavior_options_description(mode: str):
-    # print(f"Retrieve Behavior Option Description: {mode}")
+    """
+    This function retrieves the behavior options and their descriptions from the config file.
+    Args:
+        mode: string indicating the mode of the application (simple or advanced)
+    Returns:
+        options: list of behavior options
+        descriptions: list of behavior descriptions
+    """
     if mode == "simple":
         dropdown_config = get_custom_config_dropdowns(
             "config_checkbox_behavior_simple.json"
@@ -28,6 +44,16 @@ def retrieve_behavior_options_description(mode: str):
 
 
 def create_behavior_checkbox(section: str, mode: str, visible):
+    """
+    This function creates the behavior checkbox.
+    Args:
+        section: string indicating the section of the application
+        mode: string indicating the mode of the application (simple or advanced)
+        visible: boolean indicating whether the checkbox is visible
+    Returns:
+        checkbox: gradio checkbox object
+        text: gradio text object
+    """
     options, descriptions = retrieve_behavior_options_description(mode)
     label_checkbox = "Behavior changes observed"
     checkbox, text = create_checkbox(
@@ -37,6 +63,18 @@ def create_behavior_checkbox(section: str, mode: str, visible):
 
 
 def show_behavior(choice, section: str, mode: str, individual):
+    """
+    This function shows the behavior checkbox.
+    Args:
+        choice: string indicating the behavior choice
+        section: string indicating the section of the application
+        mode: string indicating the mode of the application (simple or advanced)
+        individual: dictionary of individual data
+    Returns:
+        checkbox: gradio checkbox object
+        text: gradio text object explaining behavior
+        individual: dictionary of individual data with the selected behavior
+    """
     # print(f"Show Behavior: {mode}")
     visible = set_visible(choice)
     checkbox, text = create_behavior_checkbox(section, mode, visible)

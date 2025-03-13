@@ -4,11 +4,13 @@ from typing import Literal, List, Union, Optional
 
 # Base class for CircumstanceType with a discriminator field 'type'
 class CircumstanceTypeBase(BaseModel):
+    """Base class for CircumstanceType with a discriminator field 'type'"""
     type: str
 
 
 # Collision with means of transport
 class RoadVehicleCollision(CircumstanceTypeBase):
+    """Class for RoadVehicleCollision"""
     type: Literal["road_vehicle"]
     infrastructure_number: Optional[str] = None
     road_type: Literal[
@@ -17,28 +19,34 @@ class RoadVehicleCollision(CircumstanceTypeBase):
 
 
 class TrainCollision(CircumstanceTypeBase):
+    """Class for TrainCollision"""
     type: Literal["train"]
     infrastructure_number: str
 
 
 class AircraftCollision(CircumstanceTypeBase):
+    """Class for AircraftCollision"""
     type: Literal["aircraft"]
 
 
 class BoatCollision(CircumstanceTypeBase):
+    """Class for BoatCollision"""
     type: Literal["boat"]
 
 
 class OtherTransportCollision(CircumstanceTypeBase):
+    """Class for OtherTransportCollision"""
     type: Literal["other transport collision"]
 
 
 class UnknownTransportCollision(CircumstanceTypeBase):
+    """Class for UnknownTransportCollision"""
     type: Literal["unknown transport collision"]
 
 
 # Destruction / Deliberately removed
 class HuntingDestruction(CircumstanceTypeBase):
+    """Class for Hunting"""
     type: Literal["hunting"]
     method: Literal[
         "shooting",
@@ -52,6 +60,7 @@ class HuntingDestruction(CircumstanceTypeBase):
 
 
 class TrapDestruction(CircumstanceTypeBase):
+    """Class for Trap"""
     type: Literal["trap"]
     method: Literal[
         "killing trap",
@@ -69,10 +78,12 @@ class TrapDestruction(CircumstanceTypeBase):
 
 
 class PoisoningDestruction(CircumstanceTypeBase):
+    """Class for Poisoning"""
     type: Literal["poisoning"]
 
 
 class RemovalDestruction(CircumstanceTypeBase):
+    """Class for Removal"""
     type: Literal["removal or direct capture"]
     method: Literal[
         "gassing",
@@ -87,6 +98,7 @@ class RemovalDestruction(CircumstanceTypeBase):
 
 
 class FishingDestruction(CircumstanceTypeBase):
+    """Class for Fishing"""
     type: Literal["fishing"]
     method: Literal[
         "drowned/tangled",
@@ -97,15 +109,18 @@ class FishingDestruction(CircumstanceTypeBase):
 
 
 class OtherDestruction(CircumstanceTypeBase):
+    """Class for Other Destruction"""
     type: Literal["other destruction"]
 
 
 class UnknownDestruction(CircumstanceTypeBase):
+    """Class for Unknown"""
     type: Literal["unknown destruction"]
 
 
 # Indirect destruction
 class PylonElectricGridDestruction(CircumstanceTypeBase):
+    """Class for PylonElectricGrid"""
     type: Literal["pylone and electric grid"]
     infrastructure: Literal[
         "electric line", "pole/pylon", "other structure", "unknown structure"
@@ -114,10 +129,12 @@ class PylonElectricGridDestruction(CircumstanceTypeBase):
 
 
 class WindfarmDestruction(CircumstanceTypeBase):
+    """Class for Windfarm"""
     type: Literal["windfarm"]
 
 
 class OtherCollisionDestruction(CircumstanceTypeBase):
+    """Class for Other Collision"""
     type: Literal["other collision"]
     object: Literal[
         "window",
@@ -131,6 +148,7 @@ class OtherCollisionDestruction(CircumstanceTypeBase):
 
 
 class FallDestruction(CircumstanceTypeBase):
+    """ Class for Fall """
     type: Literal["fall"]
     location: Literal[
         "chimney", "empty pole", "hole/well", "other fall", "unknown fall"
@@ -138,6 +156,7 @@ class FallDestruction(CircumstanceTypeBase):
 
 
 class DevelopmentWorkDestruction(CircumstanceTypeBase):
+    """ Class for DevelopmentWork """
     type: Literal["development work"]
     work_type: Literal[
         "transport infrastructure", "building", "other work", "unknown work"
@@ -145,6 +164,7 @@ class DevelopmentWorkDestruction(CircumstanceTypeBase):
 
 
 class PollutionContaminationDestruction(CircumstanceTypeBase):
+    """ Class for PollutionContamination """
     type: Literal["pollution / contamination"]
     pollution_type: Literal[
         "oil pollution",
@@ -159,10 +179,12 @@ class PollutionContaminationDestruction(CircumstanceTypeBase):
 
 
 class AgriculturalNetProtectionDestruction(CircumstanceTypeBase):
+    """ Class for AgriculturalNetProtection """
     type: Literal["agricultural net protection"]
 
 
 class VegetalForestWorkDestruction(CircumstanceTypeBase):
+    """ Class for VegetalForestWork """
     type: Literal["vegetal / forest work"]
     work_type: Literal[
         "clearing/mowing/plowing",
@@ -173,15 +195,18 @@ class VegetalForestWorkDestruction(CircumstanceTypeBase):
 
 
 class OtherIndirectDestruction(CircumstanceTypeBase):
+    """ Class for Other Indirect Destruction """
     type: Literal["other indirect destruction"]
 
 
 class UnknownIndirectDestruction(CircumstanceTypeBase):
+    """ Class for Unknown Indirect Destruction """
     type: Literal["unknown indirect destruction"]
 
 
 # Natural cause
 class Predation(CircumstanceTypeBase):
+    """ Class for Predation """
     type: Literal["predation"]
     predator: Literal[
         "cat",
@@ -196,6 +221,7 @@ class Predation(CircumstanceTypeBase):
 
 
 class Weather(CircumstanceTypeBase):
+    """ Class for Weather """
     type: Literal["weather"]
     condition: Literal[
         "cold wave",
@@ -209,6 +235,7 @@ class Weather(CircumstanceTypeBase):
 
 
 class NaturalDisaster(CircumstanceTypeBase):
+    """ Class for NaturalDisaster """
     type: Literal["natural disaster"]
     disaster: Literal[
         "fire",
@@ -222,18 +249,22 @@ class NaturalDisaster(CircumstanceTypeBase):
 
 
 class NestFall(CircumstanceTypeBase):
+    """ Class for NestFall """
     type: Literal["nest fall"]
 
 
 class StrandingExhaustion(CircumstanceTypeBase):
+    """ Class for StrandingExhaustion """
     type: Literal["stranding due to exhaustion"]
 
 
 class DiseaseParasite(CircumstanceTypeBase):
+    """ Class for DiseaseParasite """
     type: Literal["disease/parasite"]
 
 
 class AccidentalDrowning(CircumstanceTypeBase):
+    """ Class for AccidentalDrowning """
     type: Literal["accidental drowning"]
     drowning_location: Literal[
         "drinking trough",
@@ -248,15 +279,18 @@ class AccidentalDrowning(CircumstanceTypeBase):
 
 
 class OtherNaturalCause(CircumstanceTypeBase):
+    """ Class for Other Natural Cause """
     type: Literal["other natural cause"]
 
 
 class UnknownNaturalCause(CircumstanceTypeBase):
+    """ Class for Unknown Natural Cause """
     type: Literal["unknown natural cause"]
 
 
 # Unknown cause
 class UnknownCircumstance(CircumstanceTypeBase):
+    """ Class for Unknown Circumstance """
     type: Literal["unknown"]
 
 
@@ -300,6 +334,12 @@ CircumstanceType = Union[
 
 # Main Circumstance class
 class Circumstances(BaseModel):
+    """Class for Circumstances
+    Args: 
+        circumstance_radio: str
+        circumstance: Optional[str]
+        circumstance_type: Optional[CircumstanceType]
+    """
     circumstance_radio: str  # e.g., "Yes"
     circumstance: Optional[str] = None  # e.g., "COLLISION"
     circumstance_type: Optional[CircumstanceType] = Field(None, discriminator="type")

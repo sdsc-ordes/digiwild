@@ -6,17 +6,36 @@ from validation_submission.utils_individual import add_data_to_individual
 
 # ---------------------------------------------------------
 def get_body_parts():
+    """ Get all body parts from the config file 
+    Returns:
+        list: List of body parts
+    """
     dropdown_config = get_custom_config_dropdowns("config_checkbox_physical.json")
     return list(dropdown_config.keys())
 
 
 def retrieve_config_options(label, dropdown_config):
+    """ Retrieve the options for a given label from the config file
+    Args:
+        label (str): Label to retrieve the options for
+        dropdown_config (dict): Config file
+    Returns:
+        list: List of options
+    """
     options = list(dropdown_config[label].keys())
     options = [option.title() for option in options]
     return options
 
 
 def get_options_description(value, mode):
+    """ Get the options and descriptions for a given value
+    Args:
+        value (str): Value to retrieve the options for
+        mode (str): Mode to retrieve the options for
+    Returns:
+        list: List of options
+        list: List of descriptions
+    """
     if mode == "simple":
         dropdown_config = get_custom_config_dropdowns(
             "config_checkbox_physical_simple.json"
@@ -41,6 +60,16 @@ def get_options_description(value, mode):
 
 # ---------------------------------------------------------
 def create_checkbox_beak(section, mode, label_checkbox, visible):
+    """ Create the checkbox for the beak
+    Args:
+        section (str): Section of the checkbox
+        mode (str): Mode of the checkbox
+        label_checkbox (str): Label of the checkbox
+        visible (bool): Visibility of the checkbox
+    Returns:
+        gr.checkbox: Checkboxes for the beak
+        gr.text: Text for the beak
+    """
     body_part = "Beak"
     options, descriptions = get_options_description(body_part, mode)
     return create_checkbox(
@@ -49,6 +78,16 @@ def create_checkbox_beak(section, mode, label_checkbox, visible):
 
 
 def create_checkbox_body(section, mode, label_checkbox, visible):
+    """ Create the checkbox for the body
+    Args:
+        section (str): Section of the checkbox
+        mode (str): Mode of the checkbox
+        label_checkbox (str): Label of the checkbox
+        visible (bool): Visibility of the checkbox
+    Returns:
+        gr.checkbox: Checkboxes for the body
+        gr.text: Text for the body
+    """
     body_part = "Body"
     options, descriptions = get_options_description(body_part, mode)
     return create_checkbox(
@@ -57,6 +96,16 @@ def create_checkbox_body(section, mode, label_checkbox, visible):
 
 
 def create_checkbox_feathers(section, mode, label_checkbox, visible):
+    """ Create the checkbox for the feathers
+    Args:
+        section (str): Section of the checkbox
+        mode (str): Mode of the checkbox
+        label_checkbox (str): Label of the checkbox
+        visible (bool): Visibility of the checkbox
+    Returns:
+        gr.checkbox: Checkboxes for the feathers
+        gr.text: Text for the feathers
+    """
     body_part = "Feathers/Wings/Tail"
     options, descriptions = get_options_description(body_part, mode)
     return create_checkbox(
@@ -65,6 +114,16 @@ def create_checkbox_feathers(section, mode, label_checkbox, visible):
 
 
 def create_checkbox_head(section, mode, label_checkbox, visible):
+    """ Create the checkbox for the head
+    Args:
+        section (str): Section of the checkbox
+        mode (str): Mode of the checkbox
+        label_checkbox (str): Label of the checkbox
+        visible (bool): Visibility of the checkbox
+    Returns:
+        gr.checkbox: Checkboxes for the head
+        gr.text: Text for the head
+    """
     body_part = "Head incl. eyes"
     options, descriptions = get_options_description(body_part, mode)
     return create_checkbox(
@@ -73,6 +132,16 @@ def create_checkbox_head(section, mode, label_checkbox, visible):
 
 
 def create_checkbox_legs(section, mode, label_checkbox, visible):
+    """ Create the checkbox for the legs
+    Args:
+        section (str): Section of the checkbox
+        mode (str): Mode of the checkbox
+        label_checkbox (str): Label of the checkbox
+        visible (bool): Visibility of the checkbox
+    Returns:
+        gr.checkbox: Checkboxes for the legs
+        gr.text: Text for the legs
+    """
     body_part = "Legs"
     options, descriptions = get_options_description(body_part, mode)
     return create_checkbox(
@@ -82,6 +151,23 @@ def create_checkbox_legs(section, mode, label_checkbox, visible):
 
 # ---------------------------------------------------------
 def process_body_parts(section, mode, matched_box):
+    """ Process the body parts
+    Args:
+        section (str): Section of the checkbox
+        mode (str): Mode of the checkbox
+        matched_box (str): Matched box
+    Returns:
+        gr.checkbox: Checkboxes for the beak
+        gr.text: Text for the beak
+        gr.checkbox: Checkboxes for the body
+        gr.text: Text for the body
+        gr.checkbox: Checkboxes for the feathers
+        gr.text: Text for the feathers
+        gr.checkbox: Checkboxes for the head
+        gr.text: Text for the head
+        gr.checkbox: Checkboxes for the legs
+        gr.text: Text for the legs
+    """
     # take all except "Common"
     body_parts = get_body_parts()
     body_parts = body_parts[1:]
@@ -120,6 +206,14 @@ def process_body_parts(section, mode, matched_box):
 
 
 def on_select_body_part(body_part_checkbox, body_part, individual):
+    """ Add the selected body parts to the individual
+    Args:
+        body_part_checkbox (list): List of selected body parts
+        body_part (str): Body part
+        individual (dict): Individual
+    Returns:
+        dict: Individual with the selected body parts
+    """
     individual = add_data_to_individual(
         "physical_type_" + body_part.lower(), body_part.lower(), individual
     )
